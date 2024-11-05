@@ -1,14 +1,21 @@
 <script lang="ts">
 	import {
 		CombatState,
+		moveCombatantByTicks,
+		moveCombatantToTick,
+		resetActiveCombatant,
 		sceneData,
 		sessionData,
-		sortCombatantsByInitiative,
+		setCombatantCombatStateToDead,
+		setCombatantCombatStateToExpecting,
+		setCombatantCombatStateToWaiting,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
 	import { Minus, Hourglass, ClockAlert, Skull, UserRound } from 'lucide-svelte';
+	import { tick, untrack } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import { slide } from 'svelte/transition';
+	import Scene from './Scene.svelte';
 
 	let modal: HTMLDialogElement;
 	const DEFAULT_TICK_NUMBERS: Array<number> = [
@@ -18,47 +25,12 @@
 		number: number;
 		hasCombatants: boolean;
 	};
-	let ticks: Array<Tick> = $state(getDefaultTicks());
 	let negation: boolean = $state(false);
-
-	$effect(() => {
-		console.log('before mysterious effect');
-
-		if (sessionData.activeCombatant?.combatState === CombatState.Active) {
-			ticks = getDefaultTicks();
-		} else {
-			const firstPossibleTick = sessionData.mostRecentTick;
-			const lastPossibleTick = Math.min(
-				...sceneData.combatants
-					.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active)
-					.map((c) => c.initiative)
-			);
-			if (firstPossibleTick > lastPossibleTick) {
-				console.error(
-					`firstPossibleTick (${firstPossibleTick}) must not be greater than lastPossibleTick (${lastPossibleTick})`
-				);
-				return;
-			}
-			if (firstPossibleTick === Infinity || lastPossibleTick === Infinity) {
-				return;
-			}
-			const effectiveTicks = [];
-			for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
-				effectiveTicks.push({
-					number: i,
-					hasCombatants: sceneData.combatants.some(
-						(c) => c.initiative === i && c.id !== sessionData.activeCombatant?.id
-					)
-				});
-			}
-			ticks = effectiveTicks;
-		}
-
-		console.log('after mysterious effect');
-	});
+	let ticks: Array<Tick> = $state([]);
 
 	export function show() {
 		negation = false;
+		ticks = calculatePossibleTicks();
 		modal.showModal();
 	}
 
@@ -68,69 +40,162 @@
 
 	function select(ticks: number) {
 		hide();
-		let sign: number = negation ? -1 : 1;
 		if (sessionData.activeCombatant) {
-			sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
-			sessionData.activeCombatant.initiative += sign * ticks;
-			sortCombatantsByInitiative(sessionData.activeCombatant);
+			if (sessionData.activeCombatant.combatState === CombatState.Active) {
+				let sign: number = negation ? -1 : 1;
+				moveCombatantByTicks(sessionData.activeCombatant, sign * ticks);
+			} else {
+				moveCombatantToTick(sessionData.activeCombatant, ticks);
+			}
+			resetActiveCombatant();
 		}
 	}
 
 	function toggleNegation() {
 		negation = !negation;
+		ticks = calculatePossibleTicks();
 	}
 
-	function setCombatStateToExpecting() {
+	function calculatePossibleTicks(): Array<Tick> {
+		const activeCombatant = sessionData.activeCombatant;
+		if (activeCombatant) {
+			if (activeCombatant.combatState === CombatState.Active) {
+				return getRelativeTicks(negation, activeCombatant.initiative, sceneData.combatants);
+			} else {
+				return getAbsoluteTicks();
+			}
+		}
+		return [];
+	}
+
+	function selectCombatStateExpecting() {
+		hide();
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
-		sessionData.activeCombatant.combatState = CombatState.Expecting;
+		// const activeCombatant = sessionData.activeCombatant
+		// if (sceneData.combatants.some(c => c.initiative < activeCombatant.initiative)) {
+
+		// } else {
+		// 	sessionData.mostRecentTick = activeCombatant.initiative;
+		// }
+		// sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
+		// sessionData.activeCombatant.combatState = CombatState.Expecting;
+		setCombatantCombatStateToExpecting(sessionData.activeCombatant);
+		resetActiveCombatant();
 	}
 
-	function setCombatStateToWaiting() {
+	function selectCombatStateWaiting() {
+		hide();
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
-		sessionData.activeCombatant.combatState = CombatState.Waiting;
+		setCombatantCombatStateToWaiting(sessionData.activeCombatant);
+		// sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
+		// sessionData.activeCombatant.combatState = CombatState.Waiting;
+		resetActiveCombatant();
 	}
 
-	function setCombatStateToDead() {
+	function selectCombatStateDead() {
+		hide();
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		sessionData.activeCombatant.combatState = CombatState.Dead;
+		// sessionData.activeCombatant.combatState = CombatState.Dead;
+		setCombatantCombatStateToDead(sessionData.activeCombatant);
+		resetActiveCombatant();
 	}
 
-	function getDefaultTicks(): Array<Tick> {
-		// const allInitiatives = sceneData.combatants.map(c => c.initiative);
+	// $effect(() => {
+	// 	if (negation) {
+
+	// 	} else {
+	// 		ticks = untrack(() => getRelativeTicks());
+	// 	}
+	// })
+
+	// $effect(() => {
+	// 	const activeCombatant = sessionData.activeCombatant
+	// 	if (!activeCombatant) {
+	// 		return
+	// 	} else if (activeCombatant.combatState === CombatState.Active) {
+	// 		// ticks = untrack(() => getRelativeTicks(activeCombatant.initiative, sceneData.combatants));
+	// 	} else {
+	// 		const firstPossibleTick = sessionData.mostRecentTick;
+	// 		const lastPossibleTick = Math.min(
+	// 			...sceneData.combatants
+	// 				.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active)
+	// 				.map((c) => c.initiative)
+	// 		);
+	// 		if (firstPossibleTick > lastPossibleTick) {
+	// 			console.error(
+	// 				`firstPossibleTick (${firstPossibleTick}) must not be greater than lastPossibleTick (${lastPossibleTick})`
+	// 			);
+	// 			return;
+	// 		}
+	// 		if (firstPossibleTick === Infinity || lastPossibleTick === Infinity) {
+	// 			return;
+	// 		}
+	// 		const effectiveTicks = [];
+	// 		for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
+	// 			effectiveTicks.push({
+	// 				number: i,
+	// 				hasCombatants: sceneData.combatants.some(
+	// 					(c) => c.initiative === i && c.id !== sessionData.activeCombatant?.id
+	// 				)
+	// 			});
+	// 		}
+	// 		ticks = effectiveTicks;
+	// 	}
+	// });
+
+	function getAbsoluteTicks(): Array<Tick> {
+		// determine last (largest) possible tick
+		let lastPossibleTick: number
+		const validInitiatives = sceneData.combatants.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active).map((c) => c.initiative)
+		if (validInitiatives.length === 0) {
+			// Fallback when all combatants are in waiting, expecting, or dead
+			lastPossibleTick = sessionData.mostRecentTick || 0
+		} else {
+			lastPossibleTick = Math.min(...validInitiatives)
+		}
+		console.log(`lastPossibleTick: ${lastPossibleTick}`)
+		
+		// determine first (smallest) possible tick
+		const firstPossibleTick = sessionData.mostRecentTick;
+		console.log(`firstPossibleTick: ${firstPossibleTick}`)
+
+		return [{
+			number: 1,
+			hasCombatants: false
+		}]
+	}
+
+	function getRelativeTicks(
+		negation: boolean,
+		comparisonInitiative: number,
+		combatants: Array<Combatant>
+	): Array<Tick> {
 		return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((number) => {
+			const effectiveNumber = negation ? -number : number;
 			return {
-				number,
-				hasCombatants: tickNumberHasCombatantsAssigned(number)
+				number: effectiveNumber,
+				hasCombatants: tickNumberHasCombatantsAssigned(
+					effectiveNumber,
+					comparisonInitiative,
+					combatants
+				)
 			};
 		});
 	}
 
-	function tickNumberHasCombatantsAssigned(tickNumber: number): boolean {
-		if (!sessionData.activeCombatant) {
-			return false;
-		}
-
-		const comparisonInitiative = sessionData.activeCombatant.initiative;
+	function tickNumberHasCombatantsAssigned(
+		tickNumber: number,
+		comparisonInitiative: number,
+		combatants: Array<Combatant>
+	): boolean {
 		let relativeInitiatives: Array<number> = [];
-		if (negation) {
-			relativeInitiatives = sceneData.combatants.map(
-				(c: Combatant) => comparisonInitiative - c.initiative
-			);
-			// console.log(relativeInitiatives);
-		} else {
-			relativeInitiatives = sceneData.combatants.map(
-				(c: Combatant) => c.initiative - comparisonInitiative
-			);
-			// console.log(relativeInitiatives);
-		}
+		relativeInitiatives = combatants.map((c: Combatant) => c.initiative - comparisonInitiative);
 		return relativeInitiatives.includes(tickNumber);
 	}
 </script>
@@ -153,9 +218,14 @@
 					onclick={() => select(tick.number)}
 				>
 					{#if negation}
-						<div class="absolute {tick.number <= 9 ? 'left-4' : 'left-2.5'}">-</div>
+						<div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-4' : 'left-2'}">
+							-
+						</div>
+						{-tick.number}
+					{:else}
+						{tick.number}
 					{/if}
-					{tick.number}
+
 					<!-- {negation ? -tickNumber : tickNumber} -->
 					{#if tick.hasCombatants}
 						<div class="absolute bottom-1 right-1" transition:slide>
@@ -181,8 +251,8 @@
 			<div>
 				{#if sessionData.activeCombatant?.combatState !== CombatState.Expecting}
 					<button
-						class="btn btn-outline btn-info h-full w-full"
-						onclick={() => setCombatStateToExpecting()}
+						class="btn btn-outline btn-info aspect-square h-full w-full"
+						onclick={() => selectCombatStateExpecting()}
 					>
 						<ClockAlert size={64} strokeWidth={1} />
 					</button>
@@ -191,20 +261,22 @@
 			<div>
 				{#if sessionData.activeCombatant?.combatState !== CombatState.Waiting}
 					<button
-						class="btn btn-outline btn-info h-full w-full"
-						onclick={() => setCombatStateToWaiting()}
+						class="btn btn-outline btn-info aspect-square h-full w-full"
+						onclick={() => selectCombatStateWaiting()}
 					>
 						<Hourglass size={64} strokeWidth={1} />
 					</button>
 				{/if}
 			</div>
 			<div>
-				<button
-					class="btn btn-outline btn-error h-full w-full"
-					onclick={() => setCombatStateToDead()}
-				>
-					<Skull size={64} strokeWidth={1} />
-				</button>
+				{#if sessionData.activeCombatant?.combatState !== CombatState.Dead}
+					<button
+						class="btn btn-outline btn-error aspect-square h-full w-full"
+						onclick={() => selectCombatStateDead()}
+					>
+						<Skull size={64} strokeWidth={1} />
+					</button>
+				{/if}
 			</div>
 		</div>
 	</div>

@@ -5,7 +5,7 @@
 	import 'driver.js/dist/driver.css';
 	import { _ } from 'svelte-i18n';
 	import { Download, Upload, CircleHelp, Menu } from 'lucide-svelte';
-	import ThemeToggle from "./ThemeToggle.svelte";
+	import ThemeToggle from './ThemeToggle.svelte';
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -28,14 +28,14 @@
 	};
 
 	const forceOpenClosestDropdown = (element?: Element) => {
-		let dropdownElement = element?.closest(".dropdown")
-		dropdownElement?.classList.add("dropdown-open")
-	}
+		let dropdownElement = element?.closest('.dropdown');
+		dropdownElement?.classList.add('dropdown-open');
+	};
 
 	const closeClosestDropdown = (element?: Element) => {
-		let dropdownElement = element?.closest(".dropdown")
-		dropdownElement?.classList.remove("dropdown-open")
-	}
+		let dropdownElement = element?.closest('.dropdown');
+		dropdownElement?.classList.remove('dropdown-open');
+	};
 
 	const explainPage = () => {
 		const driverObj = driver({
@@ -77,10 +77,10 @@
 						description: $_('download_scene_description')
 					},
 					onHighlightStarted: (element?: Element) => {
-						forceOpenClosestDropdown(element)
+						forceOpenClosestDropdown(element);
 					},
 					onDeselected: (element?: Element) => {
-						closeClosestDropdown(element)
+						closeClosestDropdown(element);
 					}
 				},
 				{
@@ -90,10 +90,10 @@
 						description: $_('upload_scene_description')
 					},
 					onHighlightStarted: (element?: Element) => {
-						forceOpenClosestDropdown(element)
+						forceOpenClosestDropdown(element);
 					},
 					onDeselected: (element?: Element) => {
-						closeClosestDropdown(element)
+						closeClosestDropdown(element);
 					}
 				},
 				{
@@ -109,19 +109,31 @@
 						title: $_('tour.change_langauge.title'),
 						description: $_('tour.change_langauge.content')
 					}
-				},
+				}
 			]
 		});
 
 		driverObj.drive();
 	};
+
+	function checkAndCloseDropDown(e: MouseEvent) {
+		// Remove "focus" from div that acts as button to open the dropdown.
+		// See https://github.com/saadeghi/daisyui/issues/157#issuecomment-979073401
+		let targetEl = e.currentTarget as HTMLElement;
+		if (targetEl && targetEl.matches(':focus')) {
+			setTimeout(function () {
+				targetEl.blur();
+			}, 0);
+		}
+	}
 </script>
 
 <div
 	class="navbar fixed top-0 border-b-4 border-primary-content bg-primary-content/20 backdrop-blur-xl"
 >
 	<div class="flex-1">
-		<a class="btn btn-ghost text-xl">{$_('app_title')}</a>
+		<a class="btn btn-ghost text-xl sm:hidden">ST</a>
+		<a class="btn btn-ghost hidden text-xl sm:flex">{$_('app_title')}</a>
 	</div>
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
@@ -129,10 +141,13 @@
 			<CircleHelp />
 		</button>
 		<div class="dropdown dropdown-end">
-			<div tabindex="-1" role="button" class="btn btn-ghost">
+			<div tabindex="-1" role="button" class="btn btn-ghost" onmousedown={checkAndCloseDropDown}>
 				<Menu />
 			</div>
-			<ul tabindex="-1" class="menu dropdown-content z-[1] rounded-box p-2 shadow w-[350px] text-primary bg-primary-content">
+			<ul
+				tabindex="-1"
+				class="menu dropdown-content z-[1] w-[350px] rounded-box bg-primary-content p-2 text-primary shadow"
+			>
 				<li>
 					<label id="uploadButton" for="battleScene" class="text-xl">
 						<Upload />

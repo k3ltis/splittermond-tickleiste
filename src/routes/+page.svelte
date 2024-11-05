@@ -6,6 +6,7 @@
 	import Scene from '$lib/components/Scene.svelte';
 	import Footer from "$lib/components/Footer.svelte";
 	import "../i18n"
+	import Debug from "$lib/components/Debug.svelte";
 
 	onMount(() => {
 		const _scene = loadSceneFromLocalStorage();
@@ -22,6 +23,7 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
+	<!-- <Debug /> -->
 	<Header />
 	<Scene />
 	<Footer />

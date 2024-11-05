@@ -4,7 +4,6 @@
 		createNewCombatant,
 		sceneData,
 		sessionData,
-		sortCombatantsByInitiative,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
 	import { fade, slide } from 'svelte/transition';
@@ -29,12 +28,6 @@
 
 	// svelte-ignore non_reactive_update
 	let tickSelection: any;
-
-	$effect(() => {
-		if (sceneData && appMode === AppMode.Running) {
-			sortCombatantsByInitiative();
-		}
-	});
 
 	function addCombatant(combatant: Combatant) {
 		if (combatant.name === '') {
@@ -66,7 +59,6 @@
 
 	function runScene() {
 		appMode = AppMode.Running;
-		sortCombatantsByInitiative();
 	}
 
 	function combatantClicked(combatant: Combatant) {

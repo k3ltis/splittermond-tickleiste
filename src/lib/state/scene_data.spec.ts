@@ -1,50 +1,55 @@
 import { describe, it, expect } from 'vitest';
-import { createNewCombatant, sceneData, sortCombatantsByInitiative, type Combatant } from "./scene_data.svelte";
+import { CombatState, createNewCombatant, sceneData, sortCombatantsByInitiative, type Combatant } from "./scene_data.svelte";
+
+function createCombatant(id: string, name: string, initiative: number): Combatant {
+	return {id: id, name: name, initiative: initiative, combatState: CombatState.Active}
+}
 
 describe('sortCombatantsByInitiative test', () => {
 	it('sorts combatants by initiative', () => {
 		sceneData.combatants = [
-			{id: "1", name: "Gandalf", initiative: 8},
-			{id: "2", name: "Merry", initiative: 6},
-			{id: "3", name: "Arwen", initiative: 6},
-			{id: "4", name: "Eowyn", initiative: 12},
-			{id: "5", name: "Saruman", initiative: 3},
+			createCombatant("1", "Gandalf", 8),
+			createCombatant("2", "Merry", 6),
+			createCombatant("3", "Arwen", 6),
+			createCombatant("4", "Eowyn", 12),
+			createCombatant("5", "Saruman", 3),
 		]
 		
 		sortCombatantsByInitiative()
 		
 		expect(sceneData.combatants).toEqual([
-			{id: "5", name: "Saruman", initiative: 3},
-			{id: "2", name: "Merry", initiative: 6},
-			{id: "3", name: "Arwen", initiative: 6},
-			{id: "1", name: "Gandalf", initiative: 8},
-			{id: "4", name: "Eowyn", initiative: 12},
+			createCombatant("5", "Saruman", 3),
+			createCombatant("2", "Merry", 6),
+			createCombatant("3", "Arwen", 6),
+			createCombatant("1", "Gandalf", 8),
+			createCombatant("4", "Eowyn", 12),
 		])
 	});
 
 	it('within an equivalence class, recently active combatants are put to the end', () => {
+		const merry = createCombatant("3", "Merry", 6)
 		sceneData.combatants = [
-			{id: "1", name: "Gandalf", initiative: 8},
-			{id: "2", name: "Pippin", initiative: 6},
-			{id: "3", name: "Merry", initiative: 6},
-			{id: "4", name: "Eowyn", initiative: 3},
-			{id: "5", name: "Legolas", initiative: 6},
-			{id: "6", name: "Orc Commander", initiative: 12},
-			{id: "7", name: "Saruman", initiative: 3},
-			{id: "8", name: "Arwen", initiative: 3},
+			createCombatant("1", "Gandalf", 8),
+			createCombatant("2", "Pippin", 6),
+			merry,
+			createCombatant("4", "Eowyn", 3),
+			createCombatant("5", "Legolas", 6),
+			createCombatant("6", "Orc Commander", 12),
+			createCombatant("7", "Saruman", 3),
+			createCombatant("8", "Arwen", 3),
 		]
 
-		sortCombatantsByInitiative({id: "3", name: "Merry", initiative: 6})
+		sortCombatantsByInitiative(merry)
 
 		expect(sceneData.combatants).toEqual([
-			{id: "4", name: "Eowyn", initiative: 3},
-			{id: "7", name: "Saruman", initiative: 3},
-			{id: "8", name: "Arwen", initiative: 3},
-			{id: "2", name: "Pippin", initiative: 6},
-			{id: "5", name: "Legolas", initiative: 6},
-			{id: "3", name: "Merry", initiative: 6},
-			{id: "1", name: "Gandalf", initiative: 8},
-			{id: "6", name: "Orc Commander", initiative: 12},
+			createCombatant("4", "Eowyn", 3),
+			createCombatant("7", "Saruman", 3),
+			createCombatant("8", "Arwen", 3),
+			createCombatant("2", "Pippin", 6),
+			createCombatant("5", "Legolas", 6),
+			createCombatant("3", "Merry", 6),
+			createCombatant("1", "Gandalf", 8),
+			createCombatant("6", "Orc Commander", 12),
 		])
 	});
 });
