@@ -23,6 +23,21 @@
   "scene_title_description": "Zeigt den Namen der aktuellen Szene an.",
   "tick_selection_modal_header": "Ticks wählen",
   "upload_alt": "Upload-Icon",
+  "upload_scene_description": "Ermöglicht es Ihnen, eine Szene auszuwählen, die zuvor auf Ihrem Gerät gespeichert wurde.",
+  "tour_btn_next": "Weiter",
+  "tour_btn_prev": "Zurück",
+  "tout_btn_done": "Fertig",
+  "tour_progress_text": "{{current}} von {{total}}",
+  "tour_upload_scene": "Szene hochladen",
   "upload_scene": "Szene hochladen",
-  "upload_scene_description": "Ermöglicht es Ihnen, eine Szene auszuwählen, die zuvor auf Ihrem Gerät gespeichert wurde."
+  "tour": {
+    "change_theme": {
+      "title": "Tag- und Nachtmodus",
+      "content": "Umschalten zwischen Tag- und Nachtmodus."
+    },
+    "change_langauge": {
+      "title": "Sprache umschalten",
+      "content": "Zwischen Deutsch und Englisch wechseln."
+    }
+  }
 }

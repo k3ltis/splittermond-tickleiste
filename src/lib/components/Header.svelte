@@ -3,8 +3,9 @@
 	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
 	import { driver } from 'driver.js';
 	import 'driver.js/dist/driver.css';
-	import { _ } from "svelte-i18n";
-	import { Download, Upload, CircleHelp  } from 'lucide-svelte';
+	import { _ } from 'svelte-i18n';
+	import { Download, Upload, CircleHelp, Menu } from 'lucide-svelte';
+	import ThemeToggle from "./ThemeToggle.svelte";
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -26,9 +27,23 @@
 		downloadJSON(sceneData, filename);
 	};
 
+	const forceOpenClosestDropdown = (element?: Element) => {
+		let dropdownElement = element?.closest(".dropdown")
+		dropdownElement?.classList.add("dropdown-open")
+	}
+
+	const closeClosestDropdown = (element?: Element) => {
+		let dropdownElement = element?.closest(".dropdown")
+		dropdownElement?.classList.remove("dropdown-open")
+	}
+
 	const explainPage = () => {
 		const driverObj = driver({
 			showProgress: true,
+			nextBtnText: $_('tour_btn_next'),
+			prevBtnText: $_('tour_btn_prev'),
+			doneBtnText: $_('tout_btn_done'),
+			progressText: $_('tour_progress_text'),
 			steps: [
 				{
 					element: '#sceneTitle',
@@ -60,6 +75,12 @@
 					popover: {
 						title: $_('download_scene'),
 						description: $_('download_scene_description')
+					},
+					onHighlightStarted: (element?: Element) => {
+						forceOpenClosestDropdown(element)
+					},
+					onDeselected: (element?: Element) => {
+						closeClosestDropdown(element)
 					}
 				},
 				{
@@ -67,8 +88,28 @@
 					popover: {
 						title: $_('upload_scene'),
 						description: $_('upload_scene_description')
+					},
+					onHighlightStarted: (element?: Element) => {
+						forceOpenClosestDropdown(element)
+					},
+					onDeselected: (element?: Element) => {
+						closeClosestDropdown(element)
 					}
-				}
+				},
+				{
+					element: '#ThemeToggle',
+					popover: {
+						title: $_('tour.change_theme.title'),
+						description: $_('tour.change_theme.content')
+					}
+				},
+				{
+					element: '#ToggleLanguageBtn',
+					popover: {
+						title: $_('tour.change_langauge.title'),
+						description: $_('tour.change_langauge.content')
+					}
+				},
 			]
 		});
 
@@ -76,30 +117,44 @@
 	};
 </script>
 
-<div class="navbar border-b-4 border-primary-content fixed backdrop-blur-xl bg-primary-content/20 top-0 ">
+<div
+	class="navbar fixed top-0 border-b-4 border-primary-content bg-primary-content/20 backdrop-blur-xl"
+>
 	<div class="flex-1">
-		<a class="btn btn-ghost text-xl">{$_("app_title")}</a>
+		<a class="btn btn-ghost text-xl">{$_('app_title')}</a>
 	</div>
 	<div class="flex-none space-x-2">
-		<label id="uploadButton" for="battleScene" class="btn text-xl btn-neutral">
-			<Upload />
-			<span class="hidden lg:flex">{$_("upload_scene")}</span>
-		</label>
-		<input
-			type="file"
-			id="battleScene"
-			name="battleScene"
-			accept="application/json"
-			class="battle-scene-file-input file-input w-full max-w-xs"
-			onchange={uploadScene}
-		/>
-		<button id="downloadBtn" onclick={() => downloadScene()} class="btn btn-neutral">
-			<Download />
-			<span class="hidden lg:flex text-xl">{$_("download_scene")}</span>
-		</button>
+		<ThemeToggle />
 		<button onclick={() => explainPage()} class="btn btn-neutral">
 			<CircleHelp />
 		</button>
+		<div class="dropdown dropdown-end">
+			<div tabindex="-1" role="button" class="btn btn-ghost">
+				<Menu />
+			</div>
+			<ul tabindex="-1" class="menu dropdown-content z-[1] rounded-box p-2 shadow w-[350px] text-primary bg-primary-content">
+				<li>
+					<label id="uploadButton" for="battleScene" class="text-xl">
+						<Upload />
+						<span class="hidden lg:flex">{$_('upload_scene')}</span>
+					</label>
+					<input
+						type="file"
+						id="battleScene"
+						name="battleScene"
+						accept="application/json"
+						class="battle-scene-file-input file-input w-full max-w-xs"
+						onchange={uploadScene}
+					/>
+				</li>
+				<li>
+					<button id="downloadBtn" onclick={() => downloadScene()} class="">
+						<Download />
+						<span class="hidden text-xl lg:flex">{$_('download_scene')}</span>
+					</button>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 

@@ -23,6 +23,21 @@
   "scene_title_description": "Shows the current scene's name.",
   "tick_selection_modal_header": "Select TIcks",
   "upload_alt": "Upload icon",
+  "upload_scene_description": "Lets you choose a scene to load that was previously saved to your device.",
+  "tour_btn_next": "Next",
+  "tour_btn_prev": "Previous",
+  "tout_btn_done": "Done",
+  "tour_progress_text": "{{current}} of {{total}}",
+  "tour_upload_scene": "Upload Scene",
   "upload_scene": "Upload Scene",
-  "upload_scene_description": "Lets you choose a scene to load that was previously saved to your device."
+  "tour": {
+    "change_theme": {
+      "title": "Day/Night Mode",
+      "content": "Toggle between day and night mode."
+    },
+    "change_langauge": {
+      "title": "Toggle Language",
+      "content": "Switch between German and English."
+    }
+  }
 }

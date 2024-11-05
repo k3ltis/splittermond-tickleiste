@@ -15,7 +15,8 @@
 		</p>
 		<p class="sm:hidden">v{__APP_VERSION__}</p>
 	</aside>
-	<button onclick={() => toggleLanguage()}>
+	<button onclick={() => dataPrivacyModal.showModal()}>{$_('data_privacy')}</button>
+	<button id="ToggleLanguageBtn" onclick={() => toggleLanguage()}>
 		{#if $locale === 'en'}
 			<img width="30em" src="{base}/svg/flag-for-flag-germany-svgrepo-com.svg" alt="German" />
 		{:else}
@@ -26,7 +27,6 @@
 			/>
 		{/if}
 	</button>
-	<button onclick={() => dataPrivacyModal.showModal()}>{$_('data_privacy')}</button>
 	<nav class="flex-none">
 		<a href="https://github.com/k3ltis/splittermond-tickleiste" target="_blank">
 			<svg

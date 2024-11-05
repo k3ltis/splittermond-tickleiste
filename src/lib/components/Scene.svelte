@@ -19,7 +19,7 @@
 	let newCombatant: Combatant = $state(createNewCombatant());
 
 	// Indicating that the combatants are edited
-	let appMode: string = $state(AppMode.Editing);
+	let appMode: string = $state(AppMode.Running);
 
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
@@ -125,7 +125,7 @@
 		{#if appMode === AppMode.Editing}
 			<div
 				transition:slide
-				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg px-6 pb-4 bg-primary-content text-primary"
+				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg px-6 pb-4 bg-primary-content"
 			>
 				<div class="">
 					<input
@@ -162,12 +162,12 @@
 				animate:flip={{ delay: 100, duration: 500 }}
 				class="grid col-span-3 grid-cols-subgrid items-center gap-2 rounded-none p-6 focus:outline-none {appMode ===
 				AppMode.Running
-					? 'cursor-pointer hover:bg-primary'
+					? 'cursor-pointer hover:bg-primary-content'
 					: 'cursor-default'} {appMode == AppMode.Running && index === 0
 					? 'border-4 border-accent'
 					: ''} {index >= (appMode === AppMode.Running ? 2 : 1)
 					? 'border-t-4 border-primary-content'
-					: ''}"
+					: ''} text-primary"
 				onclick={() => combatantClicked(combatant)}
 				onkeydown={() => {}}
 				onkeyup={() => {}}
