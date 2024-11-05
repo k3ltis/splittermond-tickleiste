@@ -87,6 +87,7 @@
 	class="
 		m-auto
 		mt-16
+		md:mt-20
 		h-full
 		w-full
 		px-2
