@@ -38,7 +38,7 @@ jobs:
           chmod +x ./check_version.sh  # Ensure the script is executable
           current_version=$(node -p "require('../package.json').version")
           echo "Current version: $current_version"
-          last_version=steps.ghd.outputs.tag
+          last_version="${{ steps.ghd.outputs.tag }}"
           echo "Last released version: $last_version"
           ./check_version.sh $current_version $last_version
 
