@@ -5,6 +5,7 @@
 	import { driver } from 'driver.js';
 	import 'driver.js/dist/driver.css';
 	import { _ } from "svelte-i18n";
+	import { Download, Upload, CircleHelp  } from 'lucide-svelte';
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -78,12 +79,12 @@
 
 <div class="grap-4 navbar border-b-4 border-primary-content bg-base-100">
 	<div class="flex-1">
-		<a class="btn btn-ghost hidden text-xl md:flex">{$_("app_title")}</a>
+		<a class="btn btn-ghost text-xl">{$_("app_title")}</a>
 	</div>
 	<div class="flex-none space-x-2">
 		<label id="uploadButton" for="battleScene" class="btn">
-			<img width="30em" src="{base}/svg/upload-svgrepo-com.svg" alt="{$_("upload_alt")}" />
-			<span class="hidden md:flex">{$_("upload_scene")}</span>
+			<Upload />
+			<span class="hidden lg:flex">{$_("upload_scene")}</span>
 		</label>
 		<input
 			type="file"
@@ -94,11 +95,11 @@
 			onchange={uploadScene}
 		/>
 		<button id="downloadBtn" onclick={() => downloadScene()} class="btn">
-			<img width="30em" src="{base}/svg/download-svgrepo-com.svg" alt="{$_("download_alt")}" />
-			<span class="hidden md:flex">{$_("download_scene")}</span>
+			<Download />
+			<span class="hidden lg:flex">{$_("download_scene")}</span>
 		</button>
 		<button onclick={() => explainPage()} class="btn">
-			<img width="30em" src="{base}/svg/circle-question-svgrepo-com.svg" alt="{$_("help_alt")}" />
+			<CircleHelp />
 		</button>
 	</div>
 </div>

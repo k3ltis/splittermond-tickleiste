@@ -15,7 +15,9 @@ It's [hosted via  Github Pages](tklic.de/splittermond-tickleiste).
 
 ## Assets
 
-* SVGs from https://www.svgrepo.com/collection/dazzle-line-icons/
+* Icons
+  * https://lucide.dev
+  * https://www.svgrepo.com
 
 ## Development
 

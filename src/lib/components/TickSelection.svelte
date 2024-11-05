@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { Minus } from "lucide-svelte";
 	import { _, locale } from "svelte-i18n";
 
 	let modal: HTMLDialogElement;
@@ -49,7 +50,7 @@
 			{/each}
 			<div>
 				<button class="btn w-full h-full aspect-square" class:btn-active={negation} onclick={() => toggleNegation()}>
-					<img class="min-w-10" src="{base}/svg/minus-svgrepo-com.svg" alt="toggle negation" />
+					<Minus />
 				</button>
 			</div>
 		</div>
