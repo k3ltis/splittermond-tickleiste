@@ -29,6 +29,7 @@ jobs:
 
       - name: Run Version Check
         run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           cd scripts
           chmod +x ./check_version.sh  # Ensure the script is executable
           ./check_version.sh
