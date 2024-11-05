@@ -125,7 +125,7 @@
 	</div>
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
-		<button onclick={() => explainPage()} class="btn btn-neutral">
+		<button onclick={() => explainPage()} class="btn btn-ghost">
 			<CircleHelp />
 		</button>
 		<div class="dropdown dropdown-end">

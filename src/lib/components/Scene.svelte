@@ -1,7 +1,9 @@
 <script lang="ts">
 	import {
+		CombatState,
 		createNewCombatant,
 		sceneData,
+		sessionData,
 		sortCombatantsByInitiative,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
@@ -9,13 +11,13 @@
 	import { flip } from 'svelte/animate';
 	import TickSelection from './TickSelection.svelte';
 	import { _ } from 'svelte-i18n';
-	import { Pencil, Play, Plus, Trash } from 'lucide-svelte';
+	import { Pencil, Play, Plus, Trash, Hourglass, ClockAlert, Skull } from 'lucide-svelte';
 
 	const AppMode = {
 		Editing: 'EDITING',
 		Running: 'RUNNING'
 	};
-	const DEFAULT_APP_MODE = AppMode.Running
+	const DEFAULT_APP_MODE = AppMode.Running;
 
 	let newCombatant: Combatant = $state(createNewCombatant());
 
@@ -27,6 +29,12 @@
 
 	// svelte-ignore non_reactive_update
 	let tickSelection: any;
+
+	$effect(() => {
+		if (sceneData && appMode === AppMode.Running) {
+			sortCombatantsByInitiative();
+		}
+	});
 
 	function addCombatant(combatant: Combatant) {
 		if (combatant.name === '') {
@@ -63,6 +71,7 @@
 
 	function combatantClicked(combatant: Combatant) {
 		if (appMode === AppMode.Running) {
+			sessionData.activeCombatant = combatant;
 			tickSelection.show().then((ticks: number) => {
 				combatant.initiative += ticks;
 				sortCombatantsByInitiative(combatant);
@@ -78,7 +87,8 @@
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="
+<div
+	class="
 		m-auto
 		mt-16
 		h-full
@@ -88,7 +98,8 @@
 		md:w-11/12
 		lg:w-10/12
 		xl:w-10/12
-		2xl:w-[1200px]">
+		2xl:w-[1200px]"
+>
 	<div class="navbar bg-base-100 px-0">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
@@ -230,12 +241,22 @@
 				<div class="w-16 justify-center">
 					{#if appMode === AppMode.Editing}
 						<button
-							transition:fade={{ duration: 200 }}
+							in:fade={{ duration: 200 }}
 							class="btn btn-outline btn-error"
 							onclick={() => deleteCombatant(combatant.id)}
 						>
 							<Trash />
 						</button>
+					{:else if appMode === AppMode.Running}
+						<div in:fade={{ duration: 200 }}>
+							<!-- {#if combatant.combatState === CombatState.Waiting}
+								<Hourglass class="text-info" size={48} strokeWidth={1} />
+							{:else if combatant.combatState === CombatState.Expecting}
+								<ClockAlert class="text-info" size={48} strokeWidth={1} />
+							{:else if combatant.combatState === CombatState.Dead}
+								<Skull class="text-error" size={48} strokeWidth={1} />
+							{/if} -->
+						</div>
 					{/if}
 				</div>
 			</div>

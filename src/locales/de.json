@@ -21,7 +21,7 @@
   "run_scene_description": "Beendet den Bearbeitungsmodus und führt die Szene aus, indem alle Kämpfer nach aufsteigender Initiative geordnet werden. <b>Ein Klick auf einen Kämpfer im Ausführungsmodus ermöglicht es Ihnen, eine Anzahl von Ticks auszuwählen</b>, die zum Initiativwert des Kämpfers hinzugefügt werden, gefolgt von einer Neuanordnung. <br/><br/> Sie können jederzeit <b>in den Bearbeitungsmodus</b> zurückkehren.",
   "scene_title": "Szenenüberschrift",
   "scene_title_description": "Zeigt den Namen der aktuellen Szene an.",
-  "tick_selection_modal_header": "Ticks wählen",
+  "tick_selection_modal_header": "Aktion für {combatantName}",
   "upload_alt": "Upload-Icon",
   "upload_scene_description": "Ermöglicht es Ihnen, eine Szene auszuwählen, die zuvor auf Ihrem Gerät gespeichert wurde.",
   "tour_btn_next": "Weiter",
