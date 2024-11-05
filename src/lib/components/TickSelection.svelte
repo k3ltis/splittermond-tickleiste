@@ -16,9 +16,12 @@
 	import { slide } from 'svelte/transition';
 
 	let modal: HTMLDialogElement;
+
+	type TickMode = "relative" | "absolute"
 	type Tick = {
 		number: number;
 		hasCombatants: boolean;
+		mode: TickMode
 	};
 	let negation: boolean = $state(false);
 	let ticks: Array<Tick> = $state([]);
@@ -33,14 +36,14 @@
 		modal.close();
 	}
 
-	function select(ticks: number) {
+	function select(tick: Tick) {
 		hide();
 		if (sessionData.activeCombatant) {
-			if (sessionData.activeCombatant.combatState === CombatState.Active) {
+			if (tick.mode === "relative") {
 				let sign: number = negation ? -1 : 1;
-				moveCombatantByTicks(sessionData.activeCombatant, sign * ticks);
+				moveCombatantByTicks(sessionData.activeCombatant, sign * tick.number);
 			} else {
-				moveCombatantToTick(sessionData.activeCombatant, ticks);
+				moveCombatantToTick(sessionData.activeCombatant, tick.number);
 			}
 			resetActiveCombatant();
 		}
@@ -68,14 +71,6 @@
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		// const activeCombatant = sessionData.activeCombatant
-		// if (sceneData.combatants.some(c => c.initiative < activeCombatant.initiative)) {
-
-		// } else {
-		// 	sessionData.mostRecentTick = activeCombatant.initiative;
-		// }
-		// sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
-		// sessionData.activeCombatant.combatState = CombatState.Expecting;
 		setCombatantCombatStateToExpecting(sessionData.activeCombatant);
 		resetActiveCombatant();
 	}
@@ -86,8 +81,6 @@
 			return;
 		}
 		setCombatantCombatStateToWaiting(sessionData.activeCombatant);
-		// sessionData.mostRecentTick = sessionData.activeCombatant.initiative;
-		// sessionData.activeCombatant.combatState = CombatState.Waiting;
 		resetActiveCombatant();
 	}
 
@@ -96,53 +89,9 @@
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		// sessionData.activeCombatant.combatState = CombatState.Dead;
 		setCombatantCombatStateToDead(sessionData.activeCombatant);
 		resetActiveCombatant();
 	}
-
-	// $effect(() => {
-	// 	if (negation) {
-
-	// 	} else {
-	// 		ticks = untrack(() => getRelativeTicks());
-	// 	}
-	// })
-
-	// $effect(() => {
-	// 	const activeCombatant = sessionData.activeCombatant
-	// 	if (!activeCombatant) {
-	// 		return
-	// 	} else if (activeCombatant.combatState === CombatState.Active) {
-	// 		// ticks = untrack(() => getRelativeTicks(activeCombatant.initiative, sceneData.combatants));
-	// 	} else {
-	// 		const firstPossibleTick = sessionData.mostRecentTick;
-	// 		const lastPossibleTick = Math.min(
-	// 			...sceneData.combatants
-	// 				.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active)
-	// 				.map((c) => c.initiative)
-	// 		);
-	// 		if (firstPossibleTick > lastPossibleTick) {
-	// 			console.error(
-	// 				`firstPossibleTick (${firstPossibleTick}) must not be greater than lastPossibleTick (${lastPossibleTick})`
-	// 			);
-	// 			return;
-	// 		}
-	// 		if (firstPossibleTick === Infinity || lastPossibleTick === Infinity) {
-	// 			return;
-	// 		}
-	// 		const effectiveTicks = [];
-	// 		for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
-	// 			effectiveTicks.push({
-	// 				number: i,
-	// 				hasCombatants: sceneData.combatants.some(
-	// 					(c) => c.initiative === i && c.id !== sessionData.activeCombatant?.id
-	// 				)
-	// 			});
-	// 		}
-	// 		ticks = effectiveTicks;
-	// 	}
-	// });
 
 	function getAbsoluteTicks(): Array<Tick> {
 		// determine last (largest) possible tick
@@ -156,32 +105,31 @@
 		} else {
 			lastPossibleTick = Math.min(...validInitiatives);
 		}
-		console.log(`lastPossibleTick: ${lastPossibleTick}`);
 
 		// determine first (smallest) possible tick
 		const firstPossibleTick = sessionData.mostRecentTick;
-		console.log(`firstPossibleTick: ${firstPossibleTick}`);
 
-		if (firstPossibleTick <= lastPossibleTick) {
-			const ticks: Array<Tick> = [];
+		if (firstPossibleTick > lastPossibleTick || firstPossibleTick === Infinity || lastPossibleTick === Infinity) {
+			console.error("Tick range invalid. First tick must not be larger than last tick. Neither must be Infinity.", firstPossibleTick, lastPossibleTick)
+			return [{
+				number: 0,
+				hasCombatants: false,
+				mode: "absolute"
+			}]
+		}
+
+		const ticks: Array<Tick> = [];
 			for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
 				ticks.push({
 					number: i,
 					hasCombatants: hasTickCombatantsAssigned(
 						i,
 						sceneData.combatants.filter((c) => c.id !== sessionData.activeCombatant?.id)
-					)
+					),
+					mode: "absolute"
 				});
 			}
 			return ticks;
-		}
-
-		return [
-			{
-				number: 1,
-				hasCombatants: false
-			}
-		];
 	}
 
 	function getRelativeTicks(
@@ -194,7 +142,8 @@
 			const absoluteTick = relativeTick + comparisonInitiative;
 			return {
 				number: relativeTick,
-				hasCombatants: hasTickCombatantsAssigned(absoluteTick, combatants)
+				hasCombatants: hasTickCombatantsAssigned(absoluteTick, combatants),
+				mode: "relative"
 			};
 		});
 	}
@@ -232,18 +181,17 @@
 			{#each ticks as tick}
 				<button
 					class="btn relative aspect-square h-full w-full text-4xl"
-					onclick={() => select(tick.number)}
+					onclick={() => select(tick)}
 				>
+					{#if tick.mode === "relative"}
+						
 					{#if negation}
-						<!-- <div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-4' : 'left-2'}">
-							-
-						</div> -->
 						-{-tick.number}
 					{:else}
-						<!-- <div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-2 sm:left-3' : 'left-1'}">
-							+
-						</div> -->
 						+{tick.number}
+					{/if}
+					{:else}
+					{tick.number}
 					{/if}
 
 					<!-- {negation ? -tickNumber : tickNumber} -->

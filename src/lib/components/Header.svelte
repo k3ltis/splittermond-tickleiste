@@ -129,11 +129,11 @@
 </script>
 
 <div
-	class="navbar fixed top-0 border-b-4 border-primary-content bg-primary-content/20 backdrop-blur-xl"
+	class="navbar fixed top-0 z-[1] border-b-4 border-primary-content bg-primary-content/20 backdrop-blur-xl"
 >
 	<div class="flex-1">
-		<a class="btn btn-ghost text-xl sm:hidden">ST</a>
-		<a class="btn btn-ghost hidden text-xl sm:flex">{$_('app_title')}</a>
+		<div class="btn btn-ghost text-xl sm:hidden">ST</div>
+		<div class="btn btn-ghost hidden text-xl sm:flex">{$_('app_title')}</div>
 	</div>
 	<div class="flex-none space-x-2">
 		<ThemeToggle />

@@ -5,6 +5,7 @@
 		determineNextActingCombatant,
 		sceneData,
 		sessionData,
+		sortCombatantsByInitiative,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
 	import { fade, slide } from 'svelte/transition';
@@ -62,6 +63,7 @@
 
 	function runScene() {
 		appMode = AppMode.Running;
+		sortCombatantsByInitiative()
 	}
 
 	function combatantClicked(combatant: Combatant) {
@@ -257,7 +259,7 @@
 							<Trash />
 						</button>
 					{:else if appMode === AppMode.Running}
-						
+						<div></div>
 					{/if}
 				</div>
 			</div>
