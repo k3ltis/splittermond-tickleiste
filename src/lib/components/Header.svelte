@@ -1,6 +1,6 @@
 <script lang="ts">
     import { base } from '$app/paths';
-	import { loadScene, scene, type Scene } from '$lib/state/combatants.svelte';
+	import { loadScene, sceneData, type Scene } from '$lib/state/scene.svelte';
 import { extractFileContentAsJSON, downloadJSON } from "$lib/state/fileio.svelte";
 
 const uploadScene = (event: Event) => {
@@ -16,7 +16,12 @@ const uploadScene = (event: Event) => {
 };
 
 const downloadScene = () => {
-    downloadJSON(scene)
+    let filename = sceneData.name.toLowerCase().trim().replace(/\s+/g, "_");
+    downloadJSON(sceneData, filename)
+}
+
+const explainPage = () => {
+    
 }
 </script>
 
@@ -27,7 +32,7 @@ const downloadScene = () => {
 	<div class="flex-none space-x-2">
         <label for="battleScene" class="btn">
             <img width="30em" src="{base}/svg/upload-svgrepo-com.svg" alt="download" />
-            Upload JSON
+            Upload Scene
         </label>
         <input
             type="file"
@@ -39,7 +44,10 @@ const downloadScene = () => {
         />
         <button onclick={() => downloadScene()} class="btn">
             <img width="30em" src="{base}/svg/download-svgrepo-com.svg" alt="download" />
-            Download JSON
+            Download Scene
+        </button>
+        <button onclick={() => explainPage()} class="btn">
+            <img width="30em" src="{base}/svg/question-svgrepo-com.svg" alt="download" />
         </button>
 	</div>
 </div>

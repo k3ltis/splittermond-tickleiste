@@ -1,6 +1,4 @@
-import { scene } from "./combatants.svelte";
-
-export let file: File | null = null;
+export const JSON_FILE_SUFFIX = ".splimo.json";
 
 export const extractFileContentAsJSON = (file: File): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -8,41 +6,48 @@ export const extractFileContentAsJSON = (file: File): Promise<any> => {
         reader.onload = (event) => {
             try {
                 const obj = JSON.parse(event.target?.result as string);
-                console.log('parsed JSON:', scene);
                 resolve(obj)
             } catch (e) {
-                console.error('error parsing JSON:', e);
-                alert('invalid JSON file');
+                console.error("error parsing JSON:", e);
+                alert("invalid JSON file");
                 reject(e)
             }
         };
         reader.onerror = (error) => {
-            console.error('error reading file:', error);
+            console.error("error reading file:", error);
             reject(error);
         };
         reader.readAsText(file);
     })
 };
 
-export const downloadJSONViaDataURL = () => {
-    const jsonString = JSON.stringify(scene, null, 2);
+export const downloadJSONViaDataURL = (obj: any, fileName: string) => {
+    const jsonString = JSON.stringify(obj, null, 2);
     // Create a data URL with the JSON content
-    const url = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonString);
-    const a = document.createElement('a');
+    const url = "data:application/json;charset=utf-8," + encodeURIComponent(jsonString);
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'data.json';
+    a.download = fileName;
     // For Safari on iOS, force it to open in a new tab
-    a.target = '_blank';
+    a.target = "_blank";
     a.click();
 };
 
-export const downloadJSON = async (obj: any) => {
+export const downloadJSON = async (obj: any, fileName: string = "scene"  + JSON_FILE_SUFFIX) => {
     if (obj) {
-        // Create a File from the JSON data with a specified filename
+        if (!fileName.endsWith(JSON_FILE_SUFFIX)) {
+            fileName += JSON_FILE_SUFFIX
+        }
+
+        // Create a File from the JSON data
+        const fileContent = [JSON.stringify(obj, null, 2)];
         const file = new File(
-            [JSON.stringify(obj, null, 2)], // File content
-            'data.json', // Filename
-            { type: 'application/json', lastModified: Date.now(), } // MIME type
+            fileContent,
+            fileName,
+            {
+                type: "application/json", // MIME type
+                lastModified: Date.now()
+            }
         );
 
         // Check if the `navigator.share` API is available and can handle files
@@ -51,18 +56,18 @@ export const downloadJSON = async (obj: any) => {
             try {
                 await navigator.share({
                     files: [file],
-                    title: 'Download JSON',
-                    text: 'Download JSON file'
+                    title: "Download JSON",
+                    text: "Download JSON file"
                 });
             } catch (error) {
-                console.error('Error sharing JSON:', error);
+                console.error("Error sharing JSON:", error);
                 console.info("Try downloading file via data url fallback");
-                downloadJSONViaDataURL();
+                downloadJSONViaDataURL(obj, fileName);
             }
         } else {
-            downloadJSONViaDataURL();
+            downloadJSONViaDataURL(obj, fileName);
         }
     } else {
-        alert('No data to download');
+        alert("No data to download");
     }
 };

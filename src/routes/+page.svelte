@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
-	import Combatants from '$lib/components/Combatants.svelte';
-	import { loadScene, scene } from '$lib/state/combatants.svelte';
+	import { loadScene, saveScene, sceneData } from '$lib/state/scene.svelte';
 	import { onMount } from 'svelte';
 	import { loadSceneFromLocalStorage, saveSceneToLocalStorage } from '$lib/state/localstorage';
+	import Scene from '$lib/components/Scene.svelte';
 
 	onMount(() => {
 		const _scene = loadSceneFromLocalStorage();
@@ -12,12 +12,12 @@
 		}
 	});
 
-	$inspect(scene)
+	$inspect(sceneData)
 
 	$effect(() => {
-		saveSceneToLocalStorage(scene);
+		saveScene()
 	});
 </script>
 
 <Header />
-<Combatants />
+<Scene />

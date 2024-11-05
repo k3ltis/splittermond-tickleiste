@@ -1,5 +1,5 @@
-import exp from "constants"
 import { v4 as uuid } from "uuid"
+import { saveSceneToLocalStorage } from "./localstorage"
 
 export type Scene = {
     name: string
@@ -13,13 +13,9 @@ export type Combatant = {
 }
 
 
-export let scene: Scene = $state({
+export let sceneData: Scene = $state({
     name: "name of scene",
-    combatants: [
-        // { id: uuid(), name: "Laurent", initiative: 0 },
-        // { id: uuid(), name: "Fredolin", initiative: 3 },
-        // { id: uuid(), name: "Gwynnyfere", initiative: 6 },
-    ],
+    combatants: [],
 });
 
 export const createNewCombatant = (): Combatant => {
@@ -30,7 +26,10 @@ export const createNewCombatant = (): Combatant => {
     }
 }
 
-export const loadScene = (sceneData: Scene) => {
-    Object.assign(scene, sceneData);
+export const loadScene = (_sceneData: Scene) => {
+    Object.assign(sceneData, _sceneData);
 }
 
+export const saveScene = () => {
+    saveSceneToLocalStorage(sceneData);
+}

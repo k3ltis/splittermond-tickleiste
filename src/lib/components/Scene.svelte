@@ -1,20 +1,27 @@
 <script lang="ts">
-	import { createNewCombatant, scene, type Combatant } from "$lib/state/combatants.svelte";
+	import { createNewCombatant, sceneData, type Combatant } from '$lib/state/scene.svelte';
 
-	let newCombatant: Combatant = $state(createNewCombatant())
+	let newCombatant: Combatant = $state(createNewCombatant());
 	let editing: boolean = $state(false);
+	let combatantNameInput: HTMLInputElement;
 
 	function addCombatant(combatant: Combatant) {
 		if (combatant.name === '') {
 			return;
 		}
-		scene.combatants.push(combatant)
+		sceneData.combatants.push(combatant);
+
+		// Restore default combatant for new input
+		newCombatant = createNewCombatant();
+
+		// Restore focus on the name input
+		combatantNameInput.focus();
+		combatantNameInput.select();
 	}
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (event.key === 'Enter') {
 			addCombatant(newCombatant);
-			newCombatant = createNewCombatant()
 		}
 	}
 
@@ -26,12 +33,20 @@
 		editing = false;
 	}
 
-	function deleteCombatant(combatantId: string){
-		scene.combatants = scene.combatants.filter(c => c.id !== combatantId)
+	function deleteCombatant(combatantId: string) {
+		sceneData.combatants = sceneData.combatants.filter((c) => c.id !== combatantId);
 	}
 </script>
 
 <div class="mx-48 mt-12 overflow-x-auto">
+	<div class="p-6">
+		<input
+			type="text"
+			placeholder="Scene name..."
+			class="input w-full max-w-xs"
+			bind:value={sceneData.name}
+		/>
+	</div>
 	<button class="btn" onclick={editCombatants}>Edit</button>
 	<button class="btn" onclick={saveCombatants}>Save Edit</button>
 	<div class="mb-6">
@@ -41,6 +56,7 @@
 			placeholder="Name..."
 			class="input input-bordered w-full max-w-xs"
 			bind:value={newCombatant.name}
+			bind:this={combatantNameInput}
 			onkeydown={handleKeyDown}
 		/>
 		<input
@@ -60,7 +76,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each scene.combatants as combatant}
+			{#each sceneData.combatants as combatant}
 				<tr>
 					<td>
 						{#if editing}
