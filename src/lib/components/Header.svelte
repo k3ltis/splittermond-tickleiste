@@ -77,12 +77,12 @@
 	};
 </script>
 
-<div class="grap-4 navbar border-b-4 border-primary-content bg-base-100">
+<div class="grap-4 navbar border-b-4 border-primary-content bg-base-100 mb-4">
 	<div class="flex-1">
 		<a class="btn btn-ghost text-xl">{$_("app_title")}</a>
 	</div>
 	<div class="flex-none space-x-2">
-		<label id="uploadButton" for="battleScene" class="btn">
+		<label id="uploadButton" for="battleScene" class="btn text-xl">
 			<Upload />
 			<span class="hidden lg:flex">{$_("upload_scene")}</span>
 		</label>
@@ -96,7 +96,7 @@
 		/>
 		<button id="downloadBtn" onclick={() => downloadScene()} class="btn">
 			<Download />
-			<span class="hidden lg:flex">{$_("download_scene")}</span>
+			<span class="hidden lg:flex text-xl">{$_("download_scene")}</span>
 		</button>
 		<button onclick={() => explainPage()} class="btn">
 			<CircleHelp />

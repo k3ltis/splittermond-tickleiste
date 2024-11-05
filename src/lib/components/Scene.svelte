@@ -72,8 +72,8 @@
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="h-full w-full overflow-x-auto p-4 m-auto md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
-	<div class="navbar bg-base-100">
+<div class="h-full w-full overflow-x-auto py-4 m-auto md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
+	<div class="navbar bg-base-100 px-0">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
 			<input
@@ -90,7 +90,7 @@
 		<div class="flex-none space-x-2">
 			<button
 				id="runSceneBtn"
-				class="btn"
+				class="btn text-xl"
 				class:btn-active={appMode === AppMode.Running}
 				onclick={runScene}
 			>
@@ -99,7 +99,7 @@
 			</button>
 			<button
 				id="editSceneBtn"
-				class="btn"
+				class="btn text-xl"
 				class:btn-active={appMode === AppMode.Editing}
 				onclick={editScene}
 			>
@@ -111,7 +111,7 @@
 	<div id="combatantsTable" class="mt-4 grid w-full grid-cols-[6fr_1fr_1fr]">
 		<!-- Header -->
 		<div
-			class="col-span-3 grid grid-cols-subgrid gap-2 bg-gray-200 px-6 py-2 font-bold items-center"
+			class="col-span-3 grid grid-cols-subgrid gap-2 bg-gray-200 px-6 py-2 font-bold items-center text-xl"
 			class:rounded-t-lg={appMode === AppMode.Editing}
 			class:rounded-lg={appMode === AppMode.Running}
 		>
@@ -141,7 +141,7 @@
 					<input
 						type="number"
 						placeholder="{$_("placeholder_initiative")}"
-						class="input input-bordered text-5xl w-28 text-center"
+						class="input input-bordered text-3xl w-28 text-center"
 						bind:value={newCombatant.initiative}
 						onkeydown={handleKeyDown}
 					/>
@@ -189,7 +189,7 @@
 						disabled={appMode === AppMode.Running}
 						class="input {appMode === AppMode.Editing
 							? 'input-bordered'
-							: 'input-ghost disabled'} w-full max-w-md text-5xl w-28 text-center"
+							: 'input-ghost disabled'} w-full max-w-md text-3xl w-28 text-center"
 						bind:value={combatant.initiative}
 					/>
 				</div>
