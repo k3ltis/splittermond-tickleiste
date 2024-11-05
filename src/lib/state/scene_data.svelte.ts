@@ -31,6 +31,9 @@ export const sceneData: Scene = $state({
     combatants: [],
 });
 
+export function determineNextActingCombatant(): Combatant | null {
+    return sceneData.combatants.find(c => c.combatState === CombatState.Active) || null
+}
 
 export const sessionData: SessionData = $state({
     activeCombatant: null,

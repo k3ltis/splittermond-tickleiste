@@ -2,6 +2,7 @@
 	import {
 		CombatState,
 		createNewCombatant,
+		determineNextActingCombatant,
 		sceneData,
 		sessionData,
 		type Combatant
@@ -10,7 +11,7 @@
 	import { flip } from 'svelte/animate';
 	import TickSelection from './TickSelection.svelte';
 	import { _ } from 'svelte-i18n';
-	import { Pencil, Play, Plus, Trash, Hourglass, ClockAlert, Skull } from 'lucide-svelte';
+	import { Pencil, Play, Plus, Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
 
 	const AppMode = {
 		Editing: 'EDITING',
@@ -19,6 +20,8 @@
 	const DEFAULT_APP_MODE = AppMode.Running;
 
 	let newCombatant: Combatant = $state(createNewCombatant());
+	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant())
+
 
 	// Indicating that the combatants are edited
 	let appMode: string = $state(DEFAULT_APP_MODE);
@@ -200,7 +203,7 @@
 				role="button"
 				tabindex="0"
 			>
-				<div>
+				<div class="relative">
 					<input
 						type="text"
 						disabled={appMode === AppMode.Running}
@@ -211,6 +214,9 @@
 						text-3xl"
 						bind:value={combatant.name}
 					/>
+					{#if combatant === nextActingCombatant}
+						<ArrowRight class="absolute -left-4 top-2.5" size="32" />
+					{/if}
 				</div>
 				<div>
 					{#if combatant.combatState === CombatState.Active || appMode === AppMode.Editing }
