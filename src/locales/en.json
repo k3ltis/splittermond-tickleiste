@@ -1,57 +1,57 @@
 {
-  "app_title": "Splittermond Tickbar",
-  "column_initiative": "Initiative",
-  "column_name": "Name",
-  "combatants_list": "Combatants List",
-  "combatants_list_description": "Displays the list of combatants part of the scene.",
-  "data_privacy": "Data Privacy",
-  "data_privacy_content": "This page does utilize the browser's local storage to locally save the scene and user preferences (like language settings) in the user's browser. This is done, so that the user does not lose information when closing the browser application. If you wish to delete this information simply clear your browser's cached web data. <br /><br /> No data is send to any remote server and no other user related data is processed by this page.",
-  "data_privacy_header": "Data Privacy Information",
-  "download_alt": "Download icon",
-  "download_scene": "Download Scene",
-  "download_scene_description": "Lets you download the current scene as a JSON file.",
-  "edit_scene": "Edit Scene",
-  "edit_scene_button": "Edit Scene",
-  "edit_scene_description": "Toggles edit mode to change the scene name and combatants list.",
-  "help_alt": "Help icon",
-  "placeholder_initiative": "Initiative",
-  "placeholder_name": "Name",
-  "run_scene": "Run Scene",
-  "run_scene_button": "Run Scene",
-  "run_scene_description": "Ends edit mode and runs the scene, ordering all combatants by ascending initiative. <b>Clicking a combatant in run mode allows you to choose a number of ticks</b> to add to the combatant's initiative value, followed by a reordering. <br/><br/> You can re-enter <b>edit mode</b> at any time.",
-  "scene_title": "Scene Title",
-  "scene_title_description": "Shows the current scene's name.",
-  "tick_selection_modal_header": "Action for {{combatantName}}",
-  "upload_alt": "Upload icon",
-  "upload_scene_description": "Lets you choose a scene to load that was previously saved to your device.",
-  "tour_btn_next": "Next",
-  "tour_btn_prev": "Previous",
-  "tout_btn_done": "Done",
-  "tour_progress_text": "{{current}} of {{total}}",
-  "tour_upload_scene": "Upload Scene",
-  "upload_scene": "Upload Scene",
-  "tour": {
-    "change_theme": {
-      "title": "Day/Night Mode",
-      "content": "Toggle between day and night mode."
-    },
-    "change_langauge": {
-      "title": "Toggle Language",
-      "content": "Switch between German and English."
-    },
-    "tick_selection_modal": {
-      "overview": {
-        "title": "Tick Selection Dialog",
-        "content": "Here you can select the <b>ticks</b> to add or subtract, as well as special combat states like <b>expecting</b>, <b>waiting</b>, or <b>incapitated</b>."
-      }
-    }
-  },
-  "tickselection": {
-    "tooltip": {
-      "negation": "Negates ticks",
-      "set_state_expecting": "Expecting",
-      "set_state_waiting": "Waiting",
-      "set_state_dead": "Incapitated"
-    }
-  }
+	"app_title": "Splittermond Tickbar",
+	"column_initiative": "Initiative",
+	"column_name": "Name",
+	"combatants_list": "Combatants List",
+	"combatants_list_description": "Displays the list of combatants part of the scene.",
+	"data_privacy": "Data Privacy",
+	"data_privacy_content": "This page does utilize the browser's local storage to locally save the scene and user preferences (like language settings) in the user's browser. This is done, so that the user does not lose information when closing the browser application. If you wish to delete this information simply clear your browser's cached web data. <br /><br /> No data is send to any remote server and no other user related data is processed by this page.",
+	"data_privacy_header": "Data Privacy Information",
+	"download_alt": "Download icon",
+	"download_scene": "Download Scene",
+	"download_scene_description": "Lets you download the current scene as a JSON file.",
+	"edit_scene": "Edit Scene",
+	"edit_scene_button": "Edit Scene",
+	"edit_scene_description": "Toggles edit mode to change the scene name and combatants list.",
+	"help_alt": "Help icon",
+	"placeholder_initiative": "Initiative",
+	"placeholder_name": "Name",
+	"run_scene": "Run Scene",
+	"run_scene_button": "Run Scene",
+	"run_scene_description": "Ends edit mode and runs the scene, ordering all combatants by ascending initiative. <b>Clicking a combatant in run mode allows you to choose a number of ticks</b> to add to the combatant's initiative value, followed by a reordering. <br/><br/> You can re-enter <b>edit mode</b> at any time.",
+	"scene_title": "Scene Title",
+	"scene_title_description": "Shows the current scene's name.",
+	"tick_selection_modal_header": "Action for {combatantName}",
+	"upload_alt": "Upload icon",
+	"upload_scene_description": "Lets you choose a scene to load that was previously saved to your device.",
+	"tour_btn_next": "Next",
+	"tour_btn_prev": "Previous",
+	"tout_btn_done": "Done",
+	"tour_progress_text": "{{current}} of {{total}}",
+	"tour_upload_scene": "Upload Scene",
+	"upload_scene": "Upload Scene",
+	"tour": {
+		"change_theme": {
+			"title": "Day/Night Mode",
+			"content": "Toggle between day and night mode."
+		},
+		"change_langauge": {
+			"title": "Toggle Language",
+			"content": "Switch between German and English."
+		},
+		"tick_selection_modal": {
+			"overview": {
+				"title": "Tick Selection Dialog",
+				"content": "Here you can select the <b>ticks</b> to add or subtract, as well as special combat states like <b>expecting</b>, <b>waiting</b>, or <b>incapitated</b>."
+			}
+		}
+	},
+	"tickselection": {
+		"tooltip": {
+			"negation": "Negates ticks",
+			"set_state_expecting": "Expecting",
+			"set_state_waiting": "Waiting",
+			"set_state_dead": "Incapitated"
+		}
+	}
 }

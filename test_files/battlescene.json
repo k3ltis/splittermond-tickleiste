@@ -1,6 +1,4 @@
 {
-    "name": "On the fields",
-    "combatants": [
-        "Laurent", "Fredolin", "Gwynnyfere"
-    ]
+	"name": "On the fields",
+	"combatants": ["Laurent", "Fredolin", "Gwynnyfere"]
 }

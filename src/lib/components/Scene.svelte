@@ -1,6 +1,5 @@
 <script lang="ts">
 	import {
-		CombatState,
 		createNewCombatant,
 		determineNextActingCombatant,
 		getMinimalActiveInitiative,
@@ -13,7 +12,16 @@
 	import { flip } from 'svelte/animate';
 	import TickSelection from './TickSelection.svelte';
 	import { _ } from 'svelte-i18n';
-	import { Pencil, Play, Plus, Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
+	import {
+		Pencil,
+		Play,
+		Plus,
+		Trash,
+		Hourglass,
+		ClockAlert,
+		Skull,
+		ArrowRight
+	} from 'lucide-svelte';
 
 	const AppMode = {
 		Editing: 'EDITING',
@@ -22,8 +30,7 @@
 	const DEFAULT_APP_MODE = AppMode.Running;
 
 	let newCombatant: Combatant = $state(createNewCombatant());
-	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant())
-
+	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
 	// Indicating that the combatants are edited
 	let appMode: string = $state(DEFAULT_APP_MODE);
@@ -31,8 +38,7 @@
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
 
-	// svelte-ignore non_reactive_update
-	let tickSelection: any;
+	let tickSelection: typeof TickSelection;
 
 	function addCombatant(combatant: Combatant) {
 		if (combatant.name === '') {
@@ -64,14 +70,14 @@
 
 	function runScene() {
 		appMode = AppMode.Running;
-		sessionData.mostRecentTick = getMinimalActiveInitiative()
-		sortCombatantsByInitiative()
+		sessionData.mostRecentTick = getMinimalActiveInitiative();
+		sortCombatantsByInitiative();
 	}
 
 	function combatantClicked(combatant: Combatant) {
 		if (appMode === AppMode.Running) {
 			sessionData.activeCombatant = combatant;
-			tickSelection.show()
+			tickSelection.show();
 		}
 	}
 
@@ -87,11 +93,11 @@
 	class="
 		m-auto
 		mt-16
-		md:mt-20
 		h-full
 		w-full
 		px-2
 		py-4
+		md:mt-20
 		md:w-11/12
 		lg:w-10/12
 		xl:w-10/12
@@ -111,7 +117,7 @@
 			/>
 		</div>
 		<!-- Change Scene Mode Buttons -->
-		<div class="flex-none space-x-2 change-scene-mode">
+		<div class="change-scene-mode flex-none space-x-2">
 			<button
 				id="runSceneBtn"
 				class="btn btn-primary text-xl"
@@ -226,7 +232,7 @@
 					{/if}
 				</div>
 				<div>
-					{#if combatant.combatState === CombatState.Active || appMode === AppMode.Editing }
+					{#if combatant.combatState === 'Active' || appMode === AppMode.Editing}
 						<input
 							type="number"
 							disabled={appMode === AppMode.Running}
@@ -241,15 +247,15 @@
 							bind:value={combatant.initiative}
 						/>
 					{:else}
-					<div in:fade={{ duration: 200 }}>
-						{#if combatant.combatState === CombatState.Waiting}
-							<Hourglass class="text-info text-center w-full" size={48} strokeWidth={1} />
-						{:else if combatant.combatState === CombatState.Expecting}
-							<ClockAlert class="text-info text-center w-full" size={48} strokeWidth={1} />
-						{:else if combatant.combatState === CombatState.Dead}
-							<Skull class="text-error text-center w-full" size={48} strokeWidth={1} />
-						{/if}
-					</div>
+						<div in:fade={{ duration: 200 }}>
+							{#if combatant.combatState === 'Waiting'}
+								<Hourglass class="w-full text-center text-info" size={48} strokeWidth={1} />
+							{:else if combatant.combatState === 'Expecting'}
+								<ClockAlert class="w-full text-center text-info" size={48} strokeWidth={1} />
+							{:else if combatant.combatState === 'Dead'}
+								<Skull class="w-full text-center text-error" size={48} strokeWidth={1} />
+							{/if}
+						</div>
 					{/if}
 				</div>
 				<div class="w-16 justify-center">

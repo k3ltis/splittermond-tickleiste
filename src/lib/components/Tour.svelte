@@ -2,7 +2,7 @@
 	import { _ } from 'svelte-i18n';
 	import { driver } from 'driver.js';
 	import { CircleHelp } from 'lucide-svelte';
-	import { sessionData } from "$lib/state/scene_data.svelte";
+	import { sessionData } from '$lib/state/scene_data.svelte';
 
 	const forceOpenDropdown = (element?: Element) => {
 		let dropdownElement = element?.closest('.dropdown');
@@ -15,12 +15,12 @@
 	};
 
 	const forceOpenTickSelectionModal = () => {
-		let modal = document.getElementById("tickSelectionModal")
+		let modal = document.getElementById('tickSelectionModal');
 		modal?.classList.add('modal-open');
 	};
 
 	const closeTickSelectionModal = () => {
-		let modal = document.getElementById("tickSelectionModal")
+		let modal = document.getElementById('tickSelectionModal');
 		modal?.classList.remove('modal-open');
 	};
 
@@ -57,42 +57,42 @@
 						description: $_('run_scene_description')
 					}
 				},
-                {
+				{
 					element: '#tickSelectionModalInner',
 					popover: {
 						title: $_('tour.tick_selection_modal.overview.title'),
 						description: $_('tour.tick_selection_modal.overview.content')
 					},
-                    onHighlightStarted: () => {
+					onHighlightStarted: () => {
 						forceOpenTickSelectionModal();
-                        sessionData.ticks = [
-                            {
-                                number: 1,
-                                hasCombatants: false,
-                                mode: "relative",
-                            },
-                            {
-                                number: 2,
-                                hasCombatants: true,
-                                mode: "relative",
-                            },
-                            {
-                                number: -3,
-                                hasCombatants: false,
-                                mode: "relative",
-                            },
-                            {
-                                number: 42,
-                                hasCombatants: false,
-                                mode: "absolute",
-                            }
-                        ]
+						sessionData.ticks = [
+							{
+								number: 1,
+								hasCombatants: false,
+								mode: 'relative'
+							},
+							{
+								number: 2,
+								hasCombatants: true,
+								mode: 'relative'
+							},
+							{
+								number: -3,
+								hasCombatants: false,
+								mode: 'relative'
+							},
+							{
+								number: 42,
+								hasCombatants: false,
+								mode: 'absolute'
+							}
+						];
 					},
 					onDeselected: () => {
-                        sessionData.ticks = []
+						sessionData.ticks = [];
 						closeTickSelectionModal();
 					}
-                },
+				},
 				{
 					element: '#downloadBtn',
 					popover: {

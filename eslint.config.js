@@ -29,5 +29,12 @@ export default ts.config(
 	},
 	{
 		ignores: ['build/', '.svelte-kit/', 'dist/']
+	},
+	{
+		rules: {
+			// allows using type definition
+			// See https://typescript-eslint.io/rules/no-empty-object-type/
+			'@typescript-eslint/no-empty-object-type': 'off'
+		}
 	}
 );

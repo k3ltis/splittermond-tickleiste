@@ -1,6 +1,5 @@
 <script lang="ts">
 	import {
-		CombatState,
 		getMinimalActiveInitiative,
 		moveCombatantByTicks,
 		moveCombatantToTick,
@@ -51,7 +50,7 @@
 	function calculatePossibleTicks(): Array<Tick> {
 		const activeCombatant = sessionData.activeCombatant;
 		if (activeCombatant) {
-			if (activeCombatant.combatState === CombatState.Active) {
+			if (activeCombatant.combatState === 'Active') {
 				return getRelativeTicks(negation, activeCombatant.initiative, sceneData.combatants);
 			} else {
 				return getAbsoluteTicks();
@@ -89,7 +88,7 @@
 
 	function getAbsoluteTicks(): Array<Tick> {
 		// determine last (largest) possible tick
-		let lastPossibleTick: number = getMinimalActiveInitiative()
+		let lastPossibleTick: number = getMinimalActiveInitiative();
 
 		// determine first (smallest) possible tick
 		const firstPossibleTick = sessionData.mostRecentTick;
@@ -161,13 +160,13 @@
 				{$_('tick_selection_modal_header', {
 					values: { combatantName: sessionData.activeCombatant?.name }
 				})}
-				{#if sessionData.activeCombatant?.combatState === CombatState.Active}
+				{#if sessionData.activeCombatant?.combatState === 'Active'}
 					({sessionData.activeCombatant?.initiative})
-				{:else if sessionData.activeCombatant?.combatState === CombatState.Dead}
+				{:else if sessionData.activeCombatant?.combatState === 'Dead'}
 					(<Skull class="mt-0.5 text-error" strokeWidth="1" size="32" />)
-				{:else if sessionData.activeCombatant?.combatState === CombatState.Expecting}
+				{:else if sessionData.activeCombatant?.combatState === 'Expecting'}
 					(<ClockAlert class="mt-0.5 text-info" strokeWidth="1" size="32" />)
-				{:else if sessionData.activeCombatant?.combatState === CombatState.Waiting}
+				{:else if sessionData.activeCombatant?.combatState === 'Waiting'}
 					(<Hourglass class="mt-0.5 text-info" strokeWidth="1" size="32" />)
 				{/if}
 			</div>
@@ -199,7 +198,7 @@
 		</div>
 		<div class="mt-1 grid grid-cols-5 gap-1">
 			<div>
-				{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === CombatState.Active}
+				{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === 'Active'}
 					<div
 						class="tooltip aspect-square h-full w-full"
 						data-tip={$_('tickselection.tooltip.negation')}
@@ -220,7 +219,7 @@
 			</div>
 			<div></div>
 			<div>
-				{#if sessionData.activeCombatant?.combatState !== CombatState.Expecting}
+				{#if sessionData.activeCombatant?.combatState !== 'Expecting'}
 					<div
 						class="tooltip aspect-square h-full w-full"
 						data-tip={$_('tickselection.tooltip.set_state_expecting')}
@@ -235,7 +234,7 @@
 				{/if}
 			</div>
 			<div>
-				{#if sessionData.activeCombatant?.combatState !== CombatState.Waiting}
+				{#if sessionData.activeCombatant?.combatState !== 'Waiting'}
 					<div
 						class="tooltip aspect-square h-full w-full"
 						data-tip={$_('tickselection.tooltip.set_state_waiting')}
@@ -250,7 +249,7 @@
 				{/if}
 			</div>
 			<div>
-				{#if sessionData.activeCombatant?.combatState !== CombatState.Dead}
+				{#if sessionData.activeCombatant?.combatState !== 'Dead'}
 					<div
 						class="tooltip aspect-square h-full w-full"
 						data-tip={$_('tickselection.tooltip.set_state_dead')}

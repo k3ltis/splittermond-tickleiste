@@ -1,39 +1,46 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { loadAttribute, saveAttribute } from "$lib/state/localstorage";
-	import { onMount } from "svelte";
+	import { loadAttribute, saveAttribute } from '$lib/state/localstorage';
+	import { onMount } from 'svelte';
 	let dataPrivacyModal: HTMLDialogElement;
 	import { _, locale } from 'svelte-i18n';
 
+	// eslint-disable-next-line no-undef
+	const APP_NAME = __APP_NAME__;
+	// eslint-disable-next-line no-undef
+	const APP_VERSION = __APP_VERSION__;
+
 	const Locale = {
-		German: "de",
-		English: "en"
-	}
-	const KEY_LOCALE: string = "locale"
-	const DEFAULT_LOCALE: string = Locale.German
-	let selected_locale: string = $state(DEFAULT_LOCALE)
+		German: 'de',
+		English: 'en'
+	};
+	const KEY_LOCALE: string = 'locale';
+	const DEFAULT_LOCALE: string = Locale.German;
+	let selected_locale: string = $state(DEFAULT_LOCALE);
 
 	onMount(() => {
 		const locale = loadAttribute<string>(KEY_LOCALE);
-		selected_locale = locale || DEFAULT_LOCALE
-	})
-		
+		selected_locale = locale || DEFAULT_LOCALE;
+	});
+
 	$effect(() => {
-		$locale = selected_locale || DEFAULT_LOCALE
-	})
+		$locale = selected_locale || DEFAULT_LOCALE;
+	});
 
 	function toggleLanguage() {
 		selected_locale = selected_locale === Locale.German ? Locale.English : Locale.German;
-		saveAttribute(KEY_LOCALE, selected_locale)
+		saveAttribute(KEY_LOCALE, selected_locale);
 	}
 </script>
 
-<footer class="footer flex items-center border-t-4 border-primary-content p-4 text-base-content bg-primary-content/10">
+<footer
+	class="footer flex items-center border-t-4 border-primary-content bg-primary-content/10 p-4 text-base-content"
+>
 	<aside class="flex-1">
 		<p class="hidden sm:flex">
-			Copyright © k3ltis {new Date().getFullYear()} - {__APP_NAME__} v{__APP_VERSION__}
+			Copyright © k3ltis {new Date().getFullYear()} - {APP_NAME} v{APP_VERSION}
 		</p>
-		<p class="sm:hidden">v{__APP_VERSION__}</p>
+		<p class="sm:hidden">v{APP_VERSION}</p>
 	</aside>
 	<button onclick={() => dataPrivacyModal.showModal()}>{$_('data_privacy')}</button>
 	<button id="ToggleLanguageBtn" onclick={() => toggleLanguage()}>
@@ -84,6 +91,7 @@
 <dialog id="dataPrivacyModal" bind:this={dataPrivacyModal} class="modal">
 	<div class="modal-box">
 		<h3 class="text-lg font-bold">{$_('data_privacy_header')}</h3>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		<p class="py-4">{@html $_('data_privacy_content')}</p>
 	</div>
 	<form method="dialog" class="modal-backdrop">

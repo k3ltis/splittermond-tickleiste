@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { loadScene, sceneData, type Scene } from '$lib/state/scene_data.svelte';
-	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
+	import { extractFileContent, downloadJSON } from '$lib/state/fileio.svelte';
 	import 'driver.js/dist/driver.css';
 	import { _ } from 'svelte-i18n';
 	import { Download, Upload, Menu } from 'lucide-svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
-	import { base } from "$app/paths";
-	import Tour from "./Tour.svelte";
+	import { base } from '$app/paths';
+	import Tour from './Tour.svelte';
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
 		if (target && target.files) {
 			const file = target.files[0];
 			if (file) {
-				extractFileContentAsJSON(file).then((scene: Scene) => {
+				extractFileContent<Scene>(file).then((scene: Scene) => {
 					loadScene(scene);
 				});
 			}
@@ -44,7 +44,7 @@
 	class="navbar fixed top-0 z-[1] border-b-4 border-primary-content bg-primary-content/20 backdrop-blur-xl"
 >
 	<div class="flex-1">
-		<img class="md:max-h-16 max-h-12" src="{base}/logo.png" alt="splittermond logo" />
+		<img class="max-h-12 md:max-h-16" src="{base}/logo.png" alt="splittermond logo" />
 	</div>
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
