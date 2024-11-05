@@ -1,13 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import {
-	CombatState,
-	sceneData,
-	sortCombatantsByInitiative,
-	type Combatant
-} from './scene_data.svelte';
+import { sceneData, sortCombatantsByInitiative, type Combatant } from './scene_data.svelte';
 
 function createCombatant(id: string, name: string, initiative: number): Combatant {
-	return { id: id, name: name, initiative: initiative, combatState: CombatState.Active };
+	return { id: id, name: name, initiative: initiative, combatState: 'Active' };
 }
 
 describe('sortCombatantsByInitiative test', () => {
