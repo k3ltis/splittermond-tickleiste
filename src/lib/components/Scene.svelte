@@ -16,7 +16,7 @@
 	let newCombatant: Combatant = $state(createNewCombatant());
 
 	// Indicating that the combatants are edited
-	let appMode: string = $state(AppMode.Editing);
+	let appMode: string = $state(AppMode.Running);
 
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
@@ -72,7 +72,7 @@
 <div class="w-full h-full overflow-x-auto p-4 md:m-auto md:w-[800px] md:px-20">
 	<div class="navbar bg-base-100">
 		<!-- Scene Title -->
-		<div id="sceneTitle" class="flex-1">
+		<div id="sceneTitle" class="flex-1 text-3xl">
 			{#if appMode === AppMode.Editing}
 				<input
 					type="text"
@@ -156,14 +156,14 @@
 			<div
 				class="col-span-3 grid grid-cols-subgrid items-center gap-4 p-6 rounded-lg {appMode === AppMode.Running
 					? 'cursor-pointer hover:bg-gray-100'
-					: 'cursor-default'} {appMode == AppMode.Running && index === 0 ? 'border-4 border-green-300/100' : ''}"
+					: 'cursor-default'} {appMode == AppMode.Running && index === 0 ? 'border-4 border-green-300/100' : ''} {appMode == AppMode.Running && index >= 2 ? 'border-t-4 border-primary-content rounded-none' : ''}"
 				onclick={() => combatantClicked(combatant)}
 				onkeydown={() => combatantClicked(combatant)}
 				onkeyup={() => combatantClicked(combatant)}
 				role="button"
 				tabindex="0"
 			>
-				<div class="flex-1">
+				<div class="flex-1 text-3xl">
 					{#if appMode === AppMode.Editing}
 						<input
 							type="text"
@@ -174,7 +174,7 @@
 						{combatant.name}
 					{/if}
 				</div>
-				<div class="flex-1">
+				<div class="flex-1 text-5xl">
 					{#if appMode === AppMode.Editing}
 						<input
 							type="number"

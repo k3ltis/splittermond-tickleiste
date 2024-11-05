@@ -4,7 +4,6 @@
 	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
 	import { driver } from 'driver.js';
 	import 'driver.js/dist/driver.css';
-	import { onMount } from 'svelte';
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
