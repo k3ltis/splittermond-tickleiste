@@ -5,26 +5,27 @@
 		<link rel="icon" href="./favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
-		<link href="./_app/immutable/assets/0.OKb2wP9F.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/entry/start.U1pURHZi.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/entry.zTJH3AGv.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/runtime.lhGiHDMj.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/paths.3Lb8G48h.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.DP4dj2cp.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/render.B5DSMxr7.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/disclose-version.D7BRVwTw.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/if.C32MN6Iv.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/store.CMFN6_Ir.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/0.D25SQHgH.js">
-		<link rel="modulepreload" href="./_app/immutable/nodes/2.IF3YKg-H.js">
+		<link href="./_app/immutable/assets/0.xixHQQl4.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.db-RQilA.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.9VzmoZSv.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.LDbf804o.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/runtime.DXb_nxmo.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/paths.DGc73dwb.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.JQKV-5Cn.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/render.DgOdoMma.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/disclose-version.DHuzV3mq.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index-client.FqsGrO9G.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/store.CX0Bp6Sb.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.CffJwVNz.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.CrQ8YVHU.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/lifecycle.BuByrBdv.js">
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents"><!--[--><!--[--><!----><!----><h1>Splittermond Tickleisten Tool</h1> <p>This is a test to see if most important functionalities of the tool can be used in a client-side
-	only environment.</p> <label for="battleScene">Upload JSON</label> <input type="file" id="battleScene" name="battleScene" accept="application/json" class="file-input w-full max-w-xs"> <button class="btn"><img width="30em" src="./svg/download-svgrepo-com.svg" alt="download"> Download JSON</button> <button class="btn">Save</button> <button class="btn">Load</button> <button class="btn">Add Combatant</button> <!--[--><div><h2>Combatants:</h2> <ul><!--[--><!--]--></ul></div><!--]--><!----><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+		<div style="display: contents"><!--[--><!--[--><!----><!----><div class="navbar bg-base-100"><div class="flex-1"><a class="btn btn-ghost text-xl">Splittermond Tickleiste</a></div> <div class="flex-none space-x-2"><label for="battleScene" class="btn"><img width="30em" src="./svg/upload-svgrepo-com.svg" alt="download"> Upload JSON</label> <input type="file" id="battleScene" name="battleScene" accept="application/json" class="file-input battle-scene-file-input w-full max-w-xs svelte-pb5hh"> <button class="btn"><img width="30em" src="./svg/download-svgrepo-com.svg" alt="download"> Download JSON</button></div></div><!----> <div class="mx-48 mt-12 overflow-x-auto"><button class="btn">Edit</button> <button class="btn">Save Edit</button> <div class="mb-6"><button class="btn">Add Combatant</button> <input type="text" placeholder="Name..." class="input input-bordered w-full max-w-xs" value=""> <input type="number" placeholder="Iniative..." class="input input-bordered w-full max-w-xs" value="0"></div> <table class="table"><thead><tr><th>Name</th><th>Initiative</th><th></th></tr></thead><tbody><!--[--><!--]--></tbody></table></div><!----><!----><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
 			
 			<script>
 				{
-					__sveltekit_165f0e0 = {
+					__sveltekit_1754ven = {
 						base: new URL(".", location).pathname.slice(0, -1),
 						assets: "/splittermond-tickleiste"
 					};
@@ -34,8 +35,8 @@
 					const data = [null,null];
 
 					Promise.all([
-						import("./_app/immutable/entry/start.U1pURHZi.js"),
-						import("./_app/immutable/entry/app.DP4dj2cp.js")
+						import("./_app/immutable/entry/start.9VzmoZSv.js"),
+						import("./_app/immutable/entry/app.JQKV-5Cn.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 2],
