@@ -4,6 +4,7 @@
 	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
 	import { driver } from 'driver.js';
 	import 'driver.js/dist/driver.css';
+	import { _ } from "svelte-i18n";
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -31,42 +32,41 @@
 			steps: [
 				{
 					element: '#sceneTitle',
-					popover: { title: 'Scene Title', description: "Shows the current scene's name." }
+					popover: { title: $_('scene_title'), description: $_('scene_title_description') }
 				},
 				{
 					element: '#combatantsTable',
 					popover: {
-						title: 'Combatants List',
-						description: 'Displays the list of combatants part of the scene.'
+						title: $_('combatants_list'),
+						description: $_('combatants_list_description')
 					}
 				},
 				{
 					element: '#editSceneBtn',
 					popover: {
-						title: 'Edit Scene',
-						description: 'Toggles edit mode to change the scene name and combatants list.'
+						title: $_('edit_scene'),
+						description: $_('edit_scene_description')
 					}
 				},
 				{
 					element: '#runSceneBtn',
 					popover: {
-						title: 'Run Scene',
-						description:
-							"Ends edit mode and runs the scene which effectively means that all combatants will be ordered by ascending initiative. <b>When clicking a combatant in run mode, let's your choose a number of ticks</b> to be added to the combatants initiative value, followed by a reordering. <br/><br/> You can re-enter <b>edit mode</b> any time."
+						title: $_('run_scene'),
+						description: $_('run_scene_description')
 					}
 				},
 				{
 					element: '#downloadBtn',
 					popover: {
-						title: 'Download Scene',
-						description: 'Lets you download the current scene as JSON file.'
+						title: $_('download_scene'),
+						description: $_('download_scene_description')
 					}
 				},
 				{
 					element: '#uploadButton',
 					popover: {
-						title: 'Upload Scene',
-						description: 'Lets you choose a scene to load that was previously saved to your device.'
+						title: $_('upload_scene'),
+						description: $_('upload_scene_description')
 					}
 				}
 			]
@@ -76,14 +76,14 @@
 	};
 </script>
 
-<div class="navbar bg-base-100 grap-4 border-b-4 border-primary-content">
-	<div class="flex-1 ">
-		<a class="btn hidden md:flex btn-ghost text-xl">Splittermond Tickleiste</a>
+<div class="grap-4 navbar border-b-4 border-primary-content bg-base-100">
+	<div class="flex-1">
+		<a class="btn btn-ghost hidden text-xl md:flex">{$_("app_title")}</a>
 	</div>
 	<div class="flex-none space-x-2">
 		<label id="uploadButton" for="battleScene" class="btn">
-			<img width="30em" src="{base}/svg/upload-svgrepo-com.svg" alt="download" />
-			<span class="hidden md:flex">Upload Scene</span>
+			<img width="30em" src="{base}/svg/upload-svgrepo-com.svg" alt="{$_("upload_alt")}" />
+			<span class="hidden md:flex">{$_("upload_scene")}</span>
 		</label>
 		<input
 			type="file"
@@ -94,11 +94,11 @@
 			onchange={uploadScene}
 		/>
 		<button id="downloadBtn" onclick={() => downloadScene()} class="btn">
-			<img width="30em" src="{base}/svg/download-svgrepo-com.svg" alt="download" />
-			<span class="hidden md:flex">Download Scene</span>
+			<img width="30em" src="{base}/svg/download-svgrepo-com.svg" alt="{$_("download_alt")}" />
+			<span class="hidden md:flex">{$_("download_scene")}</span>
 		</button>
 		<button onclick={() => explainPage()} class="btn">
-			<img width="30em" src="{base}/svg/circle-question-svgrepo-com.svg" alt="download" />
+			<img width="30em" src="{base}/svg/circle-question-svgrepo-com.svg" alt="{$_("help_alt")}" />
 		</button>
 	</div>
 </div>

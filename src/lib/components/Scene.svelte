@@ -7,7 +7,8 @@
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
 	import { fade, slide } from "svelte/transition";
-	import TickSelection from './TickSelection.svelte';
+	import TickSelection from "./TickSelection.svelte";
+	import { _ } from 'svelte-i18n'
 
 	const AppMode = {
 		Editing: 'EDITING',
@@ -93,7 +94,7 @@
 				onclick={runScene}
 			>
 				<img width="30em" src="{base}/svg/circle-play-svgrepo-com.svg" alt="download" />
-				<span class="hidden md:flex">Run Scene</span>
+				<span class="hidden md:flex">{$_("run_scene_button")}</span>
 			</button>
 			<button
 				id="editSceneBtn"
@@ -102,7 +103,7 @@
 				onclick={editScene}
 			>
 				<img width="30em" src="{base}/svg/pencil-svgrepo-com.svg" alt="toggle edit" />
-				<span class="hidden md:flex">Edit Scene</span>
+				<span class="hidden md:flex">{$_("edit_scene_button")}</span>
 			</button>
 		</div>
 	</div>
@@ -113,8 +114,8 @@
 			class:rounded-t-lg={appMode === AppMode.Editing}
 			class:rounded-lg={appMode === AppMode.Running}
 		>
-			<div class="">Name</div>
-			<div class="" id="initiativeColumn">Initiative</div>
+			<div class="">{$_("column_name")}</div>
+			<div class="" id="initiativeColumn">{$_("column_initiative")}</div>
 			<div class=""></div>
 			<!-- Spacer for buttons column -->
 		</div>
@@ -128,7 +129,7 @@
 				<div class="">
 					<input
 						type="text"
-						placeholder="Name..."
+						placeholder="{$_("placeholder_name")}"
 						class="input input-bordered w-full max-w-md"
 						bind:value={newCombatant.name}
 						bind:this={combatantNameInput}
@@ -138,7 +139,7 @@
 				<div class="">
 					<input
 						type="number"
-						placeholder="Initiative..."
+						placeholder="{$_("placeholder_initiative")}"
 						class="input input-bordered w-full max-w-20"
 						bind:value={newCombatant.initiative}
 						onkeydown={handleKeyDown}
@@ -146,7 +147,7 @@
 				</div>
 				<div class="w-16 justify-center">
 					<button onclick={() => addCombatant(newCombatant)} class="btn">
-						<img width="30" src="{base}/svg/plus-svgrepo-com.svg" alt="add" />
+						<img width="30" src="{base}/svg/plus-svgrepo-com.svg" alt="add combatant" />
 					</button>
 				</div>
 			</div>
@@ -181,7 +182,7 @@
 						bind:value={combatant.name}
 					/>
 				</div>
-				<div class="">
+				<div class="w-28">
 					<input
 						type="number"
 						disabled={appMode === AppMode.Running}

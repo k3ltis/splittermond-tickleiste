@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { _, locale } from "svelte-i18n";
 
 	let modal: HTMLDialogElement;
 	let resolveSelect: (value: number) => void;
@@ -41,7 +42,7 @@
 		<form method="dialog">
 			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
 		</form>
-		<h3 class="mb-5 text-2xl font-bold">Select ticks</h3>
+		<h3 class="mb-5 text-2xl font-bold">{$_("tick_selection_modal_header")}</h3>
 		<div class="grid grid-cols-5 gap-1">
 			{#each tickNumbers as tickNumber}
 				<button class="btn text-4xl w-full h-full aspect-square" onclick={() => select(tickNumber)}>{tickNumber}</button>

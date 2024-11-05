@@ -5,6 +5,7 @@
 	import { loadSceneFromLocalStorage, saveSceneToLocalStorage } from '$lib/state/localstorage';
 	import Scene from '$lib/components/Scene.svelte';
 	import Footer from "$lib/components/Footer.svelte";
+	import "../i18n"
 
 	onMount(() => {
 		const _scene = loadSceneFromLocalStorage();
