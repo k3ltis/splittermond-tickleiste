@@ -26,6 +26,12 @@ jobs:
 
       - name: Run linter
         run: bun run test
+        
+      - name: Run Version Check
+        run: |
+          cd scripts
+          chmod +x ./check_version.sh  # Ensure the script is executable
+          ./check_version.sh
 
       - name: Build project
         run: bun run build
