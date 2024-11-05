@@ -69,7 +69,7 @@
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="mx-48 mt-12 overflow-x-auto">
+<div class="mx-3 mt-3 overflow-x-auto">
 	<div class="navbar bg-base-100">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
@@ -88,11 +88,11 @@
 		<div class="flex-none space-x-2">
 			<button id="runSceneBtn" class="btn" class:btn-active={appMode === AppMode.Running} onclick={runScene}>
 				<img width="30em" src="{base}/svg/circle-play-svgrepo-com.svg" alt="download" />
-				Run Scene
+				<span class="hidden md:flex">Run Scene</span>
 			</button>
 			<button id="editSceneBtn" class="btn" class:btn-active={appMode === AppMode.Editing} onclick={editScene}>
 				<img width="30em" src="{base}/svg/pencil-svgrepo-com.svg" alt="toggle edit" />
-				Edit Scene
+				<span class="hidden md:flex">Edit Scene</span>
 			</button>
 		</div>
 	</div>
