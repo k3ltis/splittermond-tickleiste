@@ -42,7 +42,7 @@
   },
   "tickselection": {
     "tooltip": {
-      "negation": "Negiert ticks",
+      "negation": "Ticks Rückwärts",
       "set_state_expecting": "Bereithalten",
       "set_state_dead": "Kampfunfähig",
       "set_state_waiting": "Abwarten"

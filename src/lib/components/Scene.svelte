@@ -214,8 +214,10 @@
 						text-3xl"
 						bind:value={combatant.name}
 					/>
-					{#if combatant === nextActingCombatant}
-						<ArrowRight class="absolute -left-4 top-2.5" size="32" />
+					{#if combatant === nextActingCombatant && appMode === AppMode.Running}
+						<div class="absolute -left-4 top-2.5" in:fade={{ duration: 200 }}>
+							<ArrowRight size="32" />
+						</div>
 					{/if}
 				</div>
 				<div>

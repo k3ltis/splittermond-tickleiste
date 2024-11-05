@@ -66,34 +66,39 @@ export const moveCombatantByTicks = (combatant: Combatant, ticks: number) => {
         sessionData.mostRecentTick = combatant.initiative
     }
     combatant.initiative += ticks
-    sortCombatantsByInitiative()
+    sortCombatantsByInitiative(combatant)
 }
 
 export const moveCombatantToTick = (combatant: Combatant, tick: number) => {
+    const oldCombatState = combatant.combatState
+    setCombatantCombatStateToActive(combatant)
     combatant.initiative = tick
     sessionData.mostRecentTick = combatant.initiative
-    setCombatantCombatStateToActive(combatant)
-    sortCombatantsByInitiative()
+    if (oldCombatState === CombatState.Expecting ) {
+        sortCombatantsByInitiative()
+    } else {
+        sortCombatantsByInitiative(combatant)
+    }
 }
 
 export const setCombatantCombatStateToActive = (combatant: Combatant) => {
     combatant.combatState = CombatState.Active
-    sortCombatantsByInitiative()
+    sortCombatantsByInitiative(combatant)
 }
 
 export const setCombatantCombatStateToWaiting = (combatant: Combatant) => {
     combatant.combatState = CombatState.Waiting
-    sortCombatantsByInitiative()
+    sortCombatantsByInitiative(combatant)
 }
 
 export const setCombatantCombatStateToExpecting = (combatant: Combatant) => {
     combatant.combatState = CombatState.Expecting
-    sortCombatantsByInitiative()
+    sortCombatantsByInitiative(combatant)
 }
 
 export const setCombatantCombatStateToDead = (combatant: Combatant) => {
     combatant.combatState = CombatState.Dead
-    sortCombatantsByInitiative()
+    sortCombatantsByInitiative(combatant)
 }
 
 export function resetActiveCombatant() {
@@ -108,7 +113,8 @@ export function setMostRecentTick(tick: number) {
 //     combatant.initiative = tick
 // }
 
-export const sortCombatantsByInitiative = (recentlyActingCombatant: Combatant | null = null) => {
+export const sortCombatantsByInitiative = (combatantWithLowPriority: Combatant | null = null) => {
+    // The combatant with low priority will be pushed to the end of its initiative-wise equivalence group 
     const combatants: Combatant[] = JSON.parse(JSON.stringify(sceneData.combatants))
     const combatantPartitions = combatants.reduce<any>((acc, curr: Combatant) => {
         acc[curr.combatState].push(curr)
@@ -127,10 +133,10 @@ export const sortCombatantsByInitiative = (recentlyActingCombatant: Combatant | 
             return a.initiative - b.initiative;
         }
 
-        // If initiatives are the same, we need to handle recently acting combatant
-        if (recentlyActingCombatant) {
-            if (a.id === recentlyActingCombatant.id) return 1; // Move recently acting combatant down
-            if (b.id === recentlyActingCombatant.id) return -1; // Move recently acting combatant down
+        // If initiatives are the same, we need to handle the combatant with low priority
+        if (combatantWithLowPriority) {
+            if (a.id === combatantWithLowPriority.id) return 1; // Move combatant down
+            if (b.id === combatantWithLowPriority.id) return -1; // Move combatant down
         }
 
         // If both have the same initiative and are not the recently acting combatant, maintain original order

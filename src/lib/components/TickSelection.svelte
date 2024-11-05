@@ -162,6 +162,20 @@
 		const firstPossibleTick = sessionData.mostRecentTick;
 		console.log(`firstPossibleTick: ${firstPossibleTick}`);
 
+		if (firstPossibleTick <= lastPossibleTick) {
+			const ticks: Array<Tick> = [];
+			for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
+				ticks.push({
+					number: i,
+					hasCombatants: hasTickCombatantsAssigned(
+						i,
+						sceneData.combatants.filter((c) => c.id !== sessionData.activeCombatant?.id)
+					)
+				});
+			}
+			return ticks;
+		}
+
 		return [
 			{
 				number: 1,
@@ -176,26 +190,17 @@
 		combatants: Array<Combatant>
 	): Array<Tick> {
 		return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((number) => {
-			const effectiveNumber = negation ? -number : number;
+			const relativeTick = negation ? -number : number;
+			const absoluteTick = relativeTick + comparisonInitiative;
 			return {
-				number: effectiveNumber,
-				hasCombatants: tickNumberHasCombatantsAssigned(
-					effectiveNumber,
-					comparisonInitiative,
-					combatants
-				)
+				number: relativeTick,
+				hasCombatants: hasTickCombatantsAssigned(absoluteTick, combatants)
 			};
 		});
 	}
 
-	function tickNumberHasCombatantsAssigned(
-		tickNumber: number,
-		comparisonInitiative: number,
-		combatants: Array<Combatant>
-	): boolean {
-		let relativeInitiatives: Array<number> = [];
-		relativeInitiatives = combatants.map((c: Combatant) => c.initiative - comparisonInitiative);
-		return relativeInitiatives.includes(tickNumber);
+	function hasTickCombatantsAssigned(tickNumber: number, combatants: Array<Combatant>): boolean {
+		return combatants.some((c) => c.initiative === tickNumber);
 	}
 </script>
 
@@ -208,9 +213,20 @@
 			</button>
 		</form>
 		<h3 class="mb-5 text-2xl font-bold">
-			{$_('tick_selection_modal_header', {
-				values: { combatantName: sessionData.activeCombatant?.name }
-			})} ({sessionData.activeCombatant?.initiative})
+			<div class="flex">
+				{$_('tick_selection_modal_header', {
+					values: { combatantName: sessionData.activeCombatant?.name }
+				})}
+				{#if sessionData.activeCombatant?.combatState === CombatState.Active}
+					({sessionData.activeCombatant?.initiative})
+				{:else if sessionData.activeCombatant?.combatState === CombatState.Dead}
+					(<Skull class="mt-0.5 text-error" strokeWidth="1" size="32" />)
+				{:else if sessionData.activeCombatant?.combatState === CombatState.Expecting}
+					(<ClockAlert class="mt-0.5 text-info" strokeWidth="1" size="32" />)
+				{:else if sessionData.activeCombatant?.combatState === CombatState.Waiting}
+					(<Hourglass class="mt-0.5 text-info" strokeWidth="1" size="32" />)
+				{/if}
+			</div>
 		</h3>
 		<div class="grid grid-cols-5 gap-1">
 			{#each ticks as tick}
@@ -224,6 +240,9 @@
 						</div>
 						{-tick.number}
 					{:else}
+						<div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-3' : 'left-1'}">
+							+
+						</div>
 						{tick.number}
 					{/if}
 
@@ -239,7 +258,10 @@
 		<div class="mt-1 grid grid-cols-5 gap-1">
 			<div>
 				{#if sessionData.activeCombatant?.combatState === CombatState.Active}
-					<div class="tooltip aspect-square h-full w-full" data-tip={$_('tickselection.tooltip.negation')}>
+					<div
+						class="tooltip aspect-square h-full w-full"
+						data-tip={$_('tickselection.tooltip.negation')}
+					>
 						<button
 							class="btn h-full w-full"
 							class:btn-active={negation}

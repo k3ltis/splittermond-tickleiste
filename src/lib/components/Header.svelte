@@ -27,12 +27,12 @@
 		downloadJSON(sceneData, filename);
 	};
 
-	const forceOpenClosestDropdown = (element?: Element) => {
+	const forceOpenDropdown = (element?: Element) => {
 		let dropdownElement = element?.closest('.dropdown');
 		dropdownElement?.classList.add('dropdown-open');
 	};
 
-	const closeClosestDropdown = (element?: Element) => {
+	const closeDropdown = (element?: Element) => {
 		let dropdownElement = element?.closest('.dropdown');
 		dropdownElement?.classList.remove('dropdown-open');
 	};
@@ -77,10 +77,10 @@
 						description: $_('download_scene_description')
 					},
 					onHighlightStarted: (element?: Element) => {
-						forceOpenClosestDropdown(element);
+						forceOpenDropdown(element);
 					},
 					onDeselected: (element?: Element) => {
-						closeClosestDropdown(element);
+						closeDropdown(element);
 					}
 				},
 				{
@@ -90,10 +90,10 @@
 						description: $_('upload_scene_description')
 					},
 					onHighlightStarted: (element?: Element) => {
-						forceOpenClosestDropdown(element);
+						forceOpenDropdown(element);
 					},
 					onDeselected: (element?: Element) => {
-						closeClosestDropdown(element);
+						closeDropdown(element);
 					}
 				},
 				{
