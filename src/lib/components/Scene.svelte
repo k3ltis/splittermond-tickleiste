@@ -221,5 +221,7 @@ input.disabled {
 	border: none;
 	color: var(--text-base-content);
 	cursor: default;
+	pointer-events: none;
+	user-select: none;
 }
 </style>
