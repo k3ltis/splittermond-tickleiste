@@ -77,9 +77,9 @@
 	};
 </script>
 
-<div class="navbar bg-base-100">
-	<div class="flex-1">
-		<a class="btn btn-ghost text-xl">Splittermond Tickleiste</a>
+<div class="navbar bg-base-100 grap-4">
+	<div class="flex-1 ">
+		<a class="btn hidden md:flex btn-ghost text-xl">Splittermond Tickleiste</a>
 	</div>
 	<div class="flex-none space-x-2">
 		<label id="uploadButton" for="battleScene" class="btn">
