@@ -39,5 +39,13 @@
       "title": "Sprache umschalten",
       "content": "Zwischen Deutsch und Englisch wechseln."
     }
+  },
+  "tickselection": {
+    "tooltip": {
+      "negation": "Negiert ticks",
+      "set_state_expecting": "Bereithalten",
+      "set_state_dead": "Kampfunfähig",
+      "set_state_waiting": "Abwarten"
+    }
   }
 }

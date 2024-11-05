@@ -146,7 +146,7 @@
 			</div>
 			<ul
 				tabindex="-1"
-				class="menu dropdown-content z-[1] w-[350px] rounded-box bg-primary-content p-2 text-primary shadow"
+				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-primary-content p-2 text-primary shadow"
 			>
 				<li>
 					<label id="uploadButton" for="battleScene" class="text-xl">

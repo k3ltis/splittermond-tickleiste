@@ -39,5 +39,13 @@
       "title": "Toggle Language",
       "content": "Switch between German and English."
     }
+  },
+  "tickselection": {
+    "tooltip": {
+      "negation": "Negates ticks",
+      "set_state_expecting": "Expecting",
+      "set_state_waiting": "Waiting",
+      "set_state_dead": "Incapitated"
+    }
   }
 }

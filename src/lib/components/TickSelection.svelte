@@ -11,16 +11,11 @@
 		setCombatantCombatStateToWaiting,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
-	import { Minus, Hourglass, ClockAlert, Skull, UserRound } from 'lucide-svelte';
-	import { tick, untrack } from 'svelte';
+	import { Minus, Hourglass, ClockAlert, Skull, UserRound, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { slide } from 'svelte/transition';
-	import Scene from './Scene.svelte';
 
 	let modal: HTMLDialogElement;
-	const DEFAULT_TICK_NUMBERS: Array<number> = [
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
-	];
 	type Tick = {
 		number: number;
 		hasCombatants: boolean;
@@ -151,24 +146,28 @@
 
 	function getAbsoluteTicks(): Array<Tick> {
 		// determine last (largest) possible tick
-		let lastPossibleTick: number
-		const validInitiatives = sceneData.combatants.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active).map((c) => c.initiative)
+		let lastPossibleTick: number;
+		const validInitiatives = sceneData.combatants
+			.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active)
+			.map((c) => c.initiative);
 		if (validInitiatives.length === 0) {
 			// Fallback when all combatants are in waiting, expecting, or dead
-			lastPossibleTick = sessionData.mostRecentTick || 0
+			lastPossibleTick = sessionData.mostRecentTick || 0;
 		} else {
-			lastPossibleTick = Math.min(...validInitiatives)
+			lastPossibleTick = Math.min(...validInitiatives);
 		}
-		console.log(`lastPossibleTick: ${lastPossibleTick}`)
-		
+		console.log(`lastPossibleTick: ${lastPossibleTick}`);
+
 		// determine first (smallest) possible tick
 		const firstPossibleTick = sessionData.mostRecentTick;
-		console.log(`firstPossibleTick: ${firstPossibleTick}`)
+		console.log(`firstPossibleTick: ${firstPossibleTick}`);
 
-		return [{
-			number: 1,
-			hasCombatants: false
-		}]
+		return [
+			{
+				number: 1,
+				hasCombatants: false
+			}
+		];
 	}
 
 	function getRelativeTicks(
@@ -204,7 +203,9 @@
 	<div class="max-w-l modal-box w-11/12 border-4 border-accent">
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
-			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
+			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
+				<X size={24} />
+			</button>
 		</form>
 		<h3 class="mb-5 text-2xl font-bold">
 			{$_('tick_selection_modal_header', {
@@ -238,44 +239,61 @@
 		<div class="mt-1 grid grid-cols-5 gap-1">
 			<div>
 				{#if sessionData.activeCombatant?.combatState === CombatState.Active}
-					<button
-						class="btn aspect-square h-full w-full"
-						class:btn-active={negation}
-						onclick={() => toggleNegation()}
-					>
-						<Minus size={48} />
-					</button>
+					<div class="tooltip aspect-square h-full w-full" data-tip={$_('tickselection.tooltip.negation')}>
+						<button
+							class="btn h-full w-full"
+							class:btn-active={negation}
+							onclick={() => toggleNegation()}
+						>
+							<Minus size={48} />
+						</button>
+					</div>
 				{/if}
 			</div>
 			<div></div>
 			<div>
 				{#if sessionData.activeCombatant?.combatState !== CombatState.Expecting}
-					<button
-						class="btn btn-outline btn-info aspect-square h-full w-full"
-						onclick={() => selectCombatStateExpecting()}
+					<div
+						class="tooltip aspect-square h-full w-full"
+						data-tip={$_('tickselection.tooltip.set_state_expecting')}
 					>
-						<ClockAlert size={64} strokeWidth={1} />
-					</button>
+						<button
+							class="btn btn-outline btn-info aspect-square h-full w-full"
+							onclick={() => selectCombatStateExpecting()}
+						>
+							<ClockAlert size={48} strokeWidth={1} />
+						</button>
+					</div>
 				{/if}
 			</div>
 			<div>
 				{#if sessionData.activeCombatant?.combatState !== CombatState.Waiting}
-					<button
-						class="btn btn-outline btn-info aspect-square h-full w-full"
-						onclick={() => selectCombatStateWaiting()}
+					<div
+						class="tooltip aspect-square h-full w-full"
+						data-tip={$_('tickselection.tooltip.set_state_waiting')}
 					>
-						<Hourglass size={64} strokeWidth={1} />
-					</button>
+						<button
+							class="btn btn-outline btn-info aspect-square h-full w-full"
+							onclick={() => selectCombatStateWaiting()}
+						>
+							<Hourglass size={48} strokeWidth={1} />
+						</button>
+					</div>
 				{/if}
 			</div>
 			<div>
 				{#if sessionData.activeCombatant?.combatState !== CombatState.Dead}
-					<button
-						class="btn btn-outline btn-error aspect-square h-full w-full"
-						onclick={() => selectCombatStateDead()}
+					<div
+						class="tooltip aspect-square h-full w-full"
+						data-tip={$_('tickselection.tooltip.set_state_dead')}
 					>
-						<Skull size={64} strokeWidth={1} />
-					</button>
+						<button
+							class="btn btn-outline btn-error aspect-square h-full w-full"
+							onclick={() => selectCombatStateDead()}
+						>
+							<Skull size={48} strokeWidth={1} />
+						</button>
+					</div>
 				{/if}
 			</div>
 		</div>
