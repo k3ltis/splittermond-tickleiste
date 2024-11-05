@@ -22,7 +22,7 @@ export type Combatant = {
 
 export type SessionData =  {
     activeCombatant: Combatant | null 
-    recentlyActiveTick: number
+    mostRecentTick: number
 }
 
 export const sceneData: Scene = $state({
@@ -33,7 +33,7 @@ export const sceneData: Scene = $state({
 
 export const sessionData: SessionData = $state({
     activeCombatant: null,
-    recentlyActiveTick: 0,
+    mostRecentTick: 0,
 }) 
 
 export const createNewCombatant = (): Combatant => {

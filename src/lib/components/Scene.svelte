@@ -221,19 +221,21 @@
 					/>
 				</div>
 				<div>
-					<input
-						type="number"
-						disabled={appMode === AppMode.Running}
-						class="
-							input
-							{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
-							w-20
-							px-1
-							text-center
-							text-3xl"
-						onfocus={(event: FocusEvent) => selectInputText(event)}
-						bind:value={combatant.initiative}
-					/>
+					{#if combatant.combatState === CombatState.Active || appMode === AppMode.Editing }
+						<input
+							type="number"
+							disabled={appMode === AppMode.Running}
+							class="
+								input
+								{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
+								w-20
+								px-1
+								text-center
+								text-3xl"
+							onfocus={(event: FocusEvent) => selectInputText(event)}
+							bind:value={combatant.initiative}
+						/>
+					{/if}
 				</div>
 				<div class="w-16 justify-center">
 					{#if appMode === AppMode.Editing}
