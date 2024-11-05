@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { Minus } from "lucide-svelte";
-	import { _, locale } from "svelte-i18n";
+	import { _ } from "svelte-i18n";
 
 	let modal: HTMLDialogElement;
 	let resolveSelect: (value: number) => void;
-
+	
 	const tickNumbers: Array<number> = [
 		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
 	];

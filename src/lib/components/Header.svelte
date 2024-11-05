@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { loadScene, sceneData, type Scene } from '$lib/state/scene_data.svelte';
 	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
 	import { driver } from 'driver.js';
@@ -77,12 +76,12 @@
 	};
 </script>
 
-<div class="grap-4 navbar border-b-4 border-primary-content bg-base-100 mb-4">
+<div class="navbar border-b-4 border-primary-content fixed glass top-0 ">
 	<div class="flex-1">
 		<a class="btn btn-ghost text-xl">{$_("app_title")}</a>
 	</div>
 	<div class="flex-none space-x-2">
-		<label id="uploadButton" for="battleScene" class="btn text-xl">
+		<label id="uploadButton" for="battleScene" class="btn text-xl btn-neutral">
 			<Upload />
 			<span class="hidden lg:flex">{$_("upload_scene")}</span>
 		</label>
@@ -94,11 +93,11 @@
 			class="battle-scene-file-input file-input w-full max-w-xs"
 			onchange={uploadScene}
 		/>
-		<button id="downloadBtn" onclick={() => downloadScene()} class="btn">
+		<button id="downloadBtn" onclick={() => downloadScene()} class="btn btn-neutral">
 			<Download />
 			<span class="hidden lg:flex text-xl">{$_("download_scene")}</span>
 		</button>
-		<button onclick={() => explainPage()} class="btn">
+		<button onclick={() => explainPage()} class="btn btn-neutral">
 			<CircleHelp />
 		</button>
 	</div>

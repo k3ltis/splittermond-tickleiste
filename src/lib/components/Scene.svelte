@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import {
 		createNewCombatant,
 		sceneData,
@@ -7,6 +6,7 @@
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
 	import { fade, slide } from "svelte/transition";
+	import { flip } from "svelte/animate";
 	import TickSelection from "./TickSelection.svelte";
 	import { _ } from 'svelte-i18n'
 	import { Pencil, Play, Plus, Trash } from "lucide-svelte";
@@ -72,7 +72,7 @@
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="h-full w-full overflow-x-auto py-4 m-auto md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
+<div class="h-full w-full mt-16 px-2 py-4 m-auto md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
 	<div class="navbar bg-base-100 px-0">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
@@ -90,8 +90,8 @@
 		<div class="flex-none space-x-2">
 			<button
 				id="runSceneBtn"
-				class="btn text-xl"
-				class:btn-active={appMode === AppMode.Running}
+				class="btn text-xl btn-neutral"
+				class:hidden={appMode == AppMode.Running}
 				onclick={runScene}
 			>
 				<Play />
@@ -99,8 +99,8 @@
 			</button>
 			<button
 				id="editSceneBtn"
-				class="btn text-xl"
-				class:btn-active={appMode === AppMode.Editing}
+				class="btn text-xl btn-neutral"
+				class:hidden={appMode === AppMode.Editing}
 				onclick={editScene}
 			>
 				<Pencil />
@@ -111,7 +111,7 @@
 	<div id="combatantsTable" class="mt-4 grid w-full grid-cols-[6fr_1fr_1fr]">
 		<!-- Header -->
 		<div
-			class="col-span-3 grid grid-cols-subgrid gap-2 bg-gray-200 px-6 py-2 font-bold items-center text-xl"
+			class="col-span-3 grid grid-cols-subgrid gap-2 px-6 py-2 font-bold items-center text-xl bg-primary-content text-primary"
 			class:rounded-t-lg={appMode === AppMode.Editing}
 			class:rounded-lg={appMode === AppMode.Running}
 		>
@@ -125,7 +125,7 @@
 		{#if appMode === AppMode.Editing}
 			<div
 				transition:slide
-				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg bg-gray-200 px-6 pb-4"
+				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg  px-6 pb-4 bg-primary-content text-primary"
 			>
 				<div class="">
 					<input
@@ -147,8 +147,8 @@
 					/>
 				</div>
 				<div class="w-16 justify-center">
-					<button onclick={() => addCombatant(newCombatant)} class="btn">
-						<Plus />
+					<button onclick={() => addCombatant(newCombatant)} class="btn btn-primary">
+						<Plus strokeWidth={3}/>
 					</button>
 				</div>
 			</div>
@@ -157,13 +157,14 @@
 		<div class="my-2"></div>
 
 		<!-- Combatant List -->
-		{#each sceneData.combatants as combatant, index}
+		{#each sceneData.combatants as combatant, index (combatant.id)}
 			<div
+				animate:flip={{ delay: 100, duration: 500 }}
 				class="grid col-span-3 grid-cols-subgrid items-center gap-2 rounded-none p-6 focus:outline-none {appMode ===
 				AppMode.Running
-					? 'cursor-pointer hover:bg-gray-100'
+					? 'cursor-pointer hover:bg-primary'
 					: 'cursor-default'} {appMode == AppMode.Running && index === 0
-					? 'border-4 border-green-300/100'
+					? 'border-4 border-accent'
 					: ''} {index >= (appMode === AppMode.Running ? 2 : 1)
 					? 'border-t-4 border-primary-content'
 					: ''}"
