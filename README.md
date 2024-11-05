@@ -1,38 +1,32 @@
-# create-svelte
+# Splittermond Tickleiste
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This tool is meant to support combats for Splittermond pen&paper roleplaying game by providing the tick bar functionality (in German "Tickleiste") that Splittermond uses to determine the order of actions in tactical situations, typically in combat.
 
-## Creating a project
+The tool allows to create a scene with a variable number or combatants and their respective initiaitve value at the start of the combat. By running the scene the combatants are sorted by their initiaive value and can be clicked to quickly increment their tick value. Every initiative change induces a reordering, so that you can always see the next acting participant at the top.
 
-If you're seeing this, you've probably already done this step. Congrats!
+It's [hosted via  Github Pages](tklic.de/splittermond-tickleiste).
 
-```bash
-# create a new project in the current directory
-npx sv create
+**Features**
+* Create and name a scene with variable list of participants
+* Upload and download scenes in JSON format
+* Click the question mark in the upper right corner to get a tour
+* Client-side scene persistence
 
-# create a new project in my-app
-npx sv create my-app
-```
 
-## Developing
+## Assets
 
-Once you've created a project and installed dependencies with `bun install` (or `pnpm install` or `yarn`), start a development server:
+* SVGs from https://www.svgrepo.com/collection/dazzle-line-icons/
 
+## Development
+
+Start the dev server
 ```bash
 bun run dev
-
-# or start the server and open the app in a new browser tab
-bun run dev -- --open
 ```
 
-## Building
+## Deployment
 
-To create a production version of your app:
-
+Manual deployment to Github Pages
 ```bash
-bun run build
+bun run build && bun run deploy
 ```
-
-You can preview the production build with `bun run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

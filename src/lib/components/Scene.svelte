@@ -1,9 +1,28 @@
 <script lang="ts">
-	import { createNewCombatant, sceneData, sortCombatantsByInitiative, type Combatant } from '$lib/state/scene.svelte';
+	import { base } from '$app/paths';
+	import {
+		createNewCombatant,
+		sceneData,
+		sortCombatantsByInitiative,
+		type Combatant
+	} from '$lib/state/scene.svelte';
+	import TickSelection from "./TickSelection.svelte";
+
+	const AppMode = {
+		Editing: "EDITING",
+		Running: "RUNNING",
+	}
 
 	let newCombatant: Combatant = $state(createNewCombatant());
-	let editing: boolean = $state(false);
+
+	// Indicating that the combatants are edited
+	let appMode: string = $state(AppMode.Editing);
+
+	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
+
+	// svelte-ignore non_reactive_update
+	let tickSelection: any
 
 	function addCombatant(combatant: Combatant) {
 		if (combatant.name === '') {
@@ -25,12 +44,8 @@
 		}
 	}
 
-	function editCombatants() {
-		editing = true;
-	}
-
-	function saveCombatants() {
-		editing = false;
+	function editScene() {
+		appMode = AppMode.Editing
 	}
 
 	function deleteCombatant(combatantId: string) {
@@ -38,39 +53,45 @@
 	}
 
 	function runScene() {
-		sortCombatantsByInitiative()
+		appMode = AppMode.Running
+		sortCombatantsByInitiative();
+	}
+	
+	function combatantClicked(combatant: Combatant) {
+		if (appMode === AppMode.Running) {
+			tickSelection.show().then((ticks: number) => {
+				combatant.initiative += ticks
+				sortCombatantsByInitiative();
+			})
+		}
 	}
 </script>
 
+<TickSelection bind:this={tickSelection} />
 <div class="mx-48 mt-12 overflow-x-auto">
-	<div class="p-6">
-		<input
-			type="text"
-			placeholder="Scene name..."
-			class="input w-full max-w-xs"
-			bind:value={sceneData.name}
-		/>
-	</div>
-	<button class="btn" onclick={runScene}>RunScene</button>
-	<button class="btn" onclick={editCombatants}>Edit</button>
-	<button class="btn" onclick={saveCombatants}>Save Edit</button>
-	<div class="mb-6">
-		<button onclick={() => addCombatant(newCombatant)} class="btn"> Add Combatant </button>
-		<input
-			type="text"
-			placeholder="Name..."
-			class="input input-bordered w-full max-w-xs"
-			bind:value={newCombatant.name}
-			bind:this={combatantNameInput}
-			onkeydown={handleKeyDown}
-		/>
-		<input
-			type="number"
-			placeholder="Iniative..."
-			class="input input-bordered w-full max-w-xs"
-			bind:value={newCombatant.initiative}
-			onkeydown={handleKeyDown}
-		/>
+	<div class="navbar bg-base-100">
+		<div class="flex-1">
+			{#if appMode === AppMode.Editing}
+				<input
+					type="text"
+					placeholder="Scene name..."
+					class="input input-bordered w-full max-w-xs"
+					bind:value={sceneData.name}
+				/>
+			{:else}
+				{sceneData.name}
+			{/if}
+		</div>
+		<div class="flex-none space-x-2">
+			<button class="btn" class:btn-active={appMode === AppMode.Running} onclick={runScene}>
+				<img width="30em" src="{base}/svg/circle-play-svgrepo-com.svg" alt="download" />
+				Run Scene
+			</button>
+			<button class="btn" class:btn-active={appMode === AppMode.Editing} onclick={editScene}>
+				<img width="30em" src="{base}/svg/pencil-svgrepo-com.svg" alt="toggle edit" />
+				Edit Scene
+			</button>
+		</div>
 	</div>
 	<table class="table">
 		<thead>
@@ -81,10 +102,38 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each sceneData.combatants as combatant}
+			{#if appMode === AppMode.Editing}
 				<tr>
 					<td>
-						{#if editing}
+						<input
+							type="text"
+							placeholder="Name..."
+							class="input input-bordered w-full max-w-xs"
+							bind:value={newCombatant.name}
+							bind:this={combatantNameInput}
+							onkeydown={handleKeyDown}
+						/>
+					</td>
+					<td>
+						<input
+							type="number"
+							placeholder="Iniative..."
+							class="input input-bordered w-full max-w-xs"
+							bind:value={newCombatant.initiative}
+							onkeydown={handleKeyDown}
+						/>
+					</td>
+					<td>
+						<button onclick={() => addCombatant(newCombatant)} class="btn">
+							<img width="30em" src="{base}/svg/plus-svgrepo-com.svg" alt="add" />
+						</button>
+					</td>
+				</tr>
+			{/if}
+			{#each sceneData.combatants as combatant}
+				<tr class:hover={appMode === AppMode.Running} onclick={() => combatantClicked(combatant)}>
+					<td>
+						{#if appMode === AppMode.Editing}
 							<input
 								type="text"
 								class="input input-bordered w-full max-w-xs"
@@ -95,7 +144,7 @@
 						{/if}
 					</td>
 					<td>
-						{#if editing}
+						{#if appMode === AppMode.Editing}
 							<input
 								type="number"
 								class="input input-bordered w-full max-w-xs"
@@ -106,7 +155,11 @@
 						{/if}
 					</td>
 					<td>
-						<button class="btn" onclick={() => deleteCombatant(combatant.id)}>X</button>
+						{#if appMode === AppMode.Editing}
+							<button class="btn" onclick={() => deleteCombatant(combatant.id)}>
+								<img width="30em" src="{base}/svg/trash-svgrepo-com.svg" alt="delete" />
+							</button>
+						{/if}
 					</td>
 				</tr>
 			{/each}
