@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { loadScene, sceneData, type Scene } from '$lib/state/scene.svelte';
+	import { loadScene, sceneData, type Scene } from '$lib/state/scene_data.svelte';
 	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
 	import { driver } from 'driver.js';
 	import 'driver.js/dist/driver.css';
@@ -77,7 +77,7 @@
 	};
 </script>
 
-<div class="navbar bg-base-100 grap-4">
+<div class="navbar bg-base-100 grap-4 border-b-4 border-primary-content">
 	<div class="flex-1 ">
 		<a class="btn hidden md:flex btn-ghost text-xl">Splittermond Tickleiste</a>
 	</div>

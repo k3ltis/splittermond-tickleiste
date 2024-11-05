@@ -1,4 +1,4 @@
-import type { Scene } from "./scene.svelte";
+import type { Scene } from "./scene_data.svelte";
 
 export const saveSceneToLocalStorage = (scene: Scene) => {
     localStorage.setItem('scene', JSON.stringify(scene));

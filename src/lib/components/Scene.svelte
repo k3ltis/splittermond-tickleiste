@@ -5,7 +5,7 @@
 		sceneData,
 		sortCombatantsByInitiative,
 		type Combatant
-	} from '$lib/state/scene.svelte';
+	} from '$lib/state/scene_data.svelte';
 	import TickSelection from './TickSelection.svelte';
 
 	const AppMode = {
@@ -61,7 +61,7 @@
 		if (appMode === AppMode.Running) {
 			tickSelection.show().then((ticks: number) => {
 				combatant.initiative += ticks;
-				sortCombatantsByInitiative();
+				sortCombatantsByInitiative(combatant);
 			});
 		}
 	}
@@ -69,7 +69,7 @@
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="w-full overflow-x-auto p-4 md:m-auto md:w-[800px] md:px-20">
+<div class="w-full h-full overflow-x-auto p-4 md:m-auto md:w-[800px] md:px-20">
 	<div class="navbar bg-base-100">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
@@ -106,7 +106,7 @@
 			</button>
 		</div>
 	</div>
-	<div id="combatantsTable" class="grid w-full grid-cols-[6fr_1fr_1fr] gap-4 mt-4">
+	<div id="combatantsTable" class="grid w-full grid-cols-[6fr_1fr_1fr] mt-4">
 		<!-- Header -->
 		<div
 			class="col-span-3 grid grid-cols-subgrid gap-4 bg-gray-200 px-4 py-2 font-bold"
@@ -122,7 +122,7 @@
 		<!-- Combatant Input Fields -->
 		{#if appMode === AppMode.Editing}
 			<div
-				class="col-span-3 grid grid-cols-subgrid items-center gap-4 rounded-b-lg bg-gray-200 p-2 undo-gap"
+				class="col-span-3 grid grid-cols-subgrid items-center gap-4 rounded-b-lg bg-gray-200 p-2"
 			>
 				<div class="flex-1">
 					<input
@@ -152,11 +152,11 @@
 		{/if}
 
 		<!-- Combatant List -->
-		{#each sceneData.combatants as combatant}
+		{#each sceneData.combatants as combatant, index}
 			<div
-				class="col-span-3 grid grid-cols-subgrid items-center gap-4 p-2 {appMode === AppMode.Running
+				class="col-span-3 grid grid-cols-subgrid items-center gap-4 p-6 rounded-lg {appMode === AppMode.Running
 					? 'cursor-pointer hover:bg-gray-100'
-					: 'cursor-default'}"
+					: 'cursor-default'} {appMode == AppMode.Running && index === 0 ? 'border-4 border-green-300/100' : ''}"
 				onclick={() => combatantClicked(combatant)}
 				onkeydown={() => combatantClicked(combatant)}
 				onkeyup={() => combatantClicked(combatant)}
@@ -196,9 +196,3 @@
 		{/each}
 	</div>
 </div>
-
-<style>
-	.undo-gap:nth-child(2) {
-		margin-top: -1.05rem;
-	}
-</style>

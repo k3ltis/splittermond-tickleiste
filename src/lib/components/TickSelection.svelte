@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { Combatant } from "$lib/state/scene.svelte";
+	import type { Combatant } from "$lib/state/scene_data.svelte";
 
 	let modal: HTMLDialogElement;
     let resolveSelect: (value: number) => void;

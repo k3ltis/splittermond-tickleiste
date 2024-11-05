@@ -30,3 +30,11 @@ Manual deployment to Github Pages
 ```bash
 bun run build && bun run deploy
 ```
+
+## License Checking
+
+
+Latest check done with
+```bash
+license-checker --onlyAllow "MIT;Apache-2.0;ISC;BSD-2-Clause;Python-2.0;CC-BY-4.0;BSD-3-Clause;BlueOak-1.0.0;CC0-1.0"
+```
