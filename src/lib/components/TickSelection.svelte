@@ -235,15 +235,15 @@
 					onclick={() => select(tick.number)}
 				>
 					{#if negation}
-						<div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-4' : 'left-2'}">
+						<!-- <div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-4' : 'left-2'}">
 							-
-						</div>
-						{-tick.number}
+						</div> -->
+						-{-tick.number}
 					{:else}
-						<div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-3' : 'left-1'}">
+						<!-- <div class="absolute {tick.number <= 9 && tick.number >= -9 ? 'left-2 sm:left-3' : 'left-1'}">
 							+
-						</div>
-						{tick.number}
+						</div> -->
+						+{tick.number}
 					{/if}
 
 					<!-- {negation ? -tickNumber : tickNumber} -->
