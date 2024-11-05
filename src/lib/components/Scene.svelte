@@ -110,7 +110,7 @@
 			/>
 		</div>
 		<!-- Change Scene Mode Buttons -->
-		<div class="flex-none space-x-2">
+		<div class="flex-none space-x-2 change-scene-mode">
 			<button
 				id="runSceneBtn"
 				class="btn btn-primary text-xl"

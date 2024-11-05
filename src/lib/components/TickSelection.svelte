@@ -10,7 +10,8 @@
 		setCombatantCombatStateToDead,
 		setCombatantCombatStateToExpecting,
 		setCombatantCombatStateToWaiting,
-		type Combatant
+		type Combatant,
+		type Tick
 	} from '$lib/state/scene_data.svelte';
 	import { Minus, Hourglass, ClockAlert, Skull, UserRound, X, Plus } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
@@ -18,18 +19,11 @@
 
 	let modal: HTMLDialogElement;
 
-	type TickMode = 'relative' | 'absolute';
-	type Tick = {
-		number: number;
-		hasCombatants: boolean;
-		mode: TickMode;
-	};
 	let negation: boolean = $state(false);
-	let ticks: Array<Tick> = $state([]);
 
 	export function show() {
 		negation = false;
-		ticks = calculatePossibleTicks();
+		sessionData.ticks = calculatePossibleTicks();
 		modal.showModal();
 	}
 
@@ -51,7 +45,7 @@
 
 	function toggleNegation() {
 		negation = !negation;
-		ticks = calculatePossibleTicks();
+		sessionData.ticks = calculatePossibleTicks();
 	}
 
 	function calculatePossibleTicks(): Array<Tick> {
@@ -155,7 +149,7 @@
 </script>
 
 <dialog id="tickSelectionModal" class="modal" bind:this={modal}>
-	<div class="max-w-l modal-box w-11/12 border-4 border-accent">
+	<div id="tickSelectionModalInner" class="max-w-l modal-box w-11/12 border-4 border-accent">
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
 			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
@@ -179,16 +173,16 @@
 			</div>
 		</h3>
 		<div class="grid grid-cols-5 gap-1">
-			{#each ticks as tick}
+			{#each sessionData.ticks as tick}
 				<button
 					class="btn relative aspect-square h-full w-full text-4xl"
 					onclick={() => select(tick)}
 				>
 					{#if tick.mode === 'relative'}
-						{#if negation}
-							-{-tick.number}
-						{:else}
+						{#if tick.number > 0}
 							+{tick.number}
+						{:else}
+							{tick.number}
 						{/if}
 					{:else}
 						{tick.number}
@@ -205,7 +199,7 @@
 		</div>
 		<div class="mt-1 grid grid-cols-5 gap-1">
 			<div>
-				{#if sessionData.activeCombatant?.combatState === CombatState.Active}
+				{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === CombatState.Active}
 					<div
 						class="tooltip aspect-square h-full w-full"
 						data-tip={$_('tickselection.tooltip.negation')}

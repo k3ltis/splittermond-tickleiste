@@ -38,6 +38,12 @@
     "change_langauge": {
       "title": "Sprache umschalten",
       "content": "Zwischen Deutsch und Englisch wechseln."
+    },
+    "tick_selection_modal": {
+      "overview": {
+        "title": "Tick Auswahl Dialog",
+        "content": "Hier kannst du sowohl die <b>Ticks</b> auswählen, die hinzugefügt oder abgezogen werden sollen, als auch spezielle Kampfmodi aktivieren, wie <b>Aktion bereithalten</b>, <b>Abwarten </b>oder <b>kampfunfähig</b>."
+      }
     }
   },
   "tickselection": {

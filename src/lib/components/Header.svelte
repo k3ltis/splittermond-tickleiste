@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { loadScene, sceneData, type Scene } from '$lib/state/scene_data.svelte';
 	import { extractFileContentAsJSON, downloadJSON } from '$lib/state/fileio.svelte';
-	import { driver } from 'driver.js';
 	import 'driver.js/dist/driver.css';
 	import { _ } from 'svelte-i18n';
-	import { Download, Upload, CircleHelp, Menu } from 'lucide-svelte';
+	import { Download, Upload, Menu } from 'lucide-svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { base } from "$app/paths";
+	import Tour from "./Tour.svelte";
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -26,95 +26,6 @@
 	const downloadScene = () => {
 		let filename = sceneData.name.toLowerCase().trim().replace(/\s+/g, '_');
 		downloadJSON(sceneData, filename);
-	};
-
-	const forceOpenDropdown = (element?: Element) => {
-		let dropdownElement = element?.closest('.dropdown');
-		dropdownElement?.classList.add('dropdown-open');
-	};
-
-	const closeDropdown = (element?: Element) => {
-		let dropdownElement = element?.closest('.dropdown');
-		dropdownElement?.classList.remove('dropdown-open');
-	};
-
-	const explainPage = () => {
-		const driverObj = driver({
-			showProgress: true,
-			nextBtnText: $_('tour_btn_next'),
-			prevBtnText: $_('tour_btn_prev'),
-			doneBtnText: $_('tout_btn_done'),
-			progressText: $_('tour_progress_text'),
-			steps: [
-				{
-					element: '#sceneTitle',
-					popover: { title: $_('scene_title'), description: $_('scene_title_description') }
-				},
-				{
-					element: '#combatantsTable',
-					popover: {
-						title: $_('combatants_list'),
-						description: $_('combatants_list_description')
-					}
-				},
-				{
-					element: '#editSceneBtn',
-					popover: {
-						title: $_('edit_scene'),
-						description: $_('edit_scene_description')
-					}
-				},
-				{
-					element: '#runSceneBtn',
-					popover: {
-						title: $_('run_scene'),
-						description: $_('run_scene_description')
-					}
-				},
-				{
-					element: '#downloadBtn',
-					popover: {
-						title: $_('download_scene'),
-						description: $_('download_scene_description')
-					},
-					onHighlightStarted: (element?: Element) => {
-						forceOpenDropdown(element);
-					},
-					onDeselected: (element?: Element) => {
-						closeDropdown(element);
-					}
-				},
-				{
-					element: '#uploadButton',
-					popover: {
-						title: $_('upload_scene'),
-						description: $_('upload_scene_description')
-					},
-					onHighlightStarted: (element?: Element) => {
-						forceOpenDropdown(element);
-					},
-					onDeselected: (element?: Element) => {
-						closeDropdown(element);
-					}
-				},
-				{
-					element: '#ThemeToggle',
-					popover: {
-						title: $_('tour.change_theme.title'),
-						description: $_('tour.change_theme.content')
-					}
-				},
-				{
-					element: '#ToggleLanguageBtn',
-					popover: {
-						title: $_('tour.change_langauge.title'),
-						description: $_('tour.change_langauge.content')
-					}
-				}
-			]
-		});
-
-		driverObj.drive();
 	};
 
 	function checkAndCloseDropDown(e: MouseEvent) {
@@ -137,9 +48,7 @@
 	</div>
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
-		<button onclick={() => explainPage()} class="btn btn-ghost">
-			<CircleHelp />
-		</button>
+		<Tour />
 		<div class="dropdown dropdown-end">
 			<div tabindex="-1" role="button" class="btn btn-ghost" onmousedown={checkAndCloseDropDown}>
 				<Menu />

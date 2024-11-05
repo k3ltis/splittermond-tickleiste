@@ -38,6 +38,12 @@
     "change_langauge": {
       "title": "Toggle Language",
       "content": "Switch between German and English."
+    },
+    "tick_selection_modal": {
+      "overview": {
+        "title": "Tick Selection Dialog",
+        "content": "Here you can select the <b>ticks</b> to add or subtract, as well as special combat states like <b>expecting</b>, <b>waiting</b>, or <b>incapitated</b>."
+      }
     }
   },
   "tickselection": {
