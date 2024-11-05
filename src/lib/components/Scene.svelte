@@ -227,6 +227,16 @@
 							onfocus={(event: FocusEvent) => selectInputText(event)}
 							bind:value={combatant.initiative}
 						/>
+					{:else}
+					<div in:fade={{ duration: 200 }}>
+						{#if combatant.combatState === CombatState.Waiting}
+							<Hourglass class="text-info text-center w-full" size={48} strokeWidth={1} />
+						{:else if combatant.combatState === CombatState.Expecting}
+							<ClockAlert class="text-info text-center w-full" size={48} strokeWidth={1} />
+						{:else if combatant.combatState === CombatState.Dead}
+							<Skull class="text-error text-center w-full" size={48} strokeWidth={1} />
+						{/if}
+					</div>
 					{/if}
 				</div>
 				<div class="w-16 justify-center">
@@ -239,15 +249,7 @@
 							<Trash />
 						</button>
 					{:else if appMode === AppMode.Running}
-						<div in:fade={{ duration: 200 }}>
-							{#if combatant.combatState === CombatState.Waiting}
-								<Hourglass class="text-info" size={48} strokeWidth={1} />
-							{:else if combatant.combatState === CombatState.Expecting}
-								<ClockAlert class="text-info" size={48} strokeWidth={1} />
-							{:else if combatant.combatState === CombatState.Dead}
-								<Skull class="text-error" size={48} strokeWidth={1} />
-							{/if}
-						</div>
+						
 					{/if}
 				</div>
 			</div>
