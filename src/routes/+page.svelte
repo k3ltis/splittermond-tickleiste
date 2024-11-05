@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { appendFile } from "fs";
+    import { base } from "$app/paths"
 	let file: File | null = null;
 	let jsonData: any = { name: '', combatants: [] };
 
@@ -82,7 +84,7 @@
 	onchange={handleFileChange}
 />
 <button onclick={() => downloadJSON()} class="btn">
-	<img width="30em" src="/svg/download-svgrepo-com.svg" alt="download" />
+	<img width="30em" src="{base}/svg/download-svgrepo-com.svg" alt="download" />
 	Download JSON
 </button>
 
