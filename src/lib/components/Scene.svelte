@@ -3,6 +3,7 @@
 		CombatState,
 		createNewCombatant,
 		determineNextActingCombatant,
+		getMinimalActiveInitiative,
 		sceneData,
 		sessionData,
 		sortCombatantsByInitiative,
@@ -63,6 +64,7 @@
 
 	function runScene() {
 		appMode = AppMode.Running;
+		sessionData.mostRecentTick = getMinimalActiveInitiative()
 		sortCombatantsByInitiative()
 	}
 

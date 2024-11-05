@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		CombatState,
+		getMinimalActiveInitiative,
 		moveCombatantByTicks,
 		moveCombatantToTick,
 		resetActiveCombatant,
@@ -11,17 +12,17 @@
 		setCombatantCombatStateToWaiting,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
-	import { Minus, Hourglass, ClockAlert, Skull, UserRound, X } from 'lucide-svelte';
+	import { Minus, Hourglass, ClockAlert, Skull, UserRound, X, Plus } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { slide } from 'svelte/transition';
 
 	let modal: HTMLDialogElement;
 
-	type TickMode = "relative" | "absolute"
+	type TickMode = 'relative' | 'absolute';
 	type Tick = {
 		number: number;
 		hasCombatants: boolean;
-		mode: TickMode
+		mode: TickMode;
 	};
 	let negation: boolean = $state(false);
 	let ticks: Array<Tick> = $state([]);
@@ -39,9 +40,8 @@
 	function select(tick: Tick) {
 		hide();
 		if (sessionData.activeCombatant) {
-			if (tick.mode === "relative") {
-				let sign: number = negation ? -1 : 1;
-				moveCombatantByTicks(sessionData.activeCombatant, sign * tick.number);
+			if (tick.mode === 'relative') {
+				moveCombatantByTicks(sessionData.activeCombatant, tick.number);
 			} else {
 				moveCombatantToTick(sessionData.activeCombatant, tick.number);
 			}
@@ -95,41 +95,42 @@
 
 	function getAbsoluteTicks(): Array<Tick> {
 		// determine last (largest) possible tick
-		let lastPossibleTick: number;
-		const validInitiatives = sceneData.combatants
-			.filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active)
-			.map((c) => c.initiative);
-		if (validInitiatives.length === 0) {
-			// Fallback when all combatants are in waiting, expecting, or dead
-			lastPossibleTick = sessionData.mostRecentTick || 0;
-		} else {
-			lastPossibleTick = Math.min(...validInitiatives);
-		}
+		let lastPossibleTick: number = getMinimalActiveInitiative()
 
 		// determine first (smallest) possible tick
 		const firstPossibleTick = sessionData.mostRecentTick;
 
-		if (firstPossibleTick > lastPossibleTick || firstPossibleTick === Infinity || lastPossibleTick === Infinity) {
-			console.error("Tick range invalid. First tick must not be larger than last tick. Neither must be Infinity.", firstPossibleTick, lastPossibleTick)
-			return [{
-				number: 0,
-				hasCombatants: false,
-				mode: "absolute"
-			}]
+		if (
+			firstPossibleTick > lastPossibleTick ||
+			firstPossibleTick === Infinity ||
+			lastPossibleTick === Infinity
+		) {
+			console.error(
+				'Tick range invalid. First tick must not be larger than last tick. Neither must be Infinity.',
+				firstPossibleTick,
+				lastPossibleTick
+			);
+			return [
+				{
+					number: 0,
+					hasCombatants: false,
+					mode: 'absolute'
+				}
+			];
 		}
 
 		const ticks: Array<Tick> = [];
-			for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
-				ticks.push({
-					number: i,
-					hasCombatants: hasTickCombatantsAssigned(
-						i,
-						sceneData.combatants.filter((c) => c.id !== sessionData.activeCombatant?.id)
-					),
-					mode: "absolute"
-				});
-			}
-			return ticks;
+		for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
+			ticks.push({
+				number: i,
+				hasCombatants: hasTickCombatantsAssigned(
+					i,
+					sceneData.combatants.filter((c) => c.id !== sessionData.activeCombatant?.id)
+				),
+				mode: 'absolute'
+			});
+		}
+		return ticks;
 	}
 
 	function getRelativeTicks(
@@ -143,7 +144,7 @@
 			return {
 				number: relativeTick,
 				hasCombatants: hasTickCombatantsAssigned(absoluteTick, combatants),
-				mode: "relative"
+				mode: 'relative'
 			};
 		});
 	}
@@ -183,15 +184,14 @@
 					class="btn relative aspect-square h-full w-full text-4xl"
 					onclick={() => select(tick)}
 				>
-					{#if tick.mode === "relative"}
-						
-					{#if negation}
-						-{-tick.number}
+					{#if tick.mode === 'relative'}
+						{#if negation}
+							-{-tick.number}
+						{:else}
+							+{tick.number}
+						{/if}
 					{:else}
-						+{tick.number}
-					{/if}
-					{:else}
-					{tick.number}
+						{tick.number}
 					{/if}
 
 					<!-- {negation ? -tickNumber : tickNumber} -->
@@ -215,7 +215,11 @@
 							class:btn-active={negation}
 							onclick={() => toggleNegation()}
 						>
-							<Minus size={48} />
+							{#if negation}
+								<Plus size={48} />
+							{:else}
+								<Minus size={48} />
+							{/if}
 						</button>
 					</div>
 				{/if}

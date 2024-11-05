@@ -113,6 +113,13 @@ export function setMostRecentTick(tick: number) {
     sessionData.mostRecentTick = tick
 }
 
+export function getMinimalActiveInitiative(): number {
+    const validInitiatives = sceneData.combatants
+    .filter((c) => c !== sessionData.activeCombatant && c.combatState === CombatState.Active)
+    .map((c) => c.initiative);
+    return validInitiatives.length === 0 ? sessionData.mostRecentTick || 0 : Math.min(...validInitiatives)
+}
+
 export const sortCombatantsByInitiative = (combatantWithLowPriority: Combatant | null = null, combatantwithHighPriority: Combatant | null = null) => {
     // The combatant with low priority will be pushed to the end of its initiative-wise equivalence group 
     const combatants: Combatant[] = JSON.parse(JSON.stringify(sceneData.combatants))
