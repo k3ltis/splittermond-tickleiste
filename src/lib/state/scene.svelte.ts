@@ -27,9 +27,14 @@ export const createNewCombatant = (): Combatant => {
 }
 
 export const loadScene = (_sceneData: Scene) => {
+    console.log(`Load scene ${JSON.stringify(_sceneData)}`)
     Object.assign(sceneData, _sceneData);
 }
 
 export const saveScene = () => {
     saveSceneToLocalStorage(sceneData);
+}
+
+export const sortCombatantsByInitiative = () => {
+    sceneData.combatants.sort((a: Combatant, b: Combatant) => a.initiative - b.initiative)
 }

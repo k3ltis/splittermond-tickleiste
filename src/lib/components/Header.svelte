@@ -12,6 +12,9 @@ const uploadScene = (event: Event) => {
                 loadScene(scene)
             })
         }
+        // Reset target value to allow uploading the same file multiple times
+        // see https://stackoverflow.com/a/56258902 for details
+        target.value = ""
     }
 };
 

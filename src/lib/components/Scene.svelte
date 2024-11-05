@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createNewCombatant, sceneData, type Combatant } from '$lib/state/scene.svelte';
+	import { createNewCombatant, sceneData, sortCombatantsByInitiative, type Combatant } from '$lib/state/scene.svelte';
 
 	let newCombatant: Combatant = $state(createNewCombatant());
 	let editing: boolean = $state(false);
@@ -36,6 +36,10 @@
 	function deleteCombatant(combatantId: string) {
 		sceneData.combatants = sceneData.combatants.filter((c) => c.id !== combatantId);
 	}
+
+	function runScene() {
+		sortCombatantsByInitiative()
+	}
 </script>
 
 <div class="mx-48 mt-12 overflow-x-auto">
@@ -47,6 +51,7 @@
 			bind:value={sceneData.name}
 		/>
 	</div>
+	<button class="btn" onclick={runScene}>RunScene</button>
 	<button class="btn" onclick={editCombatants}>Edit</button>
 	<button class="btn" onclick={saveCombatants}>Save Edit</button>
 	<div class="mb-6">
