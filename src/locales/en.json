@@ -5,7 +5,7 @@
   "combatants_list": "Combatants List",
   "combatants_list_description": "Displays the list of combatants part of the scene.",
   "data_privacy": "Data Privacy",
-  "data_privacy_content": "This page does utilize the browser's local storage to locally save the scene in the user's browser. This is done, so that the user does not lose information when closing the browser application. If you wish to delete this information you can either clear your browser's cached web data or simply delete all entries while in the scene's edit mode. <br /><br /> No data is send to any remove server and no other user related data is processed by this page.",
+  "data_privacy_content": "This page does utilize the browser's local storage to locally save the scene and user preferences (like language settings) in the user's browser. This is done, so that the user does not lose information when closing the browser application. If you wish to delete this information simply clear your browser's cached web data. <br /><br /> No data is send to any remote server and no other user related data is processed by this page.",
   "data_privacy_header": "Data Privacy Information",
   "download_alt": "Download icon",
   "download_scene": "Download Scene",

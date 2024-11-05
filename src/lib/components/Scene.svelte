@@ -5,11 +5,11 @@
 		sortCombatantsByInitiative,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
-	import { fade, slide } from "svelte/transition";
-	import { flip } from "svelte/animate";
-	import TickSelection from "./TickSelection.svelte";
-	import { _ } from 'svelte-i18n'
-	import { Pencil, Play, Plus, Trash } from "lucide-svelte";
+	import { fade, slide } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
+	import TickSelection from './TickSelection.svelte';
+	import { _ } from 'svelte-i18n';
+	import { Pencil, Play, Plus, Trash } from 'lucide-svelte';
 
 	const AppMode = {
 		Editing: 'EDITING',
@@ -68,11 +68,16 @@
 			});
 		}
 	}
+
+	function selectInputText(event?: FocusEvent) {
+		const target = event?.target as HTMLInputElement;
+		target.select();
+	}
 </script>
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="h-full w-full mt-16 px-2 py-4 m-auto md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
+<div class="m-auto mt-16 h-full w-full px-2 py-4 md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
 	<div class="navbar bg-base-100 px-0">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
@@ -80,9 +85,9 @@
 				type="text"
 				placeholder="Scene name..."
 				disabled={appMode === AppMode.Running}
-				class="text-3xl input mr-4 w-full {appMode === AppMode.Editing
-							? 'input-bordered'
-							: 'input-ghost disabled'}"
+				class="input mr-4 w-full text-3xl {appMode === AppMode.Editing
+					? 'input-bordered'
+					: 'disabled input-ghost'}"
 				bind:value={sceneData.name}
 			/>
 		</div>
@@ -90,33 +95,33 @@
 		<div class="flex-none space-x-2">
 			<button
 				id="runSceneBtn"
-				class="btn text-xl btn-primary"
+				class="btn btn-primary text-xl"
 				class:hidden={appMode == AppMode.Running}
 				onclick={runScene}
 			>
 				<Play />
-				<span class="hidden lg:flex">{$_("run_scene_button")}</span>
+				<span class="hidden lg:flex">{$_('run_scene_button')}</span>
 			</button>
 			<button
 				id="editSceneBtn"
-				class="btn text-xl btn-primary"
+				class="btn btn-primary text-xl"
 				class:hidden={appMode === AppMode.Editing}
 				onclick={editScene}
 			>
 				<Pencil />
-				<span class="hidden lg:flex">{$_("edit_scene_button")}</span>
+				<span class="hidden lg:flex">{$_('edit_scene_button')}</span>
 			</button>
 		</div>
 	</div>
 	<div id="combatantsTable" class="mt-4 grid w-full grid-cols-[6fr_1fr_1fr]">
-		<!-- Header -->
+		<!-- Table Header -->
 		<div
-			class="col-span-3 grid grid-cols-subgrid gap-2 px-6 py-2 font-bold items-center text-xl bg-primary-content text-primary"
+			class="col-span-3 grid grid-cols-subgrid items-center gap-2 bg-primary-content px-6 py-2 text-xl font-bold text-primary"
 			class:rounded-t-lg={appMode === AppMode.Editing}
 			class:rounded-lg={appMode === AppMode.Running}
 		>
-			<div class="">{$_("column_name")}</div>
-			<div class="" id="initiativeColumn">{$_("column_initiative")}</div>
+			<div class="">{$_('column_name')}</div>
+			<div class="" id="initiativeColumn">{$_('column_initiative')}</div>
 			<div class=""></div>
 			<!-- Spacer for buttons column -->
 		</div>
@@ -125,12 +130,12 @@
 		{#if appMode === AppMode.Editing}
 			<div
 				transition:slide
-				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg px-6 pb-4 bg-primary-content"
+				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg bg-primary-content px-6 pb-4"
 			>
 				<div class="">
 					<input
 						type="text"
-						placeholder="{$_("placeholder_name")}"
+						placeholder={$_('placeholder_name')}
 						class="input input-bordered w-full text-3xl"
 						bind:value={newCombatant.name}
 						bind:this={combatantNameInput}
@@ -140,15 +145,22 @@
 				<div class="">
 					<input
 						type="number"
-						placeholder="{$_("placeholder_initiative")}"
-						class="input input-bordered text-3xl w-20 text-center px-1"
+						placeholder={$_('placeholder_initiative')}
+						class="
+							input
+							input-bordered
+							w-20
+							px-1
+							text-center
+							text-3xl"
 						bind:value={newCombatant.initiative}
+						onfocus={(event: FocusEvent) => selectInputText(event)}
 						onkeydown={handleKeyDown}
 					/>
 				</div>
 				<div class="w-16 justify-center">
 					<button onclick={() => addCombatant(newCombatant)} class="btn btn-primary">
-						<Plus strokeWidth={3}/>
+						<Plus strokeWidth={3} />
 					</button>
 				</div>
 			</div>
@@ -160,14 +172,19 @@
 		{#each sceneData.combatants as combatant, index (combatant.id)}
 			<div
 				animate:flip={{ delay: 100, duration: 500 }}
-				class="grid col-span-3 grid-cols-subgrid items-center gap-2 rounded-none p-6 focus:outline-none {appMode ===
-				AppMode.Running
-					? 'cursor-pointer hover:bg-primary-content'
-					: 'cursor-default'} {appMode == AppMode.Running && index === 0
-					? 'border-4 border-accent'
-					: ''} {index >= (appMode === AppMode.Running ? 2 : 1)
-					? 'border-t-4 border-primary-content'
-					: ''} text-primary"
+				class="
+					col-span-3
+					grid
+					grid-cols-subgrid
+					items-center
+					gap-2
+					rounded-none
+					p-6
+					focus:outline-none
+					{appMode === AppMode.Running ? 'cursor-pointer hover:bg-primary-content' : 'cursor-default'}
+					{appMode == AppMode.Running && index === 0 ? 'border-4 border-accent' : ''}
+					{index >= (appMode === AppMode.Running ? 2 : 1) ? 'border-t-4 border-primary-content' : ''}
+					text-primary"
 				onclick={() => combatantClicked(combatant)}
 				onkeydown={() => {}}
 				onkeyup={() => {}}
@@ -178,9 +195,11 @@
 					<input
 						type="text"
 						disabled={appMode === AppMode.Running}
-						class="input {appMode === AppMode.Editing
-							? 'input-bordered'
-							: 'input-ghost disabled'} w-full text-3xl"
+						class="
+						input
+						{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
+						w-full
+						text-3xl"
 						bind:value={combatant.name}
 					/>
 				</div>
@@ -188,15 +207,26 @@
 					<input
 						type="number"
 						disabled={appMode === AppMode.Running}
-						class="input {appMode === AppMode.Editing
-							? 'input-bordered'
-							: 'input-ghost disabled'} w-full max-w-md text-3xl w-20 text-center px-1"
+						class="
+							input
+							{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
+							w-20
+							w-full
+							max-w-md
+							px-1
+							text-center
+							text-3xl"
+						onfocus={(event: FocusEvent) => selectInputText(event)}
 						bind:value={combatant.initiative}
 					/>
 				</div>
 				<div class="w-16 justify-center">
 					{#if appMode === AppMode.Editing}
-						<button transition:fade={{ duration: 200 }} class="btn btn-outline btn-error" onclick={() => deleteCombatant(combatant.id)}>
+						<button
+							transition:fade={{ duration: 200 }}
+							class="btn btn-outline btn-error"
+							onclick={() => deleteCombatant(combatant.id)}
+						>
 							<Trash />
 						</button>
 					{/if}
@@ -207,23 +237,23 @@
 </div>
 
 <style>
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+	input[type='number']::-webkit-outer-spin-button,
+	input[type='number']::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 
-input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
-}
+	input[type='number'] {
+		-moz-appearance: textfield; /* Firefox */
+	}
 
-/* disabled:bg-transparent disabled:border-none disabled:text-base-content disabled:cursor-default */
-input.disabled {
-	background: var(--bg-transparent);
-	border-color: transparent;
-	color: var(--text-base-content);
-	cursor: default;
-	pointer-events: none;
-	user-select: none;
-}
+	/* disabled:bg-transparent disabled:border-none disabled:text-base-content disabled:cursor-default */
+	input.disabled {
+		background: var(--bg-transparent);
+		border-color: transparent;
+		color: var(--text-base-content);
+		cursor: default;
+		pointer-events: none;
+		user-select: none;
+	}
 </style>

@@ -14,7 +14,7 @@ export type Combatant = {
 
 
 export let sceneData: Scene = $state({
-    name: "name of scene",
+    name: "My Scene",
     combatants: [],
 });
 

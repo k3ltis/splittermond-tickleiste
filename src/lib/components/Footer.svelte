@@ -1,10 +1,30 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { loadAttribute, saveAttribute } from "$lib/state/localstorage";
+	import { onMount } from "svelte";
 	let dataPrivacyModal: HTMLDialogElement;
 	import { _, locale } from 'svelte-i18n';
 
+	const Locale = {
+		German: "de",
+		English: "en"
+	}
+	const KEY_LOCALE: string = "locale"
+	const DEFAULT_LOCALE: string = Locale.German
+	let selected_locale: string = $state(DEFAULT_LOCALE)
+
+	onMount(() => {
+		const locale = loadAttribute<string>(KEY_LOCALE);
+		selected_locale = locale || DEFAULT_LOCALE
+	})
+		
+	$effect(() => {
+		$locale = selected_locale || DEFAULT_LOCALE
+	})
+
 	function toggleLanguage() {
-		$locale = $locale === 'en' ? 'de' : 'en';
+		selected_locale = selected_locale === Locale.German ? Locale.English : Locale.German;
+		saveAttribute(KEY_LOCALE, selected_locale)
 	}
 </script>
 
