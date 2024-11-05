@@ -6,7 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"deploy": "npx gh-pages -d dist",
+		"deploy": "npx gh-pages -d build -t",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
@@ -22,6 +22,7 @@
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@types/eslint": "^9.6.0",
+		"@types/uuid": "^10.0.0",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.13",
 		"eslint": "^9.7.0",
@@ -42,6 +43,7 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
-		"@types/node": "^22.8.1"
+		"@types/node": "^22.8.1",
+		"uuid": "^11.0.2"
 	}
 }
