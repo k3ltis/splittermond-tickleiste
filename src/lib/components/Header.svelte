@@ -136,7 +136,7 @@
 				<li>
 					<label id="uploadButton" for="battleScene" class="text-xl">
 						<Upload />
-						<span class="hidden lg:flex">{$_('upload_scene')}</span>
+						<span>{$_('upload_scene')}</span>
 					</label>
 					<input
 						type="file"
@@ -150,7 +150,7 @@
 				<li>
 					<button id="downloadBtn" onclick={() => downloadScene()} class="">
 						<Download />
-						<span class="hidden text-xl lg:flex">{$_('download_scene')}</span>
+						<span class="text-xl">{$_('download_scene')}</span>
 					</button>
 				</li>
 			</ul>

@@ -15,11 +15,12 @@
 		Editing: 'EDITING',
 		Running: 'RUNNING'
 	};
+	const DEFAULT_APP_MODE = AppMode.Running
 
 	let newCombatant: Combatant = $state(createNewCombatant());
 
 	// Indicating that the combatants are edited
-	let appMode: string = $state(AppMode.Running);
+	let appMode: string = $state(DEFAULT_APP_MODE);
 
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
@@ -77,7 +78,17 @@
 
 <TickSelection bind:this={tickSelection} />
 
-<div class="m-auto mt-16 h-full w-full px-2 py-4 md:w-11/12 lg:w-10/12 xl:w-10/12 2xl:w-[1200px]">
+<div class="
+		m-auto
+		mt-16
+		h-full
+		w-full
+		px-2
+		py-4
+		md:w-11/12
+		lg:w-10/12
+		xl:w-10/12
+		2xl:w-[1200px]">
 	<div class="navbar bg-base-100 px-0">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
@@ -113,16 +124,16 @@
 			</button>
 		</div>
 	</div>
-	<div id="combatantsTable" class="mt-4 grid w-full grid-cols-[6fr_1fr_1fr]">
+	<div id="combatantsTable" class="mt-4 grid w-full grid-cols-[99fr_1fr_1fr]">
 		<!-- Table Header -->
 		<div
-			class="col-span-3 grid grid-cols-subgrid items-center gap-2 bg-primary-content px-6 py-2 text-xl font-bold text-primary"
+			class="col-span-3 grid grid-cols-subgrid items-center gap-2 bg-primary-content px-6 py-2 text-xl font-bold"
 			class:rounded-t-lg={appMode === AppMode.Editing}
 			class:rounded-lg={appMode === AppMode.Running}
 		>
-			<div class="">{$_('column_name')}</div>
-			<div class="" id="initiativeColumn">{$_('column_initiative')}</div>
-			<div class=""></div>
+			<div>{$_('column_name')}</div>
+			<div id="initiativeColumn">{$_('column_initiative')}</div>
+			<div></div>
 			<!-- Spacer for buttons column -->
 		</div>
 
@@ -132,7 +143,7 @@
 				transition:slide
 				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg bg-primary-content px-6 pb-4"
 			>
-				<div class="">
+				<div>
 					<input
 						type="text"
 						placeholder={$_('placeholder_name')}
@@ -142,7 +153,7 @@
 						onkeydown={handleKeyDown}
 					/>
 				</div>
-				<div class="">
+				<div>
 					<input
 						type="number"
 						placeholder={$_('placeholder_initiative')}
@@ -182,16 +193,14 @@
 					p-6
 					focus:outline-none
 					{appMode === AppMode.Running ? 'cursor-pointer hover:bg-primary-content' : 'cursor-default'}
-					{appMode == AppMode.Running && index === 0 ? 'border-4 border-accent' : ''}
-					{index >= (appMode === AppMode.Running ? 2 : 1) ? 'border-t-4 border-primary-content' : ''}
-					text-primary"
+					{index >= 1 ? 'border-t-4 border-primary-content' : ''}"
 				onclick={() => combatantClicked(combatant)}
 				onkeydown={() => {}}
 				onkeyup={() => {}}
 				role="button"
 				tabindex="0"
 			>
-				<div class="">
+				<div>
 					<input
 						type="text"
 						disabled={appMode === AppMode.Running}
@@ -203,7 +212,7 @@
 						bind:value={combatant.name}
 					/>
 				</div>
-				<div class="">
+				<div>
 					<input
 						type="number"
 						disabled={appMode === AppMode.Running}
@@ -211,8 +220,6 @@
 							input
 							{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
 							w-20
-							w-full
-							max-w-md
 							px-1
 							text-center
 							text-3xl"

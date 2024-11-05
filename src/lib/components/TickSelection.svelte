@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Minus } from "lucide-svelte";
+	import { Minus, Hourglass, ClockAlert, Skull } from "lucide-svelte";
 	import { _ } from "svelte-i18n";
 
 	let modal: HTMLDialogElement;
@@ -34,10 +34,22 @@
 	function toggleNegation() {
 		negation = !negation;
 	}
+
+	function selectCombatantReadyState() {
+
+	}
+
+	function selectCombatantWaitingState() {
+		
+	}
+
+	function selectCombatantDeathState() {
+		
+	}
 </script>
 
 <dialog id="tickSelectionModal" class="modal" bind:this={modal}>
-	<div class="modal-box w-11/12 max-w-l">
+	<div class="modal-box w-11/12 max-w-l border-4 border-accent">
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
 			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
@@ -45,11 +57,27 @@
 		<h3 class="mb-5 text-2xl font-bold">{$_("tick_selection_modal_header")}</h3>
 		<div class="grid grid-cols-5 gap-1">
 			{#each tickNumbers as tickNumber}
-				<button class="btn text-4xl w-full h-full aspect-square" onclick={() => select(tickNumber)}>{tickNumber}</button>
+				<button class="btn text-4xl w-full h-full aspect-square" onclick={() => select(tickNumber)}>{negation ? -tickNumber : tickNumber}</button>
 			{/each}
 			<div>
 				<button class="btn w-full h-full aspect-square" class:btn-active={negation} onclick={() => toggleNegation()}>
-					<Minus />
+					<Minus size={48}/>
+				</button>
+			</div>
+			<div></div>
+			<div>
+				<button class="btn w-full h-full btn-outline btn-info" onclick={() => selectCombatantReadyState()}>
+					<ClockAlert size={64}/>
+				</button>
+			</div>
+			<div>
+				<button class="btn w-full h-full btn-outline btn-info" onclick={() => selectCombatantWaitingState()}>
+					<Hourglass size={64}/>
+				</button>
+			</div>
+			<div>
+				<button class="btn w-full h-full btn-outline btn-error" onclick={() => selectCombatantDeathState()}>
+					<Skull size={64}/>
 				</button>
 			</div>
 		</div>
