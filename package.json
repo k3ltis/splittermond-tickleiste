@@ -1,13 +1,13 @@
 {
 	"name": "splittermond-tickleiste",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A Svelte-based application for managing initiative tracking in the pen&paper roleplaying game Splittermond.",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"deploy": "npx gh-pages -d build -t",
+		"deploy": "npx gh-pages -d build -t --cname tickleiste.tklic.de",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
