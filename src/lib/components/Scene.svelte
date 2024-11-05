@@ -72,10 +72,7 @@
 	function combatantClicked(combatant: Combatant) {
 		if (appMode === AppMode.Running) {
 			sessionData.activeCombatant = combatant;
-			tickSelection.show().then((ticks: number) => {
-				combatant.initiative += ticks;
-				sortCombatantsByInitiative(combatant);
-			});
+			tickSelection.show()
 		}
 	}
 
@@ -249,13 +246,13 @@
 						</button>
 					{:else if appMode === AppMode.Running}
 						<div in:fade={{ duration: 200 }}>
-							<!-- {#if combatant.combatState === CombatState.Waiting}
+							{#if combatant.combatState === CombatState.Waiting}
 								<Hourglass class="text-info" size={48} strokeWidth={1} />
 							{:else if combatant.combatState === CombatState.Expecting}
 								<ClockAlert class="text-info" size={48} strokeWidth={1} />
 							{:else if combatant.combatState === CombatState.Dead}
 								<Skull class="text-error" size={48} strokeWidth={1} />
-							{/if} -->
+							{/if}
 						</div>
 					{/if}
 				</div>

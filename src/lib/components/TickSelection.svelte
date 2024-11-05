@@ -1,11 +1,16 @@
 <script lang="ts">
-	import { CombatState, sceneData, sessionData, type Combatant } from '$lib/state/scene_data.svelte';
+	import {
+		CombatState,
+		sceneData,
+		sessionData,
+		sortCombatantsByInitiative,
+		type Combatant
+	} from '$lib/state/scene_data.svelte';
 	import { Minus, Hourglass, ClockAlert, Skull, UserRound } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { slide } from 'svelte/transition';
 
 	let modal: HTMLDialogElement;
-	let resolveSelect: (value: number) => void;
 
 	const tickNumbers: Array<number> = [
 		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
@@ -18,11 +23,6 @@
 		sceneData.combatants;
 
 		modal.showModal();
-
-		// Return a new Promise and assign the resolver to `resolveSelect`
-		return new Promise<number>((resolve) => {
-			resolveSelect = resolve;
-		});
 	}
 
 	function hide() {
@@ -32,8 +32,10 @@
 	function select(ticks: number) {
 		hide();
 		let sign: number = negation ? -1 : 1;
-		// Resolve the promise with the selected tick value
-		resolveSelect(sign * ticks);
+		if (sessionData.activeCombatant) {
+			sessionData.activeCombatant.initiative += sign * ticks;
+			sortCombatantsByInitiative(sessionData.activeCombatant);
+		}
 	}
 
 	function toggleNegation() {
@@ -42,25 +44,23 @@
 
 	function setCombatStateToExpecting() {
 		if (!sessionData.activeCombatant) {
-			return
+			return;
 		}
-		sessionData.activeCombatant.combatState = CombatState.Expecting
+		sessionData.activeCombatant.combatState = CombatState.Expecting;
 	}
-	
+
 	function setCombatStateToWaiting() {
 		if (!sessionData.activeCombatant) {
-			return
+			return;
 		}
-		sessionData.activeCombatant.combatState = CombatState.Waiting
-
+		sessionData.activeCombatant.combatState = CombatState.Waiting;
 	}
 
 	function setCombatStateToDead() {
 		if (!sessionData.activeCombatant) {
-			return
+			return;
 		}
-		sessionData.activeCombatant.combatState = CombatState.Dead
-
+		sessionData.activeCombatant.combatState = CombatState.Dead;
 	}
 
 	function tickNumberHasCombatantsAssigned(tickNumber: number): boolean {
@@ -91,7 +91,11 @@
 		<form method="dialog">
 			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
 		</form>
-		<h3 class="mb-5 text-2xl font-bold">{$_('tick_selection_modal_header', { values: { combatantName: sessionData.activeCombatant?.name}})}</h3>
+		<h3 class="mb-5 text-2xl font-bold">
+			{$_('tick_selection_modal_header', {
+				values: { combatantName: sessionData.activeCombatant?.name }
+			})}
+		</h3>
 		<div class="grid grid-cols-5 gap-1">
 			{#each tickNumbers as tickNumber}
 				<button
@@ -99,7 +103,7 @@
 					onclick={() => select(tickNumber)}
 				>
 					{#if negation}
-						<div class="absolute {tickNumber <= 9 ? "left-4" :  "left-2.5"}">-</div>
+						<div class="absolute {tickNumber <= 9 ? 'left-4' : 'left-2.5'}">-</div>
 					{/if}
 					{tickNumber}
 					<!-- {negation ? -tickNumber : tickNumber} -->
