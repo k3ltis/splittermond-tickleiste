@@ -76,7 +76,7 @@
 	};
 </script>
 
-<div class="navbar border-b-4 border-primary-content fixed glass top-0 ">
+<div class="navbar border-b-4 border-primary-content fixed backdrop-blur-xl bg-primary-content/20 top-0 ">
 	<div class="flex-1">
 		<a class="btn btn-ghost text-xl">{$_("app_title")}</a>
 	</div>

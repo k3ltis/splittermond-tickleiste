@@ -12,6 +12,6 @@ export default {
 	plugins: [forms, containerQueries, require('daisyui')],
 
 	daisyui: {
-		themes: ["cupcake"]
+		themes: ["light"]
 	}
 } as Config;

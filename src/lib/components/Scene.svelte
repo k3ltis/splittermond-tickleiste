@@ -19,7 +19,7 @@
 	let newCombatant: Combatant = $state(createNewCombatant());
 
 	// Indicating that the combatants are edited
-	let appMode: string = $state(AppMode.Running);
+	let appMode: string = $state(AppMode.Editing);
 
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
@@ -80,7 +80,7 @@
 				type="text"
 				placeholder="Scene name..."
 				disabled={appMode === AppMode.Running}
-				class="text-3xl input mr-4 w-full max-w-md {appMode === AppMode.Editing
+				class="text-3xl input mr-4 w-full {appMode === AppMode.Editing
 							? 'input-bordered'
 							: 'input-ghost disabled'}"
 				bind:value={sceneData.name}
@@ -90,7 +90,7 @@
 		<div class="flex-none space-x-2">
 			<button
 				id="runSceneBtn"
-				class="btn text-xl btn-neutral"
+				class="btn text-xl btn-primary"
 				class:hidden={appMode == AppMode.Running}
 				onclick={runScene}
 			>
@@ -99,7 +99,7 @@
 			</button>
 			<button
 				id="editSceneBtn"
-				class="btn text-xl btn-neutral"
+				class="btn text-xl btn-primary"
 				class:hidden={appMode === AppMode.Editing}
 				onclick={editScene}
 			>
@@ -125,13 +125,13 @@
 		{#if appMode === AppMode.Editing}
 			<div
 				transition:slide
-				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg  px-6 pb-4 bg-primary-content text-primary"
+				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg px-6 pb-4 bg-primary-content text-primary"
 			>
 				<div class="">
 					<input
 						type="text"
 						placeholder="{$_("placeholder_name")}"
-						class="input input-bordered w-full max-w-md text-3xl"
+						class="input input-bordered w-full text-3xl"
 						bind:value={newCombatant.name}
 						bind:this={combatantNameInput}
 						onkeydown={handleKeyDown}
@@ -141,7 +141,7 @@
 					<input
 						type="number"
 						placeholder="{$_("placeholder_initiative")}"
-						class="input input-bordered text-3xl w-28 text-center"
+						class="input input-bordered text-3xl w-20 text-center px-1"
 						bind:value={newCombatant.initiative}
 						onkeydown={handleKeyDown}
 					/>
@@ -180,17 +180,17 @@
 						disabled={appMode === AppMode.Running}
 						class="input {appMode === AppMode.Editing
 							? 'input-bordered'
-							: 'input-ghost disabled'} w-full max-w-md text-3xl"
+							: 'input-ghost disabled'} w-full text-3xl"
 						bind:value={combatant.name}
 					/>
 				</div>
-				<div class="w-28">
+				<div class="">
 					<input
 						type="number"
 						disabled={appMode === AppMode.Running}
 						class="input {appMode === AppMode.Editing
 							? 'input-bordered'
-							: 'input-ghost disabled'} w-full max-w-md text-3xl w-28 text-center"
+							: 'input-ghost disabled'} w-full max-w-md text-3xl w-20 text-center px-1"
 						bind:value={combatant.initiative}
 					/>
 				</div>
@@ -220,7 +220,7 @@ input[type="number"] {
 /* disabled:bg-transparent disabled:border-none disabled:text-base-content disabled:cursor-default */
 input.disabled {
 	background: var(--bg-transparent);
-	border: none;
+	border-color: transparent;
 	color: var(--text-base-content);
 	cursor: default;
 	pointer-events: none;

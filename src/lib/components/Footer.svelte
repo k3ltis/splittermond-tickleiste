@@ -8,7 +8,7 @@
 	}
 </script>
 
-<footer class="footer flex items-center border-t-4 border-primary-content p-4 text-base-content">
+<footer class="footer flex items-center border-t-4 border-primary-content p-4 text-base-content bg-primary-content/10">
 	<aside class="flex-1">
 		<p class="hidden sm:flex">
 			Copyright © k3ltis {new Date().getFullYear()} - {__APP_NAME__} v{__APP_VERSION__}
