@@ -5,7 +5,7 @@
   "combatants_list": "Liste der Kämpfer",
   "combatants_list_description": "Zeigt die Liste der Kämpfer, die Teil der Szene sind.",
   "data_privacy": "Datenschutz",
-  "data_privacy_content": "Diese Seite nutzt den lokalen Speicher des Browsers, um die Szene lokal im Browser des Nutzers zu speichern. Dies geschieht, damit der Nutzer keine Informationen verliert, wenn er die Browseranwendung schließt. Wenn Sie diese Informationen löschen möchten, können Sie entweder die zwischengespeicherten Webdaten Ihres Browsers löschen oder einfach alle Einträge im Bearbeitungsmodus der Szene löschen. Es werden keine Daten an einen externen Server gesendet und keine anderen nutzerbezogenen Daten werden von dieser Seite verarbeitet.",
+  "data_privacy_content": "Diese Seite nutzt den lokalen Speicher des Browsers, um die Szene lokal im Browser des Nutzers zu speichern. Dies geschieht, damit der Nutzer keine Informationen verliert, wenn er die Browseranwendung schließt. Wenn Sie diese Informationen löschen möchten, können Sie entweder die zwischengespeicherten Webdaten Ihres Browsers löschen oder einfach alle Einträge im Bearbeitungsmodus der Szene löschen. <br /><br /> Es werden keine Daten an einen externen Server gesendet und keine anderen nutzerbezogenen Daten werden von dieser Seite verarbeitet.",
   "data_privacy_header": "Datenschutzinformationen",
   "download_alt": "Download-Icon",
   "download_scene": "Szene herunterladen",
