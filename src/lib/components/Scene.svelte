@@ -2,9 +2,9 @@
 	import {
 		createNewCombatant,
 		determineNextActingCombatant,
-		getMinimalActiveInitiative,
 		sceneData,
 		sessionData,
+		setMostRecentTickToMinimalActiveInitiative,
 		sortCombatantsByInitiative,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
@@ -70,7 +70,7 @@
 
 	function runScene() {
 		appMode = AppMode.Running;
-		sessionData.mostRecentTick = getMinimalActiveInitiative();
+		setMostRecentTickToMinimalActiveInitiative();
 		sortCombatantsByInitiative();
 	}
 
@@ -194,9 +194,11 @@
 		<!-- <div class="my-2"></div> -->
 
 		<!-- Combatant List -->
-		{#if sceneData.combatants.length === 0 }
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<div class="col-span-3 text-center py-16 px-4 text-l">{@html $_("scene.empty_combatants_list")}</div>
+		{#if sceneData.combatants.length === 0}
+			<div class="text-l col-span-3 px-4 py-16 text-center">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				{@html $_('scene.empty_combatants_list')}
+			</div>
 		{/if}
 		{#each sceneData.combatants as combatant, index (combatant.id)}
 			<div

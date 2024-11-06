@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
-		getMinimalActiveInitiative,
+		getAbsoluteTicks,
+		getRelativeTicks,
 		moveCombatantByTicks,
 		moveCombatantToTick,
 		resetActiveCombatant,
@@ -9,7 +10,6 @@
 		setCombatantCombatStateToDead,
 		setCombatantCombatStateToExpecting,
 		setCombatantCombatStateToWaiting,
-		type Combatant,
 		type Tick
 	} from '$lib/state/scene_data.svelte';
 	import { Minus, Hourglass, ClockAlert, Skull, UserRound, X, Plus } from 'lucide-svelte';
@@ -84,66 +84,6 @@
 		}
 		setCombatantCombatStateToDead(sessionData.activeCombatant);
 		resetActiveCombatant();
-	}
-
-	function getAbsoluteTicks(): Array<Tick> {
-		// determine last (largest) possible tick
-		let lastPossibleTick: number = getMinimalActiveInitiative();
-
-		// determine first (smallest) possible tick
-		const firstPossibleTick = sessionData.mostRecentTick;
-
-		if (
-			firstPossibleTick > lastPossibleTick ||
-			firstPossibleTick === Infinity ||
-			lastPossibleTick === Infinity
-		) {
-			console.error(
-				'Tick range invalid. First tick must not be larger than last tick. Neither must be Infinity.',
-				firstPossibleTick,
-				lastPossibleTick
-			);
-			return [
-				{
-					number: 0,
-					hasCombatants: false,
-					mode: 'absolute'
-				}
-			];
-		}
-
-		const ticks: Array<Tick> = [];
-		for (let i = firstPossibleTick; i <= lastPossibleTick; i++) {
-			ticks.push({
-				number: i,
-				hasCombatants: hasTickCombatantsAssigned(
-					i,
-					sceneData.combatants.filter((c) => c.id !== sessionData.activeCombatant?.id)
-				),
-				mode: 'absolute'
-			});
-		}
-		return ticks;
-	}
-
-	function getRelativeTicks(
-		negation: boolean,
-		comparisonInitiative: number,
-		combatants: Array<Combatant>
-	): Array<Tick> {
-		return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((number) => {
-			const relativeTick = negation ? -number : number;
-			const absoluteTick = relativeTick + comparisonInitiative;
-			return {
-				number: relativeTick,
-				hasCombatants: hasTickCombatantsAssigned(absoluteTick, combatants),
-				mode: 'relative'
-			};
-		});
-	}
-
-	function hasTickCombatantsAssigned(tickNumber: number, combatants: Array<Combatant>): boolean {
-		return combatants.some((c) => c.initiative === tickNumber);
 	}
 </script>
 

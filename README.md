@@ -13,7 +13,6 @@ Try it out on [tickleiste.tklic.de](tickleiste.tklic.de), it's hosted via Github
 - Supports special combat states like _Waiting, Expecting, and Incapitated_
 - No server involved, no login necessary, scene data will be saved to the browsers local storage
 
-
 ## Assets
 
 - Icons
@@ -35,4 +34,3 @@ Manual deployment to Github Pages
 ```bash
 bun run build && bun run deploy
 ```
-

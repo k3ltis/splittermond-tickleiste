@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { loadScene, sceneData, type Scene } from '$lib/state/scene_data.svelte';
+	import { getSceneDataForExport, loadScene, type Scene } from '$lib/state/scene_data.svelte';
 	import { extractFileContent, downloadJSON } from '$lib/state/fileio.svelte';
 	import 'driver.js/dist/driver.css';
 	import { _ } from 'svelte-i18n';
@@ -24,6 +24,7 @@
 	};
 
 	const downloadScene = () => {
+		const sceneData = getSceneDataForExport();
 		let filename = sceneData.name.toLowerCase().trim().replace(/\s+/g, '_');
 		downloadJSON(sceneData, filename);
 	};

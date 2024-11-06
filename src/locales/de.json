@@ -1,60 +1,60 @@
 {
-  "app_title": "Splittermond Tickleiste",
-  "column_initiative": "Initiative",
-  "column_name": "Name",
-  "combatants_list": "Liste der Kämpfer",
-  "combatants_list_description": "Zeigt die Liste der Kämpfer, die Teil der Szene sind.",
-  "data_privacy": "Datenschutz",
-  "data_privacy_content": "Diese Seite nutzt den lokalen Speicher des Browsers (local storage), um die Szene sowie benutzerdefinierte Einstellungen (wie etwas die gewählte Sprache) lokal im Browser des Nutzers zu speichern. Dies geschieht, damit der Nutzer keine Informationen verliert, wenn er die Browseranwendung schließt. Wenn Sie diese Informationen löschen möchten, müssen Sie die zwischengespeicherten Webdaten Ihres Browsers bereinigen. <br /><br /> Es werden keine Daten an einen externen Server gesendet und keine anderen nutzerbezogenen Daten werden von dieser Seite verarbeitet.",
-  "data_privacy_header": "Datenschutzinformationen",
-  "download_alt": "Download-Icon",
-  "download_scene": "Szene herunterladen",
-  "download_scene_description": "Ermöglicht es Ihnen, die aktuelle Szene als JSON-Datei herunterzuladen.",
-  "edit_scene": "Szene bearbeiten",
-  "edit_scene_button": "Szene bearbeiten",
-  "edit_scene_description": "Wechselt in den Bearbeitungsmodus, um den Szenennamen und die Liste der Kämpfer zu ändern.",
-  "help_alt": "Hilfe-Icon",
-  "placeholder_initiative": "Initiative",
-  "placeholder_name": "Name",
-  "run_scene": "Szene ausführen",
-  "run_scene_button": "Szene ausführen",
-  "run_scene_description": "Beendet den Bearbeitungsmodus und führt die Szene aus, indem alle Kämpfer nach aufsteigender Initiative geordnet werden. <b>Ein Klick auf einen Kämpfer im Ausführungsmodus ermöglicht es Ihnen, eine Anzahl von Ticks auszuwählen</b>, die zum Initiativwert des Kämpfers hinzugefügt werden, gefolgt von einer Neuanordnung. <br/><br/> Sie können jederzeit <b>in den Bearbeitungsmodus</b> zurückkehren.",
-  "scene_title": "Szenenüberschrift",
-  "scene_title_description": "Zeigt den Namen der aktuellen Szene an.",
-  "tick_selection_modal_header": "Aktion für {combatantName}",
-  "upload_alt": "Upload-Icon",
-  "upload_scene_description": "Ermöglicht es Ihnen, eine Szene auszuwählen, die zuvor auf Ihrem Gerät gespeichert wurde.",
-  "tour_btn_next": "Weiter",
-  "tour_btn_prev": "Zurück",
-  "tout_btn_done": "Fertig",
-  "tour_progress_text": "{{current}} von {{total}}",
-  "tour_upload_scene": "Szene hochladen",
-  "upload_scene": "Szene hochladen",
-  "tour": {
-    "change_theme": {
-      "title": "Tag- und Nachtmodus",
-      "content": "Umschalten zwischen Tag- und Nachtmodus."
-    },
-    "change_langauge": {
-      "title": "Sprache umschalten",
-      "content": "Zwischen Deutsch und Englisch wechseln."
-    },
-    "tick_selection_modal": {
-      "overview": {
-        "title": "Tick Auswahl Dialog",
-        "content": "Hier kannst du sowohl die <b>Ticks</b> auswählen, die hinzugefügt oder abgezogen werden sollen, als auch spezielle Kampfmodi aktivieren, wie <b>Aktion bereithalten</b>, <b>Abwarten </b>oder <b>kampfunfähig</b>."
-      }
-    }
-  },
-  "tickselection": {
-    "tooltip": {
-      "negation": "Ticks Rückwärts",
-      "set_state_expecting": "Bereithalten",
-      "set_state_dead": "Kampfunfähig",
-      "set_state_waiting": "Abwarten"
-    }
-  },
-  "scene": {
-    "empty_combatants_list": "Klicke auf <b>Scene Bearbeiten</b> und füge ein paar Kämpfer hinzu."
-  }
+	"app_title": "Splittermond Tickleiste",
+	"column_initiative": "Initiative",
+	"column_name": "Name",
+	"combatants_list": "Liste der Kämpfer",
+	"combatants_list_description": "Zeigt die Liste der Kämpfer, die Teil der Szene sind.",
+	"data_privacy": "Datenschutz",
+	"data_privacy_content": "Diese Seite nutzt den lokalen Speicher des Browsers (local storage), um die Szene sowie benutzerdefinierte Einstellungen (wie etwas die gewählte Sprache) lokal im Browser des Nutzers zu speichern. Dies geschieht, damit der Nutzer keine Informationen verliert, wenn er die Browseranwendung schließt. Wenn Sie diese Informationen löschen möchten, müssen Sie die zwischengespeicherten Webdaten Ihres Browsers bereinigen. <br /><br /> Es werden keine Daten an einen externen Server gesendet und keine anderen nutzerbezogenen Daten werden von dieser Seite verarbeitet.",
+	"data_privacy_header": "Datenschutzinformationen",
+	"download_alt": "Download-Icon",
+	"download_scene": "Szene herunterladen",
+	"download_scene_description": "Ermöglicht es Ihnen, die aktuelle Szene als JSON-Datei herunterzuladen.",
+	"edit_scene": "Szene bearbeiten",
+	"edit_scene_button": "Szene bearbeiten",
+	"edit_scene_description": "Wechselt in den Bearbeitungsmodus, um den Szenennamen und die Liste der Kämpfer zu ändern.",
+	"help_alt": "Hilfe-Icon",
+	"placeholder_initiative": "Initiative",
+	"placeholder_name": "Name",
+	"run_scene": "Szene ausführen",
+	"run_scene_button": "Szene ausführen",
+	"run_scene_description": "Beendet den Bearbeitungsmodus und führt die Szene aus, indem alle Kämpfer nach aufsteigender Initiative geordnet werden. <b>Ein Klick auf einen Kämpfer im Ausführungsmodus ermöglicht es Ihnen, eine Anzahl von Ticks auszuwählen</b>, die zum Initiativwert des Kämpfers hinzugefügt werden, gefolgt von einer Neuanordnung. <br/><br/> Sie können jederzeit <b>in den Bearbeitungsmodus</b> zurückkehren.",
+	"scene_title": "Szenenüberschrift",
+	"scene_title_description": "Zeigt den Namen der aktuellen Szene an.",
+	"tick_selection_modal_header": "Aktion für {combatantName}",
+	"upload_alt": "Upload-Icon",
+	"upload_scene_description": "Ermöglicht es Ihnen, eine Szene auszuwählen, die zuvor auf Ihrem Gerät gespeichert wurde.",
+	"tour_btn_next": "Weiter",
+	"tour_btn_prev": "Zurück",
+	"tout_btn_done": "Fertig",
+	"tour_progress_text": "{{current}} von {{total}}",
+	"tour_upload_scene": "Szene hochladen",
+	"upload_scene": "Szene hochladen",
+	"tour": {
+		"change_theme": {
+			"title": "Tag- und Nachtmodus",
+			"content": "Umschalten zwischen Tag- und Nachtmodus."
+		},
+		"change_langauge": {
+			"title": "Sprache umschalten",
+			"content": "Zwischen Deutsch und Englisch wechseln."
+		},
+		"tick_selection_modal": {
+			"overview": {
+				"title": "Tick Auswahl Dialog",
+				"content": "Hier kannst du sowohl die <b>Ticks</b> auswählen, die hinzugefügt oder abgezogen werden sollen, als auch spezielle Kampfmodi aktivieren, wie <b>Aktion bereithalten</b>, <b>Abwarten </b>oder <b>kampfunfähig</b>."
+			}
+		}
+	},
+	"tickselection": {
+		"tooltip": {
+			"negation": "Ticks Rückwärts",
+			"set_state_expecting": "Bereithalten",
+			"set_state_dead": "Kampfunfähig",
+			"set_state_waiting": "Abwarten"
+		}
+	},
+	"scene": {
+		"empty_combatants_list": "Klicke auf <b>Scene Bearbeiten</b> und füge ein paar Kämpfer hinzu."
+	}
 }
