@@ -191,9 +191,13 @@
 			</div>
 		{/if}
 
-		<div class="my-2"></div>
+		<!-- <div class="my-2"></div> -->
 
 		<!-- Combatant List -->
+		{#if sceneData.combatants.length === 0 }
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			<div class="col-span-3 text-center py-16 px-4 text-l">{@html $_("scene.empty_combatants_list")}</div>
+		{/if}
 		{#each sceneData.combatants as combatant, index (combatant.id)}
 			<div
 				animate:flip={{ delay: 100, duration: 500 }}
