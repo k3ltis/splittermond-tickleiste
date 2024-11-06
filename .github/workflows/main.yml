@@ -27,6 +27,9 @@ jobs:
       - name: Run linter
         run: bun run test
 
+      - name: Check licenses
+        run: license-checker --onlyAllow "MIT;Apache-2.0;ISC;BSD-2-Clause;Python-2.0;CC-BY-4.0;BSD-3-Clause;BlueOak-1.0.0;CC0-1.0;0BSD"
+
       - name: Git describe
         id: ghd
         uses: proudust/gh-describe@v2

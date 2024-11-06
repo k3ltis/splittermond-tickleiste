@@ -1,6 +1,6 @@
 {
 	"name": "splittermond-tickleiste",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "A Svelte-based application for managing initiative tracking in the pen&paper roleplaying game Splittermond.",
 	"type": "module",
 	"scripts": {
@@ -60,6 +60,7 @@
 		"eslint-plugin-svelte": "^2.46.0",
 		"gh-pages": "^6.2.0",
 		"globals": "^15.11.0",
+		"license-checker": "^25.0.1",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.7",
 		"prettier-plugin-tailwindcss": "^0.6.8",
