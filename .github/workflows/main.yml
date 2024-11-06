@@ -28,7 +28,7 @@ jobs:
         run: bun run test
 
       - name: Check licenses
-        run: license-checker --onlyAllow "MIT;Apache-2.0;ISC;BSD-2-Clause;Python-2.0;CC-BY-4.0;BSD-3-Clause;BlueOak-1.0.0;CC0-1.0;0BSD"
+        run: npx license-checker --onlyAllow "MIT;Apache-2.0;ISC;BSD-2-Clause;Python-2.0;CC-BY-4.0;BSD-3-Clause;BlueOak-1.0.0;CC0-1.0;0BSD;CC-BY-3.0"
 
       - name: Git describe
         id: ghd
