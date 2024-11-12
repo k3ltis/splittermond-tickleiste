@@ -34,9 +34,9 @@
 		hide();
 		if (sessionData.activeCombatant) {
 			if (tick.mode === 'relative') {
-				moveCombatantByTicks(sessionData.activeCombatant, tick.number);
+				moveCombatantByTicks(sessionData.activeCombatant.id, tick.number);
 			} else {
-				moveCombatantToTick(sessionData.activeCombatant, tick.number);
+				moveCombatantToTick(sessionData.activeCombatant.id, tick.number);
 			}
 			resetActiveCombatant();
 		}
@@ -64,7 +64,7 @@
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		setCombatantCombatStateToExpecting(sessionData.activeCombatant);
+		setCombatantCombatStateToExpecting(sessionData.activeCombatant.id);
 		resetActiveCombatant();
 	}
 
@@ -73,7 +73,7 @@
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		setCombatantCombatStateToWaiting(sessionData.activeCombatant);
+		setCombatantCombatStateToWaiting(sessionData.activeCombatant.id);
 		resetActiveCombatant();
 	}
 
@@ -82,7 +82,7 @@
 		if (!sessionData.activeCombatant) {
 			return;
 		}
-		setCombatantCombatStateToDead(sessionData.activeCombatant);
+		setCombatantCombatStateToDead(sessionData.activeCombatant.id);
 		resetActiveCombatant();
 	}
 </script>

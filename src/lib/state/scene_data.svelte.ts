@@ -51,24 +51,24 @@ export function determineNextActingCombatant(): Combatant | null {
 	return sceneData.combatants.find((c) => c.combatState === 'Active') || null;
 }
 
-export const createNewCombatant = (): Combatant => {
+export function createNewCombatant(): Combatant {
 	return {
 		id: uuid(),
 		name: '',
 		initiative: 0,
 		combatState: 'Active'
 	};
-};
+}
 
-export const loadScene = (_sceneData: Scene) => {
+export function loadScene(_sceneData: Scene) {
 	console.log(`Load scene ${JSON.stringify(_sceneData)}`);
 	Object.assign(sceneData, _sceneData);
 	sortCombatantsByInitiative();
-};
+}
 
-export const saveScene = () => {
+export function saveScene() {
 	saveSceneToLocalStorage(sceneData);
-};
+}
 
 export function getSceneDataForExport(): Scene {
 	const _sceneData: Scene = JSON.parse(JSON.stringify(sceneData));
@@ -76,71 +76,83 @@ export function getSceneDataForExport(): Scene {
 	return _sceneData;
 }
 
-export const moveCombatantByTicks = (combatant: Combatant, ticks: number) => {
+export function moveCombatantByTicks(combatantId: string, ticks: number) {
+	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
+	if (!combatant) {
+		console.error('Cannot find combatant with id ' + combatantId);
+		return;
+	}
+
+	// Check whether moving combatant is the next one in order
 	if (
 		sceneData.combatants.length > 0 &&
 		combatant === sceneData.combatants.find((c) => c.combatState === 'Active')
 	) {
-		setMostRecentTick(combatant.initiative);
+		sceneData.mostRecentTick = combatant.initiative;
 	}
 	combatant.initiative += ticks;
 	sortCombatantsByInitiative(combatant);
-};
+}
 
-export const moveCombatantToTick = (combatant: Combatant, tick: number) => {
+export function moveCombatantToTick(combatantId: string, tick: number) {
+	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
+	if (!combatant) {
+		console.error('Cannot find combatant with id ' + combatantId);
+		return;
+	}
+
 	const oldCombatState = combatant.combatState;
 	combatant.initiative = tick;
 	combatant.combatState = 'Active';
-	setMostRecentTick(combatant.initiative);
+	sceneData.mostRecentTick = combatant.initiative;
 	if (oldCombatState === 'Expecting') {
 		sortCombatantsByInitiative(null, combatant);
 	} else {
 		sortCombatantsByInitiative(combatant);
 	}
-};
+}
 
-export const setCombatantCombatStateToActive = (combatant: Combatant) => {
-	combatant.combatState = 'Active';
-	sortCombatantsByInitiative(combatant);
-};
+export function setCombatantCombatStateToWaiting(combatantId: string) {
+	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
+	if (!combatant) {
+		console.error('Cannot find combatant with id ' + combatantId);
+		return;
+	}
 
-export const setCombatantCombatStateToWaiting = (combatant: Combatant) => {
 	combatant.combatState = 'Waiting';
-	setMostRecentTick(combatant.initiative);
+	sceneData.mostRecentTick = combatant.initiative;
 	sortCombatantsByInitiative(combatant);
-};
+}
 
-export const setCombatantCombatStateToExpecting = (combatant: Combatant) => {
+export function setCombatantCombatStateToExpecting(combatantId: string) {
+	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
+	if (!combatant) {
+		console.error('Cannot find combatant with id ' + combatantId);
+		return;
+	}
+
 	combatant.combatState = 'Expecting';
-	setMostRecentTick(combatant.initiative);
+	sceneData.mostRecentTick = combatant.initiative;
 	sortCombatantsByInitiative(combatant);
-};
+}
 
-export const setCombatantCombatStateToDead = (combatant: Combatant) => {
+export function setCombatantCombatStateToDead(combatantId: string) {
+	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
+	if (!combatant) {
+		console.error('Cannot find combatant with id ' + combatantId);
+		return;
+	}
+
 	combatant.combatState = 'Dead';
 	sortCombatantsByInitiative(combatant);
-};
+}
 
 export function resetActiveCombatant() {
 	sessionData.activeCombatant = null;
 }
 
-export function setMostRecentTick(tick: number) {
-	sceneData.mostRecentTick = tick;
-}
-
-export function getMinimalActiveInitiative(): number {
-	const validInitiatives = sceneData.combatants
-		.filter((c) => c !== sessionData.activeCombatant && c.combatState === 'Active')
-		.map((c) => c.initiative);
-	return validInitiatives.length === 0
-		? sceneData.mostRecentTick || 0
-		: Math.min(...validInitiatives);
-}
-
 export function setMostRecentTickToMinimalActiveInitiative() {
-	const mostRecentTick = getMinimalActiveInitiative();
-	setMostRecentTick(mostRecentTick);
+	sceneData.mostRecentTick = getMinimalActiveInitiative();
 }
 
 export function getAbsoluteTicks(): Array<Tick> {
@@ -199,19 +211,23 @@ export function getRelativeTicks(
 	});
 }
 
-function hasTickCombatantsAssigned(tickNumber: number, combatants: Array<Combatant>): boolean {
-	return combatants.some((c) => c.initiative === tickNumber);
-}
-
-export const sortCombatantsByInitiative = (
+/**
+ * Sorts the scene combatants by two criterias:
+ *   - By the combatants' scending initiatives
+ *   - By the combatants' combat state in the following order: Waiting, Expecting, Active, Dead
+ *
+ * @param combatantWithLowPriority Combatant to put at the end of the sorted list
+ * @param combatantwithHighPriority Combatant to put at the beginning of the sorted list
+ */
+export function sortCombatantsByInitiative(
 	combatantWithLowPriority: Combatant | null = null,
 	combatantwithHighPriority: Combatant | null = null
-) => {
+) {
 	// Create a non-reactive clone of combatants
-	const combatants: Combatant[] = JSON.parse(JSON.stringify(sceneData.combatants));
+	const _combatants: Combatant[] = JSON.parse(JSON.stringify(sceneData.combatants));
 
 	// Partition combatants by their combat state
-	const combatantPartitions: CombatantsPartition = combatants.reduce<CombatantsPartition>(
+	const combatantPartitions: CombatantsPartition = _combatants.reduce<CombatantsPartition>(
 		(acc, curr: Combatant) => {
 			acc[curr.combatState].push(curr);
 			return acc;
@@ -259,4 +275,17 @@ export const sortCombatantsByInitiative = (
 		...combatantPartitions.Active,
 		...combatantPartitions.Dead
 	);
-};
+}
+
+function getMinimalActiveInitiative(): number {
+	const validInitiatives = sceneData.combatants
+		.filter((c) => c !== sessionData.activeCombatant && c.combatState === 'Active')
+		.map((c) => c.initiative);
+	return validInitiatives.length === 0
+		? sceneData.mostRecentTick || 0
+		: Math.min(...validInitiatives);
+}
+
+function hasTickCombatantsAssigned(tickNumber: number, combatants: Array<Combatant>): boolean {
+	return combatants.some((c) => c.initiative === tickNumber);
+}
