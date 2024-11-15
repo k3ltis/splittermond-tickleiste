@@ -9,7 +9,7 @@
 	} from '$lib/state/scene_data.svelte';
 	import { slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import TickSelection from './TickSelection.svelte';
+	import CombatantModal from './modal/CombatantModal.svelte';
 	import CombatantEntry from './CombatantEntry.svelte';
 	import { _ } from 'svelte-i18n';
 	import { Pencil, Play, Plus } from 'lucide-svelte';
@@ -26,7 +26,7 @@
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
 
-	let tickSelection: typeof TickSelection;
+	let combatantModal: typeof CombatantModal;
 
 	function addCombatant(combatant: Combatant) {
 		if (combatant.name === '') {
@@ -65,12 +65,12 @@
 	function combatantClicked(combatant: Combatant) {
 		if (appMode === 'RUNNING') {
 			sessionData.activeCombatant = combatant;
-			tickSelection.show();
+			combatantModal.show();
 		}
 	}
 </script>
 
-<TickSelection bind:this={tickSelection} />
+<CombatantModal bind:this={combatantModal} />
 
 <div
 	class="
