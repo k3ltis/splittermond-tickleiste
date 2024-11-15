@@ -1,39 +1,27 @@
 <script lang="ts">
 	import {
 		createNewCombatant,
-		determineNextActingCombatant,
 		sceneData,
 		sessionData,
 		setMostRecentTickToMinimalActiveInitiative,
 		sortCombatantsByInitiative,
 		type Combatant
 	} from '$lib/state/scene_data.svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import TickSelection from './TickSelection.svelte';
+	import CombatantEntry from './CombatantEntry.svelte';
 	import { _ } from 'svelte-i18n';
-	import {
-		Pencil,
-		Play,
-		Plus,
-		Trash,
-		Hourglass,
-		ClockAlert,
-		Skull,
-		ArrowRight
-	} from 'lucide-svelte';
+	import { Pencil, Play, Plus } from 'lucide-svelte';
+	import type { AppMode } from '$lib/domain/app';
+	import { selectInputText } from '$lib/utility/html_utilities';
 
-	const AppMode = {
-		Editing: 'EDITING',
-		Running: 'RUNNING'
-	};
-	const DEFAULT_APP_MODE = AppMode.Running;
+	const DEFAULT_APP_MODE: AppMode = 'RUNNING';
 
 	let newCombatant: Combatant = $state(createNewCombatant());
-	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
 	// Indicating that the combatants are edited
-	let appMode: string = $state(DEFAULT_APP_MODE);
+	let appMode: AppMode = $state(DEFAULT_APP_MODE);
 
 	// svelte-ignore non_reactive_update
 	let combatantNameInput: HTMLInputElement;
@@ -61,7 +49,7 @@
 	}
 
 	function editScene() {
-		appMode = AppMode.Editing;
+		appMode = 'EDITING';
 	}
 
 	function deleteCombatant(combatantId: string) {
@@ -69,21 +57,16 @@
 	}
 
 	function runScene() {
-		appMode = AppMode.Running;
+		appMode = 'RUNNING';
 		setMostRecentTickToMinimalActiveInitiative();
 		sortCombatantsByInitiative();
 	}
 
 	function combatantClicked(combatant: Combatant) {
-		if (appMode === AppMode.Running) {
+		if (appMode === 'RUNNING') {
 			sessionData.activeCombatant = combatant;
 			tickSelection.show();
 		}
-	}
-
-	function selectInputText(event?: FocusEvent) {
-		const target = event?.target as HTMLInputElement;
-		target.select();
 	}
 </script>
 
@@ -109,8 +92,8 @@
 			<input
 				type="text"
 				placeholder="Scene name..."
-				disabled={appMode === AppMode.Running}
-				class="input mr-4 w-full text-3xl {appMode === AppMode.Editing
+				disabled={appMode === 'RUNNING'}
+				class="input mr-4 w-full text-3xl {appMode === 'EDITING'
 					? 'input-bordered'
 					: 'disabled input-ghost'}"
 				bind:value={sceneData.name}
@@ -121,7 +104,7 @@
 			<button
 				id="runSceneBtn"
 				class="btn btn-primary text-xl"
-				class:hidden={appMode == AppMode.Running}
+				class:hidden={appMode == 'RUNNING'}
 				onclick={runScene}
 			>
 				<Play />
@@ -130,7 +113,7 @@
 			<button
 				id="editSceneBtn"
 				class="btn btn-primary text-xl"
-				class:hidden={appMode === AppMode.Editing}
+				class:hidden={appMode === 'EDITING'}
 				onclick={editScene}
 			>
 				<Pencil />
@@ -142,8 +125,8 @@
 		<!-- Table Header -->
 		<div
 			class="col-span-3 grid grid-cols-subgrid items-center gap-2 bg-primary-content px-6 py-2 text-xl font-bold"
-			class:rounded-t-lg={appMode === AppMode.Editing}
-			class:rounded-lg={appMode === AppMode.Running}
+			class:rounded-t-lg={appMode === 'EDITING'}
+			class:rounded-lg={appMode === 'RUNNING'}
 		>
 			<div>{$_('column_name')}</div>
 			<div id="initiativeColumn">{$_('column_initiative')}</div>
@@ -152,7 +135,7 @@
 		</div>
 
 		<!-- Combatant Input Fields -->
-		{#if appMode === AppMode.Editing}
+		{#if appMode === 'EDITING'}
 			<div
 				transition:slide
 				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg bg-primary-content px-6 pb-4"
@@ -200,86 +183,12 @@
 				{@html $_('scene.empty_combatants_list')}
 			</div>
 		{/if}
-		{#each sceneData.combatants as combatant, index (combatant.id)}
-			<div
-				animate:flip={{ delay: 100, duration: 500 }}
-				class="
-					col-span-3
-					grid
-					grid-cols-subgrid
-					items-center
-					gap-2
-					rounded-none
-					p-6
-					focus:outline-none
-					{appMode === AppMode.Running ? 'cursor-pointer hover:bg-primary-content' : 'cursor-default'}
-					{index >= 1 ? 'border-t-4 border-primary-content' : ''}"
-				onclick={() => combatantClicked(combatant)}
-				onkeydown={() => {}}
-				onkeyup={() => {}}
-				role="button"
-				tabindex="0"
-			>
-				<div class="relative">
-					<input
-						type="text"
-						disabled={appMode === AppMode.Running}
-						class="
-						input
-						{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
-						w-full
-						text-3xl"
-						bind:value={combatant.name}
-					/>
-					{#if combatant === nextActingCombatant && appMode === AppMode.Running}
-						<div class="absolute -left-4 top-2.5" in:fade={{ duration: 200 }}>
-							<ArrowRight size="32" />
-						</div>
-					{/if}
-				</div>
-				<div>
-					{#if combatant.combatState === 'Active' || appMode === AppMode.Editing}
-						<input
-							type="number"
-							disabled={appMode === AppMode.Running}
-							class="
-								input
-								{appMode === AppMode.Editing ? 'input-bordered' : 'disabled input-ghost'}
-								w-20
-								px-1
-								text-center
-								text-3xl"
-							onfocus={(event: FocusEvent) => selectInputText(event)}
-							bind:value={combatant.initiative}
-						/>
-					{:else}
-						<div in:fade={{ duration: 200 }}>
-							{#if combatant.combatState === 'Waiting'}
-								<Hourglass class="w-full text-center text-info" size={48} strokeWidth={1} />
-							{:else if combatant.combatState === 'Expecting'}
-								<ClockAlert class="w-full text-center text-info" size={48} strokeWidth={1} />
-							{:else if combatant.combatState === 'Dead'}
-								<Skull class="w-full text-center text-error" size={48} strokeWidth={1} />
-							{/if}
-						</div>
-					{/if}
-				</div>
-				<div class="w-16 justify-center">
-					{#if appMode === AppMode.Editing}
-						<button
-							in:fade={{ duration: 200 }}
-							class="btn btn-outline btn-error"
-							onclick={() => deleteCombatant(combatant.id)}
-						>
-							<Trash />
-						</button>
-					{:else if appMode === AppMode.Running}
-						<div></div>
-					{/if}
-				</div>
-			</div>
-		{/each}
 	</div>
+	{#each sceneData.combatants as combatant, index (combatant.id)}
+		<div animate:flip={{ delay: 100, duration: 500 }}>
+			<CombatantEntry {appMode} {combatant} {index} {combatantClicked} {deleteCombatant} />
+		</div>
+	{/each}
 </div>
 
 <style>
