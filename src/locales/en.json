@@ -56,5 +56,28 @@
 	},
 	"scene": {
 		"empty_combatants_list": "Click <b>Edit Scene</b> and add some combatants."
-	}
+	},
+	"combatant_modal": {
+		"actions": "Actions",
+		"conditions": "Conditions"
+	},
+	"condition": {
+		"fearful": "Fearful",
+		"dazed": "Dazed",
+		"unconscious": "Unconscious",
+		"bleeding": "Bleeding",
+		"burning": "Burning",
+		"exhausted": "Exhausted",
+		"blinded": "Blinded",
+		"crisis_of_faith": "Crisis of Faith",
+		"sick": "Sick",
+		"crippled": "Crippled",
+		"panicked": "Panicked",
+		"frenzied": "Frenzied",
+		"struggling": "Struggling",
+		"sleeping": "Sleeping",
+		"wasting": "Wasting",
+		"dying": "Dying",
+		"wounded": "Wounded"
+	  }
 }

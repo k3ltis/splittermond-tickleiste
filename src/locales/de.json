@@ -56,5 +56,28 @@
 	},
 	"scene": {
 		"empty_combatants_list": "Klicke auf <b>Scene Bearbeiten</b> und füge ein paar Kämpfer hinzu."
-	}
+	},
+	"combatant_modal": {
+		"actions": "Aktionen",
+		"conditions": "Zustände"
+	},
+	"condition": {
+		"fearful": "Angsterfüllt",
+		"dazed": "Benommen",
+		"unconscious": "Bewusstlos",
+		"bleeding": "Blutend",
+		"burning": "Brennend",
+		"exhausted": "Erschöpft",
+		"blinded": "Geblendet",
+		"crisis_of_faith": "Glaubenskrise",
+		"sick": "Krank",
+		"crippled": "Lahm",
+		"panicked": "Panisch",
+		"frenzied": "Rasend",
+		"struggling": "Ringend",
+		"sleeping": "Schlafend",
+		"wasting": "Siechtum",
+		"dying": "Sterbend",
+		"wounded": "Verwundet"
+	  }
 }
