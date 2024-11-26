@@ -14,6 +14,7 @@ export type ConditionType =
 	| 'frenzied'
 	| 'dying'
 	| 'wounded';
+
 export type Condition = {
 	id: ConditionType;
 	i18n: string;

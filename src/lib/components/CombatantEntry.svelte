@@ -1,9 +1,16 @@
 <script lang="ts">
-	import { determineNextActingCombatant, type Combatant } from '$lib/state/scene_data.svelte';
+	import {
+		determineNextActingCombatant,
+		type Combatant,
+		sceneData,
+		type ConditionState
+	} from '$lib/state/scene_data.svelte';
 	import { fade } from 'svelte/transition';
 	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
+	import { _ } from 'svelte-i18n';
+	import { conditions, type ConditionType } from '$lib/state/condition';
 
 	interface Props {
 		combatant: Combatant;
@@ -16,6 +23,18 @@
 	let { combatant, appMode, index, combatantClicked, deleteCombatant }: Props = $props();
 
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
+
+	function resolveLabel(conditionId: ConditionType): string {
+		const condition = conditions.find((c) => c.id === conditionId);
+		if (!condition) {
+			return conditionId;
+		}
+		return $_(condition.i18n);
+	}
+
+	function resolveConditionDuration(conditionState: ConditionState): number {
+		return sceneData.mostRecentTick - conditionState.activeSinceTick;
+	}
 </script>
 
 <div
@@ -31,17 +50,34 @@
 >
 	<div class="col-span-3 grid grid-cols-subgrid items-center gap-2">
 		<div class="relative">
-			<input
-				type="text"
-				aria-label="Combatant name"
-				disabled={appMode === 'RUNNING'}
-				class="
-				input
-				w-full
-				{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
-				text-3xl"
-				bind:value={combatant.name}
-			/>
+			<div class="flex flex-row">
+				<input
+					type="text"
+					aria-label="Combatant name"
+					disabled={appMode === 'RUNNING'}
+					class="
+					input
+					w-full
+					{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
+					my-auto
+					text-3xl
+					"
+					bind:value={combatant.name}
+				/>
+				{#if appMode === 'RUNNING'}
+					<div class="flex flex-col">
+						{#each combatant.conditionStates as conditionState}
+							<div class="badge badge-error badge-outline badge-lg mb-1 self-end">
+								<span class="text-nowrap"
+									>{resolveLabel(conditionState.id)} ({resolveConditionDuration(
+										conditionState
+									)})</span
+								>
+							</div>
+						{/each}
+					</div>
+				{/if}
+			</div>
 			{#if combatant === nextActingCombatant && appMode === 'RUNNING'}
 				<div class="absolute -left-4 top-2.5" in:fade={{ duration: 200 }}>
 					<ArrowRight size="32" />

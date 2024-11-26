@@ -13,7 +13,7 @@ export type Scene = {
 	mostRecentTick: number;
 };
 
-type ConditionState = {
+export type ConditionState = {
 	id: ConditionType;
 	activeSinceTick: number;
 };
