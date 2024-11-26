@@ -1,13 +1,21 @@
 import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
+import { type ConditionType } from './condition';
+import { migrateScene as migrateSceneData } from './data_migration';
 
 // Types
 export type CombatState = 'Active' | 'Dead' | 'Waiting' | 'Expecting';
 
 export type Scene = {
+	version: number;
 	name: string;
 	combatants: Combatant[];
 	mostRecentTick: number;
+};
+
+type ConditionState = {
+	id: ConditionType;
+	activeSinceTick: number;
 };
 
 export type Combatant = {
@@ -15,6 +23,7 @@ export type Combatant = {
 	name: string;
 	initiative: number;
 	combatState: CombatState;
+	conditionStates: ConditionState[];
 };
 
 export type SessionData = {
@@ -36,6 +45,7 @@ type CombatantsPartition = {
 
 // Reactive States
 export const sceneData: Scene = $state({
+	version: 0,
 	name: 'My Scene',
 	combatants: [] as Combatant[],
 	mostRecentTick: 0
@@ -56,13 +66,14 @@ export function createNewCombatant(): Combatant {
 		id: uuid(),
 		name: '',
 		initiative: 0,
-		combatState: 'Active'
+		combatState: 'Active',
+		conditionStates: []
 	};
 }
 
 export function loadScene(_sceneData: Scene) {
 	console.log(`Load scene ${JSON.stringify(_sceneData)}`);
-	Object.assign(sceneData, _sceneData);
+	Object.assign(sceneData, migrateSceneData(_sceneData));
 	sortCombatantsByInitiative();
 }
 
@@ -275,6 +286,30 @@ export function sortCombatantsByInitiative(
 		...combatantPartitions.Active,
 		...combatantPartitions.Dead
 	);
+}
+
+export function toggleCondition(combatantId: string, conditionId: ConditionType) {
+	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
+	if (!combatant) {
+		console.error('cannot find combatant with id ' + combatantId);
+		return;
+	}
+
+	const conditionStateIndex = combatant.conditionStates.findIndex(
+		(conditionState) => conditionState.id === conditionId
+	);
+	if (conditionStateIndex >= 0) {
+		// remove condition
+		console.log(`remove condition ${conditionId} from combatant ${combatantId}`);
+		combatant.conditionStates.splice(conditionStateIndex, 1);
+	} else {
+		// add condition
+		console.log(`add condition ${conditionId} to combatant ${combatantId}`);
+		combatant.conditionStates.push({
+			id: conditionId,
+			activeSinceTick: combatant.initiative
+		});
+	}
 }
 
 function getMinimalActiveInitiative(): number {

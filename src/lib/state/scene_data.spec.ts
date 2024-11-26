@@ -8,6 +8,7 @@ import {
 	setCombatantCombatStateToDead,
 	setCombatantCombatStateToExpecting,
 	setCombatantCombatStateToWaiting,
+	toggleCondition,
 	type Combatant,
 	type Scene
 } from './scene_data.svelte';
@@ -36,19 +37,22 @@ describe('loadScene', () => {
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			]
 		});
@@ -82,19 +86,22 @@ describe('moveCombatantByTicks', () => {
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			],
 			// Merry was moved from 3 to 9, thus mostRecentTick is expected to be 3
@@ -115,19 +122,22 @@ describe('moveCombatantByTicks', () => {
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 10,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			],
 			// Gandalf was moved from 4 to 10, but Merry is the first active combatant, thus mostRecentTick stays unchanged
@@ -148,19 +158,22 @@ describe('moveCombatantByTicks', () => {
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: -5,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			],
 			// Merry was moved from 3 to -5
@@ -191,6 +204,47 @@ describe('moveCombatantToTick', () => {
 	);
 });
 
+describe('toggleCondition', () => {
+	it('toggle condition', () => {
+		givenScene(TEST_SCENE_SMALL);
+
+		toggleCondition('MerryId', 'bleeding');
+
+		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
+			{
+				id: 'bleeding',
+				activeSinceTick: 3
+			}
+		]);
+
+		toggleCondition('MerryId', 'burning');
+
+		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
+			{
+				id: 'bleeding',
+				activeSinceTick: 3
+			},
+			{
+				id: 'burning',
+				activeSinceTick: 3
+			}
+		]);
+
+		toggleCondition('MerryId', 'bleeding');
+
+		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
+			{
+				id: 'burning',
+				activeSinceTick: 3
+			}
+		]);
+
+		toggleCondition('MerryId', 'burning');
+
+		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([]);
+	});
+});
+
 describe('set combat states', () => {
 	describe('setCombatantCombatStateToWaiting', () => {
 		it('sets combat state to waiting', () => {
@@ -203,19 +257,22 @@ describe('set combat states', () => {
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Waiting'
+					combatState: 'Waiting',
+					conditionStates: []
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			]);
 		});
@@ -231,19 +288,22 @@ describe('set combat states', () => {
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Waiting'
+					combatState: 'Waiting',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Waiting'
+					combatState: 'Waiting',
+					conditionStates: []
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			]);
 		});
@@ -260,19 +320,22 @@ describe('set combat states', () => {
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Expecting'
+					combatState: 'Expecting',
+					conditionStates: []
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				}
 			]);
 		});
@@ -289,19 +352,22 @@ describe('set combat states', () => {
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active'
+					combatState: 'Active',
+					conditionStates: []
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Dead'
+					combatState: 'Dead',
+					conditionStates: []
 				}
 			]);
 		});
@@ -320,19 +386,22 @@ describe('set combat states', () => {
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Waiting'
+					combatState: 'Waiting',
+					conditionStates: []
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Expecting'
+					combatState: 'Expecting',
+					conditionStates: []
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Dead'
+					combatState: 'Dead',
+					conditionStates: []
 				}
 			]);
 		});
