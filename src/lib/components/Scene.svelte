@@ -200,6 +200,7 @@
 
 	input[type='number'] {
 		-moz-appearance: textfield; /* Firefox */
+		appearance: textfield;
 	}
 
 	/* disabled:bg-transparent disabled:border-none disabled:text-base-content disabled:cursor-default */

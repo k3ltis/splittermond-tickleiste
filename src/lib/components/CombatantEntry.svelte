@@ -20,13 +20,7 @@
 
 <div
 	class="
-		grid
-		grid-cols-[98fr_1fr_1fr]
-		items-center
-		gap-2
-		rounded-none
-		p-6
-		focus:outline-none
+	    grid w-full grid-cols-[98fr_1fr_1fr] rounded-none p-6 focus:outline-none
 		{appMode === 'RUNNING' ? 'cursor-pointer hover:bg-primary-content' : 'cursor-default'}
 		{index >= 1 ? 'border-t-4 border-primary-content' : ''}"
 	onclick={() => combatantClicked(combatant)}
@@ -35,7 +29,7 @@
 	role="button"
 	tabindex="0"
 >
-	<div class="relative">
+	<div class="col-span-3 grid grid-cols-subgrid items-center gap-2">
 		<input
 			type="text"
 			aria-label="Combatant name"
@@ -43,7 +37,6 @@
 			class="
 				input
 				{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
-				w-full
 				text-3xl"
 			bind:value={combatant.name}
 		/>
@@ -52,48 +45,44 @@
 				<ArrowRight size="32" />
 			</div>
 		{/if}
-	</div>
-	<div>
-		{#if combatant.combatState === 'Active' || appMode === 'EDITING'}
-			<input
-				type="number"
-				aria-label="Combatant Initiative"
-				disabled={appMode === 'RUNNING'}
-				class="
-					input
+		<div>
+			{#if combatant.combatState === 'Active' || appMode === 'EDITING'}
+				<input
+					type="number"
+					aria-label="Combatant Initiative"
+					disabled={appMode === 'RUNNING'}
+					class="
 					{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
-					px-1
-					text-3xl
-					max-w-24
-					text-center
+					input max-w-20 px-1 text-center text-3xl
 					"
-				onfocus={(event: FocusEvent) => selectInputText(event)}
-				bind:value={combatant.initiative}
-			/>
-		{:else}
-			<div in:fade={{ duration: 200 }} aria-label="Combatant Status">
-				{#if combatant.combatState === 'Waiting'}
-					<Hourglass class="text-center text-info min-w-12" size={48} strokeWidth={1} />
-				{:else if combatant.combatState === 'Expecting'}
-					<ClockAlert class="text-center text-info min-w-12" size={48} strokeWidth={1} />
-				{:else if combatant.combatState === 'Dead'}
-					<Skull class="text-center text-error min-w-12" size={48} strokeWidth={1} />
-				{/if}
-			</div>
-		{/if}
-	</div>
-	<div class="text-center">
-		{#if appMode === 'EDITING'}
-			<button
-				in:fade={{ duration: 200 }}
-				class="btn btn-outline btn-error min-w-12"
-				onclick={() => deleteCombatant(combatant.id)}
-			>
-				<Trash />
-			</button>
-		{:else if appMode === 'RUNNING'}
-			<div class="min-w-12"></div>
-		{/if}
+					onfocus={(event: FocusEvent) => selectInputText(event)}
+					bind:value={combatant.initiative}
+				/>
+			{:else}
+				<div in:fade={{ duration: 200 }} aria-label="Combatant Status">
+					{#if combatant.combatState === 'Waiting'}
+						<Hourglass class="min-w-12 text-center text-info" size={48} strokeWidth={1} />
+					{:else if combatant.combatState === 'Expecting'}
+						<ClockAlert class="min-w-12 text-center text-info" size={48} strokeWidth={1} />
+					{:else if combatant.combatState === 'Dead'}
+						<Skull class="min-w-12 text-center text-error" size={48} strokeWidth={1} />
+					{/if}
+				</div>
+			{/if}
+		</div>
+		<div class="w-16 text-center">
+			{#if appMode === 'EDITING'}
+				<button
+					in:fade={{ duration: 200 }}
+					class="btn btn-outline btn-error"
+					onclick={() => deleteCombatant(combatant.id)}
+				>
+					<Trash />
+				</button>
+			{:else if appMode === 'RUNNING'}
+				<div class="min-w-12"></div>
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -106,6 +95,7 @@
 
 	input[type='number'] {
 		-moz-appearance: textfield; /* Firefox */
+		appearance: textfield;
 	}
 
 	/* disabled:bg-transparent disabled:border-none disabled:text-base-content disabled:cursor-default */
