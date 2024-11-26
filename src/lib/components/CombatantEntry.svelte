@@ -30,21 +30,24 @@
 	tabindex="0"
 >
 	<div class="col-span-3 grid grid-cols-subgrid items-center gap-2">
-		<input
-			type="text"
-			aria-label="Combatant name"
-			disabled={appMode === 'RUNNING'}
-			class="
+		<div class="relative">
+			<input
+				type="text"
+				aria-label="Combatant name"
+				disabled={appMode === 'RUNNING'}
+				class="
 				input
+				w-full
 				{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
 				text-3xl"
-			bind:value={combatant.name}
-		/>
-		{#if combatant === nextActingCombatant && appMode === 'RUNNING'}
-			<div class="absolute -left-4 top-2.5" in:fade={{ duration: 200 }}>
-				<ArrowRight size="32" />
-			</div>
-		{/if}
+				bind:value={combatant.name}
+			/>
+			{#if combatant === nextActingCombatant && appMode === 'RUNNING'}
+				<div class="absolute -left-4 top-2.5" in:fade={{ duration: 200 }}>
+					<ArrowRight size="32" />
+				</div>
+			{/if}
+		</div>
 		<div>
 			{#if combatant.combatState === 'Active' || appMode === 'EDITING'}
 				<input
@@ -53,19 +56,19 @@
 					disabled={appMode === 'RUNNING'}
 					class="
 					{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
-					input max-w-20 px-1 text-center text-3xl
+					input w-20 px-1 text-center text-3xl
 					"
 					onfocus={(event: FocusEvent) => selectInputText(event)}
 					bind:value={combatant.initiative}
 				/>
 			{:else}
-				<div in:fade={{ duration: 200 }} aria-label="Combatant Status">
+				<div in:fade={{ duration: 200 }} aria-label="Combatant Status" class="">
 					{#if combatant.combatState === 'Waiting'}
-						<Hourglass class="min-w-12 text-center text-info" size={48} strokeWidth={1} />
+						<Hourglass class="w-20 text-center text-info" size={48} strokeWidth={1} />
 					{:else if combatant.combatState === 'Expecting'}
-						<ClockAlert class="min-w-12 text-center text-info" size={48} strokeWidth={1} />
+						<ClockAlert class="w-20 text-center text-info" size={48} strokeWidth={1} />
 					{:else if combatant.combatState === 'Dead'}
-						<Skull class="min-w-12 text-center text-error" size={48} strokeWidth={1} />
+						<Skull class="w-20 text-center text-error" size={48} strokeWidth={1} />
 					{/if}
 				</div>
 			{/if}

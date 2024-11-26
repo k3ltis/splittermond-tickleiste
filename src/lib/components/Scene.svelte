@@ -130,7 +130,7 @@
 		>
 			<div>{$_('column_name')}</div>
 			<div id="initiativeColumn">{$_('column_initiative')}</div>
-			<div></div>
+			<div class="w-16"></div>
 			<!-- Spacer for buttons column -->
 		</div>
 
