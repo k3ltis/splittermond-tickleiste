@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { X } from 'lucide-svelte';
 	import { base } from '$app/paths';
 	import { loadAttribute, saveAttribute } from '$lib/state/localstorage';
 	import { onMount } from 'svelte';
@@ -88,13 +89,29 @@
 	</nav>
 </footer>
 
-<dialog id="dataPrivacyModal" bind:this={dataPrivacyModal} class="modal">
+<dialog
+	id="dataPrivacyModal"
+	bind:this={dataPrivacyModal}
+	class="modal"
+	aria-labelledby="dialogTitle"
+	aria-describedby="dialogDesc"
+>
 	<div class="modal-box">
-		<h3 class="text-lg font-bold">{$_('data_privacy_header')}</h3>
+		<!-- Allow closing by clicking the "X" -->
+		<form method="dialog">
+			<button
+				class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+				aria-label={$_('close')}
+			>
+				<X aria-hidden size={24} />
+			</button>
+		</form>
+		<h3 class="text-lg font-bold" id="dialogTitle">{$_('data_privacy_header')}</h3>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<p class="py-4">{@html $_('data_privacy_content')}</p>
+		<p class="py-4" id="dialogDesc">{@html $_('data_privacy_content')}</p>
 	</div>
+	<!-- Allows closing by clicking the free area around the modal -->
 	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
+		<button>{$_('close')}</button>
 	</form>
 </dialog>

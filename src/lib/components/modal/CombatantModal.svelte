@@ -30,8 +30,11 @@
 	>
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
-			<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
-				<X size={24} />
+			<button
+				class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+				aria-label={$_('close')}
+			>
+				<X aria-hidden size={24} />
 			</button>
 		</form>
 		<div role="tablist" class="tabs tabs-lifted">
@@ -61,6 +64,6 @@
 	</div>
 	<!-- Allows closing by clicking the free area around the modal -->
 	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
+		<button>{$_('close')}</button>
 	</form>
 </dialog>
