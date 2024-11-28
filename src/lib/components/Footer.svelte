@@ -63,7 +63,7 @@
 				version="1.1"
 				xmlns="http://www.w3.org/2000/svg"
 				xmlns:xlink="http://www.w3.org/1999/xlink"
-				class="icon-footer"
+				class="custom-icon"
 			>
 				<title>github [#142]</title>
 				<desc>Created with Sketch.</desc>
@@ -98,9 +98,3 @@
 		<button>close</button>
 	</form>
 </dialog>
-
-<style>
-	.icon-footer {
-		fill: var(--text-base-content);
-	}
-</style>
