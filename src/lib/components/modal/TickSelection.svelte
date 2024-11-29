@@ -181,3 +181,12 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	/* Until size (md - 1) we show only 16 elements */
+	@media screen and (max-width: 767px) {
+		button.tick-selection:nth-child(n + 17) {
+			display: none;
+		}
+	}
+</style>
