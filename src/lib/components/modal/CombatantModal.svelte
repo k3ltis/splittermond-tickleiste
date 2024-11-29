@@ -5,14 +5,14 @@
 	import ConditionSelection from './ConditionSelection.svelte';
 	import { sessionData } from '$lib/state/scene_data.svelte';
 
-	type Tab = 'actions' | 'conditions'
+	type Tab = 'actions' | 'conditions';
 
 	let modal: HTMLDialogElement;
 	let tickSelection: TickSelection;
-	let selectedTab: Tab = 'actions'
+	let selectedTab: Tab = 'actions';
 
 	export function show(tab: Tab = 'actions') {
-		selectedTab = tab
+		selectedTab = tab;
 		modal.showModal();
 		tickSelection.resetModal();
 	}
@@ -26,13 +26,18 @@
 		modal.close();
 		resetActiveTab();
 	}
-	
+
 	function resetActiveTab() {
-		selectedTab = 'actions'
+		selectedTab = 'actions';
+	}
+
+	function selectTab(tab: Tab, event: MouseEvent) {
+		event.preventDefault()
+		selectedTab = tab
 	}
 </script>
 
-<dialog id="tickSelectionModal" class="modal" bind:this={modal} >
+<dialog id="tickSelectionModal" class="modal" bind:this={modal}>
 	<div
 		id="tickSelectionModalInner"
 		class="max-w-l modal-box min-h-[60%] w-11/12 border-4 border-accent pt-2"
@@ -47,30 +52,28 @@
 			</button>
 		</form>
 		<div role="tablist" class="tabs tabs-lifted">
-			<input
-				type="radio"
-				name="my_tabs_2"
-				value="actions"
+			<a 
+				href="#"
 				role="tab"
 				class="tab h-12 text-2xl focus:outline-none focus:ring-0"
-				aria-label={$_('combatant_modal.actions')}
-				bind:group={selectedTab}
-				checked={true}
-			/>
-			<div role="tabpanel" class="tab-content rounded-box border-base-300 bg-base-100 p-6">
+				onclick="{(event) => selectTab('actions', event)}"
+				class:tab-active={ selectedTab === 'actions' }
+			>
+				{$_('combatant_modal.actions')}
+			</a>
+			<div class="tab-content rounded-box border-base-300 bg-base-100 p-6" hidden={true}>
 				<TickSelection bind:this={tickSelection} notifyDone={() => onNotifyDone()} />
 			</div>
-
-			<input
-				type="radio"
-				name="my_tabs_2"
-				value="conditions"
+			<a 
+				href="#"
 				role="tab"
 				class="tab h-12 text-2xl focus:outline-none focus:ring-0"
-				aria-label={$_('combatant_modal.conditions')}
-				bind:group={selectedTab}
-			/>
-			<div role="tabpanel" class="tab-content rounded-box border-base-300 bg-base-100 p-6">
+				onclick="{(event) => selectTab('conditions', event)}"
+				class:tab-active={ selectedTab === 'conditions' }
+			>
+				{$_('combatant_modal.conditions')}
+			</a>
+			<div class="tab-content rounded-box border-base-300 bg-base-100 p-6">
 				<ConditionSelection />
 			</div>
 		</div>
@@ -80,3 +83,9 @@
 		<button>{$_('close')}</button>
 	</form>
 </dialog>
+
+<style>
+	input[type=radio][name=my_tabs_2] {
+		display:none
+	}
+</style>

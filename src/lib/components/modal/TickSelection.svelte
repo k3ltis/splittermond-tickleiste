@@ -18,8 +18,10 @@
 
 	let negation: boolean = $state(false);
 	let { notifyDone }: any = $props();
+	let userRoundAnimationDuration: number = $state(0)
 
 	export function resetModal() {
+		userRoundAnimationDuration = 0
 		negation = false;
 		sessionData.ticks = calculatePossibleTicks();
 	}
@@ -49,6 +51,8 @@
 	}
 
 	function toggleNegation() {
+		// make the animation visible
+		userRoundAnimationDuration = 200
 		negation = !negation;
 		sessionData.ticks = calculatePossibleTicks();
 	}
@@ -99,7 +103,7 @@
 
 			<!-- {negation ? -tickNumber : tickNumber} -->
 			{#if tick.hasCombatants}
-				<div class="absolute bottom-0 right-0" transition:slide>
+				<div class="absolute bottom-0 right-0" transition:slide={{duration:userRoundAnimationDuration}}>
 					<UserRound class="text-accent size-4 sm:size-6" />
 				</div>
 			{/if}
@@ -174,12 +178,3 @@
 		{/if}
 	</div>
 </div>
-
-<style>
-	/* Until size (md - 1) we show only 16 elements */
-	@media screen and (max-width: 767px) {
-		button.tick-selection:nth-child(n + 17) {
-			display: none;
-		}
-	}
-</style>
