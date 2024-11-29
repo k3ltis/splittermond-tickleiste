@@ -8,10 +8,11 @@ Try it out on [tickleiste.tklic.de](tickleiste.tklic.de), it's hosted via Github
 
 **Features**
 
-- Create a scene with any number of combatants
-- Save and load the scene to and from your local device
-- Supports special combat states like _Waiting, Expecting, and Incapitated_
-- No server involved, no login necessary, scene data will be saved to the browsers local storage
+- **Create a scene** with any number of combatants
+- Supports **special combat states** like _Waiting, Expecting, and Incapitated_
+- Support for **conditions** like `panicked` or `crysis of faith`
+- **Save and load** the scene to and from your local device
+- **No server** involved, **no login** necessary, scene data will be saved to the browsers **local storage**
 
 ## Assets
 
