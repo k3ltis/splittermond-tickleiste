@@ -21,11 +21,13 @@
 
 	function calculateConditionDuration(conditionId: ConditionType): number {
 		if (!sessionData.activeCombatant) {
-			return 0
+			return 0;
 		}
-		const conditionState = sessionData.activeCombatant.conditionStates.find(c => c.id === conditionId)
+		const conditionState = sessionData.activeCombatant.conditionStates.find(
+			(c) => c.id === conditionId
+		);
 		if (!conditionState) {
-			return 0
+			return 0;
 		}
 		return Math.abs(sessionData.activeCombatant.initiative - conditionState.activeSinceTick);
 	}
@@ -37,7 +39,8 @@
 			class:btn-outline={!isActiveOnActiveCombatant(condition.id)}
 			class:btn-error={isActiveOnActiveCombatant(condition.id)}
 			class="btn md:text-xl"
-			onclick={() => select(condition.id)}>
+			onclick={() => select(condition.id)}
+		>
 			<span class="text-nowrap">
 				{$_(condition.i18n)}
 				{#if isActiveOnActiveCombatant(condition.id)}

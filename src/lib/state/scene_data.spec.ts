@@ -218,7 +218,7 @@ describe('toggleCondition', () => {
 		]);
 
 		// Move ticks and add burning
-		moveCombatantByTicks('MerryId', 5)
+		moveCombatantByTicks('MerryId', 5);
 		toggleCondition('MerryId', 'burning');
 		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
 			{

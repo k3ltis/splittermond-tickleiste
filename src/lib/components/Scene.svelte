@@ -5,10 +5,7 @@
 		sessionData,
 		setMostRecentTickToMinimalActiveInitiative,
 		sortCombatantsByInitiative,
-		type Combatant,
-
-		type ConditionState
-
+		type Combatant
 	} from '$lib/state/scene_data.svelte';
 	import { slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
@@ -72,7 +69,7 @@
 		}
 	}
 
-	function conditionClicked(combatant: Combatant, _condition: ConditionState) {
+	function conditionClicked(combatant: Combatant) {
 		if (appMode === 'RUNNING') {
 			sessionData.activeCombatant = combatant;
 			combatantModal.show('conditions');
@@ -196,7 +193,14 @@
 	</div>
 	{#each sceneData.combatants as combatant, index (combatant.id)}
 		<div animate:flip={{ delay: 100, duration: 500 }}>
-			<CombatantEntry {appMode} {combatant} {index} {combatantClicked} {conditionClicked} {deleteCombatant} />
+			<CombatantEntry
+				{appMode}
+				{combatant}
+				{index}
+				{combatantClicked}
+				{conditionClicked}
+				{deleteCombatant}
+			/>
 		</div>
 	{/each}
 </div>

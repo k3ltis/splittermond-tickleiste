@@ -2,11 +2,10 @@
 	import {
 		determineNextActingCombatant,
 		type Combatant,
-		sceneData,
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
 	import { fade } from 'svelte/transition';
-	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight, Minimize } from 'lucide-svelte';
+	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
@@ -21,7 +20,8 @@
 		deleteCombatant: (combatantId: string) => void;
 	}
 
-	let { combatant, appMode, index, combatantClicked, conditionClicked, deleteCombatant }: Props = $props();
+	let { combatant, appMode, index, combatantClicked, conditionClicked, deleteCombatant }: Props =
+		$props();
 
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
@@ -33,13 +33,16 @@
 		return $_(condition.i18n);
 	}
 
-	function calculateConditionDuration(combatant: Combatant, conditionState: ConditionState): number {
+	function calculateConditionDuration(
+		combatant: Combatant,
+		conditionState: ConditionState
+	): number {
 		return Math.abs(combatant.initiative - conditionState.activeSinceTick);
 	}
 
 	function onBadgeClicked(combatant: Combatant, conditionState: ConditionState, event: MouseEvent) {
-		event.stopPropagation()
-		conditionClicked(combatant, conditionState)
+		event.stopPropagation();
+		conditionClicked(combatant, conditionState);
 	}
 </script>
 
@@ -73,10 +76,14 @@
 				{#if appMode === 'RUNNING'}
 					<div class="flex flex-row flex-wrap">
 						{#each combatant.conditionStates as conditionState}
-							<button class="badge badge-error badge-outline badge-lg mr-1 self-end focus:outline-none focus:ring-0" onclick={(event) => onBadgeClicked(combatant, conditionState, event)}>
+							<button
+								class="badge badge-error badge-outline badge-lg mr-1 self-end focus:outline-none focus:ring-0"
+								onclick={(event) => onBadgeClicked(combatant, conditionState, event)}
+							>
 								<span class="text-nowrap"
 									>{resolveLabel(conditionState.id)} ({calculateConditionDuration(
-										combatant, conditionState
+										combatant,
+										conditionState
 									)})</span
 								>
 							</button>
@@ -98,7 +105,7 @@
 					disabled={appMode === 'RUNNING'}
 					class="
 					{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
-					input w-20 px-1 text-center text-3xl 
+					input w-20 px-1 text-center text-3xl
 					"
 					onfocus={(event: FocusEvent) => selectInputText(event)}
 					bind:value={combatant.initiative}

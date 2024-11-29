@@ -17,11 +17,11 @@
 	import { slide } from 'svelte/transition';
 
 	let negation: boolean = $state(false);
-	let { notifyDone }: any = $props();
-	let userRoundAnimationDuration: number = $state(0)
+	let { notifyDone }: { notifyDone: () => void } = $props();
+	let userRoundAnimationDuration: number = $state(0);
 
 	export function resetModal() {
-		userRoundAnimationDuration = 0
+		userRoundAnimationDuration = 0;
 		negation = false;
 		sessionData.ticks = calculatePossibleTicks();
 	}
@@ -52,7 +52,7 @@
 
 	function toggleNegation() {
 		// make the animation visible
-		userRoundAnimationDuration = 200
+		userRoundAnimationDuration = 200;
 		negation = !negation;
 		sessionData.ticks = calculatePossibleTicks();
 	}
@@ -85,7 +85,7 @@
 	}
 </script>
 
-<div class="grid gap-1 grid-cols-4 md:grid-cols-5">
+<div class="grid grid-cols-4 gap-1 md:grid-cols-5">
 	{#each sessionData.ticks as tick}
 		<button
 			class="tick-selection btn relative aspect-square h-full w-full min-[320px]:text-2xl sm:text-3xl"
@@ -103,14 +103,17 @@
 
 			<!-- {negation ? -tickNumber : tickNumber} -->
 			{#if tick.hasCombatants}
-				<div class="absolute bottom-0 right-0" transition:slide={{duration:userRoundAnimationDuration}}>
-					<UserRound class="text-accent size-4 sm:size-6" />
+				<div
+					class="absolute bottom-0 right-0"
+					transition:slide={{ duration: userRoundAnimationDuration }}
+				>
+					<UserRound class="size-4 text-accent sm:size-6" />
 				</div>
 			{/if}
 		</button>
 	{/each}
 </div>
-<div class="mt-1 grid grid-cols-4 md:grid-cols-5 gap-1">
+<div class="mt-1 grid grid-cols-4 gap-1 md:grid-cols-5">
 	<div>
 		{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === 'Active'}
 			<div

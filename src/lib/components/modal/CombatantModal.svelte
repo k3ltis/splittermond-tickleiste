@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { ClockAlert, Hourglass, Skull, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import TickSelection from './TickSelection.svelte';
 	import ConditionSelection from './ConditionSelection.svelte';
-	import { sessionData } from '$lib/state/scene_data.svelte';
+	import { X } from 'lucide-svelte';
 
 	type Tab = 'actions' | 'conditions';
 
@@ -32,8 +31,8 @@
 	}
 
 	function selectTab(tab: Tab, event: MouseEvent) {
-		event.preventDefault()
-		selectedTab = tab
+		event.preventDefault();
+		selectedTab = tab;
 	}
 </script>
 
@@ -52,24 +51,26 @@
 			</button>
 		</form>
 		<div role="tablist" class="tabs tabs-lifted">
-			<a 
+			<!-- svelte-ignore a11y_invalid_attribute -->
+			<a
 				href="#"
 				role="tab"
 				class="tab h-12 text-2xl focus:outline-none focus:ring-0"
-				onclick="{(event) => selectTab('actions', event)}"
-				class:tab-active={ selectedTab === 'actions' }
+				onclick={(event) => selectTab('actions', event)}
+				class:tab-active={selectedTab === 'actions'}
 			>
 				{$_('combatant_modal.actions')}
 			</a>
 			<div class="tab-content rounded-box border-base-300 bg-base-100 p-6" hidden={true}>
 				<TickSelection bind:this={tickSelection} notifyDone={() => onNotifyDone()} />
 			</div>
-			<a 
+			<!-- svelte-ignore a11y_invalid_attribute -->
+			<a
 				href="#"
 				role="tab"
 				class="tab h-12 text-2xl focus:outline-none focus:ring-0"
-				onclick="{(event) => selectTab('conditions', event)}"
-				class:tab-active={ selectedTab === 'conditions' }
+				onclick={(event) => selectTab('conditions', event)}
+				class:tab-active={selectedTab === 'conditions'}
 			>
 				{$_('combatant_modal.conditions')}
 			</a>
@@ -83,9 +84,3 @@
 		<button>{$_('close')}</button>
 	</form>
 </dialog>
-
-<style>
-	input[type=radio][name=my_tabs_2] {
-		display:none
-	}
-</style>
