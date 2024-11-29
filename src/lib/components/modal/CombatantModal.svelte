@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { X } from 'lucide-svelte';
+	import { ClockAlert, Hourglass, Skull, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import TickSelection from './TickSelection.svelte';
 	import ConditionSelection from './ConditionSelection.svelte';
+	import { sessionData } from '$lib/state/scene_data.svelte';
 
 	type Tab = 'actions' | 'conditions'
 
@@ -34,7 +35,7 @@
 <dialog id="tickSelectionModal" class="modal" bind:this={modal} >
 	<div
 		id="tickSelectionModalInner"
-		class="max-w-l modal-box min-h-[60%] w-11/12 border-4 border-accent"
+		class="max-w-l modal-box min-h-[60%] w-11/12 border-4 border-accent pt-2"
 	>
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">

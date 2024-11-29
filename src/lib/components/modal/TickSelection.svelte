@@ -81,22 +81,6 @@
 	}
 </script>
 
-<h3 class="mb-5 text-2xl font-bold">
-	<div class="flex">
-		{$_('tick_selection_modal_header', {
-			values: { combatantName: sessionData.activeCombatant?.name }
-		})}
-		{#if sessionData.activeCombatant?.combatState === 'Active'}
-			({sessionData.activeCombatant?.initiative})
-		{:else if sessionData.activeCombatant?.combatState === 'Dead'}
-			(<Skull class="mt-0.5 text-error" strokeWidth="1" size="32" />)
-		{:else if sessionData.activeCombatant?.combatState === 'Expecting'}
-			(<ClockAlert class="mt-0.5 text-info" strokeWidth="1" size="32" />)
-		{:else if sessionData.activeCombatant?.combatState === 'Waiting'}
-			(<Hourglass class="mt-0.5 text-info" strokeWidth="1" size="32" />)
-		{/if}
-	</div>
-</h3>
 <div class="grid gap-1 grid-cols-4 md:grid-cols-5">
 	{#each sessionData.ticks as tick}
 		<button
