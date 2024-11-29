@@ -208,8 +208,8 @@ describe('toggleCondition', () => {
 	it('toggle condition', () => {
 		givenScene(TEST_SCENE_SMALL);
 
+		// Add bleeding
 		toggleCondition('MerryId', 'bleeding');
-
 		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
 			{
 				id: 'bleeding',
@@ -217,8 +217,9 @@ describe('toggleCondition', () => {
 			}
 		]);
 
+		// Move ticks and add burning
+		moveCombatantByTicks('MerryId', 5)
 		toggleCondition('MerryId', 'burning');
-
 		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
 			{
 				id: 'bleeding',
@@ -226,22 +227,39 @@ describe('toggleCondition', () => {
 			},
 			{
 				id: 'burning',
-				activeSinceTick: 3
+				activeSinceTick: 8
 			}
 		]);
 
-		toggleCondition('MerryId', 'bleeding');
+		// Add bleeding of unmoved combatant
+		toggleCondition('GandalfId', 'bleeding');
+		expect(sceneData.combatants.find((c) => c.id === 'GandalfId')?.conditionStates).toEqual([
+			{
+				id: 'bleeding',
+				activeSinceTick: 4
+			}
+		]);
 
+		// Remove bleeding for one combatant, the other stays unchanged
+		toggleCondition('MerryId', 'bleeding');
 		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
 			{
 				id: 'burning',
-				activeSinceTick: 3
+				activeSinceTick: 8
+			}
+		]);
+		expect(sceneData.combatants.find((c) => c.id === 'GandalfId')?.conditionStates).toEqual([
+			{
+				id: 'bleeding',
+				activeSinceTick: 4
 			}
 		]);
 
+		// Remove all conditions
 		toggleCondition('MerryId', 'burning');
-
+		toggleCondition('GandalfId', 'bleeding');
 		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([]);
+		expect(sceneData.combatants.find((c) => c.id === 'GandalfId')?.conditionStates).toEqual([]);
 	});
 });
 

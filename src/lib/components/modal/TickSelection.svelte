@@ -97,9 +97,12 @@
 		{/if}
 	</div>
 </h3>
-<div class="grid grid-cols-5 gap-1">
+<div class="grid gap-1 grid-cols-4 md:grid-cols-5">
 	{#each sessionData.ticks as tick}
-		<button class="btn relative aspect-square h-full w-full text-4xl" onclick={() => select(tick)}>
+		<button
+			class="tick-selection btn relative aspect-square h-full w-full min-[320px]:text-2xl sm:text-3xl"
+			onclick={() => select(tick)}
+		>
 			{#if tick.mode === 'relative'}
 				{#if tick.number > 0}
 					+{tick.number}
@@ -112,14 +115,14 @@
 
 			<!-- {negation ? -tickNumber : tickNumber} -->
 			{#if tick.hasCombatants}
-				<div class="absolute bottom-1 right-1" transition:slide>
-					<UserRound class="text-accent" />
+				<div class="absolute bottom-0 right-0" transition:slide>
+					<UserRound class="text-accent size-4 sm:size-6" />
 				</div>
 			{/if}
 		</button>
 	{/each}
 </div>
-<div class="mt-1 grid grid-cols-5 gap-1">
+<div class="mt-1 grid grid-cols-4 md:grid-cols-5 gap-1">
 	<div>
 		{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === 'Active'}
 			<div
@@ -140,7 +143,7 @@
 			</div>
 		{/if}
 	</div>
-	<div></div>
+	<div class="hidden md:block"></div>
 	<div>
 		{#if sessionData.activeCombatant?.combatState !== 'Expecting'}
 			<div
@@ -187,3 +190,12 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	/* Until size (md - 1) we show only 16 elements */
+	@media screen and (max-width: 767px) {
+		button.tick-selection:nth-child(n + 17) {
+			display: none;
+		}
+	}
+</style>

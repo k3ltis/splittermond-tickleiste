@@ -6,7 +6,7 @@
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
 	import { fade } from 'svelte/transition';
-	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
+	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight, Minimize } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
@@ -17,10 +17,11 @@
 		appMode: AppMode;
 		index: number;
 		combatantClicked: (combatant: Combatant) => void;
+		conditionClicked: (combatant: Combatant, condition: ConditionState) => void;
 		deleteCombatant: (combatantId: string) => void;
 	}
 
-	let { combatant, appMode, index, combatantClicked, deleteCombatant }: Props = $props();
+	let { combatant, appMode, index, combatantClicked, conditionClicked, deleteCombatant }: Props = $props();
 
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
@@ -32,8 +33,13 @@
 		return $_(condition.i18n);
 	}
 
-	function resolveConditionDuration(conditionState: ConditionState): number {
-		return sceneData.mostRecentTick - conditionState.activeSinceTick;
+	function calculateConditionDuration(combatant: Combatant, conditionState: ConditionState): number {
+		return Math.abs(combatant.initiative - conditionState.activeSinceTick);
+	}
+
+	function onBadgeClicked(combatant: Combatant, conditionState: ConditionState, event: MouseEvent) {
+		event.stopPropagation()
+		conditionClicked(combatant, conditionState)
 	}
 </script>
 
@@ -50,7 +56,7 @@
 >
 	<div class="col-span-3 grid grid-cols-subgrid items-center gap-2">
 		<div class="relative">
-			<div class="flex flex-row">
+			<div class="flex flex-col">
 				<input
 					type="text"
 					aria-label="Combatant name"
@@ -65,15 +71,15 @@
 					bind:value={combatant.name}
 				/>
 				{#if appMode === 'RUNNING'}
-					<div class="flex flex-col">
+					<div class="flex flex-row flex-wrap">
 						{#each combatant.conditionStates as conditionState}
-							<div class="badge badge-error badge-outline badge-lg mb-1 self-end">
+							<button class="badge badge-error badge-outline badge-lg mr-1 self-end focus:outline-none focus:ring-0" onclick={(event) => onBadgeClicked(combatant, conditionState, event)}>
 								<span class="text-nowrap"
-									>{resolveLabel(conditionState.id)} ({resolveConditionDuration(
-										conditionState
+									>{resolveLabel(conditionState.id)} ({calculateConditionDuration(
+										combatant, conditionState
 									)})</span
 								>
-							</div>
+							</button>
 						{/each}
 					</div>
 				{/if}
@@ -84,7 +90,7 @@
 				</div>
 			{/if}
 		</div>
-		<div>
+		<div class="self-start">
 			{#if combatant.combatState === 'Active' || appMode === 'EDITING'}
 				<input
 					type="number"
@@ -92,7 +98,7 @@
 					disabled={appMode === 'RUNNING'}
 					class="
 					{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
-					input w-20 px-1 text-center text-3xl
+					input w-20 px-1 text-center text-3xl 
 					"
 					onfocus={(event: FocusEvent) => selectInputText(event)}
 					bind:value={combatant.initiative}

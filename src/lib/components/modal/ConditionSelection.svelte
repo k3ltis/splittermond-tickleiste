@@ -13,11 +13,21 @@
 
 	function isActiveOnActiveCombatant(conditionId: ConditionType) {
 		if (!sessionData.activeCombatant) {
-			console.warn('No active combatant. Cannot check conditions.');
 			return;
 		}
 
 		return sessionData.activeCombatant.conditionStates.some((s) => s.id === conditionId);
+	}
+
+	function calculateConditionDuration(conditionId: ConditionType): number {
+		if (!sessionData.activeCombatant) {
+			return 0
+		}
+		const conditionState = sessionData.activeCombatant.conditionStates.find(c => c.id === conditionId)
+		if (!conditionState) {
+			return 0
+		}
+		return Math.abs(sessionData.activeCombatant.initiative - conditionState.activeSinceTick);
 	}
 </script>
 
@@ -26,8 +36,14 @@
 		<button
 			class:btn-outline={!isActiveOnActiveCombatant(condition.id)}
 			class:btn-error={isActiveOnActiveCombatant(condition.id)}
-			class="btn text-xl"
-			onclick={() => select(condition.id)}>{$_(condition.i18n)}</button
-		>
+			class="btn md:text-xl"
+			onclick={() => select(condition.id)}>
+			<span class="text-nowrap">
+				{$_(condition.i18n)}
+				{#if isActiveOnActiveCombatant(condition.id)}
+					({calculateConditionDuration(condition.id)})
+				{/if}
+			</span>
+		</button>
 	{/each}
 </div>
