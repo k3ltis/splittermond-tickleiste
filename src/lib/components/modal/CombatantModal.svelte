@@ -39,7 +39,7 @@
 <dialog id="tickSelectionModal" class="modal" bind:this={modal}>
 	<div
 		id="tickSelectionModalInner"
-		class="max-w-l modal-box min-h-[60%] w-11/12 border-4 border-accent pt-2"
+		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-accent pt-2"
 	>
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">

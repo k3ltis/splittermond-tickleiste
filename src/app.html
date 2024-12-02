@@ -9,6 +9,13 @@
 			svg.custom-icon path {
 				fill: oklch(var(--bc));
 			}
+
+			/* hide scroll bar in full screen */
+			:root:has(:is(.modal-open, .modal:target, .modal-toggle:checked + .modal, .modal[open])) {
+				/* !important is necessary, because the undesired rule is overwritten
+				by tailwind later in the dependency loading hierarchy. */
+				scrollbar-gutter: auto !important;
+			}
 		</style>
 		%sveltekit.head%
 	</head>
