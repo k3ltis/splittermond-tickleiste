@@ -2,6 +2,7 @@
 	import { loadAttribute, saveAttribute } from '$lib/state/localstorage';
 	import { Moon, Sun } from 'lucide-svelte';
 	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	const ThemeMode = {
 		Light: 'LIGHT',
@@ -36,11 +37,11 @@
 </script>
 
 <div id="ThemeToggle">
-	<button class="btn btn-ghost" onclick={() => toggleThemeMode()}>
+	<button class="btn btn-ghost" onclick={() => toggleThemeMode()} aria-label={$_('toggle_theme')}>
 		{#if themeMode === ThemeMode.Light}
-			<Moon />
+			<Moon aria-hidden />
 		{:else}
-			<Sun />
+			<Sun aria-hidden />
 		{/if}
 	</button>
 </div>

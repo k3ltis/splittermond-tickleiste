@@ -140,6 +140,6 @@
 	};
 </script>
 
-<button onclick={() => explainPage()} class="btn btn-ghost">
-	<CircleHelp />
+<button onclick={() => explainPage()} class="btn btn-ghost" aria-label={$_('start_tour')}>
+	<CircleHelp aria-hidden />
 </button>
