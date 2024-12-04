@@ -1,4 +1,6 @@
 {
+	"add_combatant": "Add combatant",
+	"active_combatant": "Active combatant",
 	"app_title": "Splittermond Tickbar",
 	"close": "close",
 	"column_initiative": "Initiative",
@@ -8,6 +10,7 @@
 	"data_privacy": "Data Privacy",
 	"data_privacy_content": "This page does utilize the browser's local storage to locally save the scene and user preferences (like language settings) in the user's browser. This is done, so that the user does not lose information when closing the browser application. If you wish to delete this information simply clear your browser's cached web data. <br /><br /> No data is send to any remote server and no other user related data is processed by this page.",
 	"data_privacy_header": "Data Privacy Information",
+	"delete_combatant": "Delete combatant {name}",
 	"download_alt": "Download icon",
 	"download_scene": "Download Scene",
 	"download_scene_description": "Lets you download the current scene as a JSON file.",

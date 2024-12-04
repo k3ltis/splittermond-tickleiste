@@ -98,7 +98,7 @@
 		<div id="sceneTitle" class="flex-1">
 			<input
 				type="text"
-				placeholder="Scene name..."
+				placeholder={$_('scene_title')}
 				disabled={appMode === 'RUNNING'}
 				class="input mr-4 w-full text-3xl {appMode === 'EDITING'
 					? 'input-bordered'
@@ -115,7 +115,7 @@
 				onclick={runScene}
 			>
 				<Play />
-				<span class="hidden lg:flex">{$_('run_scene_button')}</span>
+				<span class="sr-only lg:not-sr-only lg:flex">{$_('run_scene_button')}</span>
 			</button>
 			<button
 				id="editSceneBtn"
@@ -123,8 +123,8 @@
 				class:hidden={appMode === 'EDITING'}
 				onclick={editScene}
 			>
-				<Pencil />
-				<span class="hidden lg:flex">{$_('edit_scene_button')}</span>
+				<Pencil aria-hidden />
+				<span class="sr-only lg:not-sr-only lg:flex">{$_('edit_scene_button')}</span>
 			</button>
 		</div>
 	</div>
@@ -174,8 +174,12 @@
 					/>
 				</div>
 				<div class="w-16 justify-center">
-					<button onclick={() => addCombatant(newCombatant)} class="btn btn-primary">
-						<Plus strokeWidth={3} />
+					<button
+						onclick={() => addCombatant(newCombatant)}
+						class="btn btn-primary"
+						aria-label={$_('add_combatant')}
+					>
+						<Plus strokeWidth={3} aria-hidden />
 					</button>
 				</div>
 			</div>

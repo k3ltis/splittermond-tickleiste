@@ -94,6 +94,7 @@
 			{#if combatant === nextActingCombatant && appMode === 'RUNNING'}
 				<div class="absolute -left-4 top-2.5" in:fade={{ duration: 200 }}>
 					<ArrowRight size="32" />
+					<span class="sr-only">{$_('active_combatant')}</span>
 				</div>
 			{/if}
 		</div>
@@ -111,7 +112,7 @@
 					bind:value={combatant.initiative}
 				/>
 			{:else}
-				<div in:fade={{ duration: 200 }} aria-label="Combatant Status" class="">
+				<div in:fade={{ duration: 200 }} aria-label="Combatant Status">
 					{#if combatant.combatState === 'Waiting'}
 						<Hourglass class="w-20 text-center text-info" size={48} strokeWidth={1} />
 					{:else if combatant.combatState === 'Expecting'}
@@ -128,8 +129,9 @@
 					in:fade={{ duration: 200 }}
 					class="btn btn-outline btn-error"
 					onclick={() => deleteCombatant(combatant.id)}
+					aria-label={$_('delete_combatant', { values: { name: combatant.name } })}
 				>
-					<Trash />
+					<Trash aria-hidden />
 				</button>
 			{:else if appMode === 'RUNNING'}
 				<div class="min-w-12"></div>

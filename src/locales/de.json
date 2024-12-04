@@ -1,4 +1,6 @@
 {
+	"add_combatant": "Kämpfer hinzufügen",
+	"active_combatant": "Aktiver Kämpfer",
 	"app_title": "Splittermond Tickleiste",
 	"close": "schließen",
 	"column_initiative": "Initiative",
@@ -8,6 +10,7 @@
 	"data_privacy": "Datenschutz",
 	"data_privacy_content": "Diese Seite nutzt den lokalen Speicher des Browsers (local storage), um die Szene sowie benutzerdefinierte Einstellungen (wie etwas die gewählte Sprache) lokal im Browser des Nutzers zu speichern. Dies geschieht, damit der Nutzer keine Informationen verliert, wenn er die Browseranwendung schließt. Wenn Sie diese Informationen löschen möchten, müssen Sie die zwischengespeicherten Webdaten Ihres Browsers bereinigen. <br /><br /> Es werden keine Daten an einen externen Server gesendet und keine anderen nutzerbezogenen Daten werden von dieser Seite verarbeitet.",
 	"data_privacy_header": "Datenschutzinformationen",
+	"delete_combatant": "Kämpfer {name} löschen",
 	"download_alt": "Download-Icon",
 	"download_scene": "Szene herunterladen",
 	"download_scene_description": "Ermöglicht es Ihnen, die aktuelle Szene als JSON-Datei herunterzuladen.",
