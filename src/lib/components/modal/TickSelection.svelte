@@ -92,23 +92,25 @@
 			onclick={() => select(tick)}
 		>
 			{#if tick.mode === 'relative'}
+				<span class="sr-only">{$_('tick_move')}</span>
 				{#if tick.number > 0}
 					+{tick.number}
 				{:else}
 					{tick.number}
 				{/if}
 			{:else}
+				<span class="sr-only">{$_('tick_join')}</span>
 				{tick.number}
 			{/if}
 
 			<!-- {negation ? -tickNumber : tickNumber} -->
 			{#if tick.hasCombatants}
-				<div
+				<span
 					class="absolute bottom-0 right-0"
 					transition:slide={{ duration: userRoundAnimationDuration }}
 				>
-					<UserRound class="size-4 text-accent sm:size-6" />
-				</div>
+					<UserRound class="size-4 text-accent sm:size-6" aria-hidden />
+				</span>
 			{/if}
 		</button>
 	{/each}
@@ -118,17 +120,20 @@
 		{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === 'Active'}
 			<div
 				class="tooltip aspect-square h-full w-full"
-				data-tip={$_('tickselection.tooltip.negation')}
+				data-tip={$_('tickselection.tooltip.tick_direction', { values: { n: Number(negation) } })}
 			>
 				<button
 					class="btn h-full w-full"
 					class:btn-active={negation}
 					onclick={() => toggleNegation()}
+					aria-label={$_('tickselection.tooltip.tick_direction', {
+						values: { n: Number(negation) }
+					})}
 				>
 					{#if negation}
-						<Plus size={48} />
+						<Plus size={48} aria-hidden />
 					{:else}
-						<Minus size={48} />
+						<Minus size={48} aria-hidden />
 					{/if}
 				</button>
 			</div>
@@ -144,8 +149,9 @@
 				<button
 					class="btn btn-outline btn-info aspect-square h-full w-full"
 					onclick={() => selectCombatStateExpecting()}
+					aria-label={$_('tickselection.tooltip.set_state_expecting')}
 				>
-					<ClockAlert size={48} strokeWidth={1} />
+					<ClockAlert size={48} strokeWidth={1} aria-hidden />
 				</button>
 			</div>
 		{/if}
@@ -159,8 +165,9 @@
 				<button
 					class="btn btn-outline btn-info aspect-square h-full w-full"
 					onclick={() => selectCombatStateWaiting()}
+					aria-label={$_('tickselection.tooltip.set_state_waiting')}
 				>
-					<Hourglass size={48} strokeWidth={1} />
+					<Hourglass size={48} strokeWidth={1} aria-hidden />
 				</button>
 			</div>
 		{/if}
@@ -174,8 +181,9 @@
 				<button
 					class="btn btn-outline btn-error aspect-square h-full w-full"
 					onclick={() => selectCombatStateDead()}
+					aria-label={$_('tickselection.tooltip.set_state_dead')}
 				>
-					<Skull size={48} strokeWidth={1} />
+					<Skull size={48} strokeWidth={1} aria-hidden />
 				</button>
 			</div>
 		{/if}

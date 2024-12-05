@@ -29,6 +29,8 @@
 	"upload_alt": "Upload-Icon",
 	"upload_scene_description": "Ermöglicht es Ihnen, eine Szene auszuwählen, die zuvor auf Ihrem Gerät gespeichert wurde.",
 	"start_tour": "Erklärungs-Tour starten",
+	"tick_join": "Tick Einstieg",
+	"tick_move": "Tick Bewegung",
 	"toggle_theme": "Theme wechseln",
 	"tour_btn_next": "Weiter",
 	"tour_btn_prev": "Zurück",
@@ -54,7 +56,7 @@
 	},
 	"tickselection": {
 		"tooltip": {
-			"negation": "Ticks Rückwärts",
+			"tick_direction": "Ticks {n, plural, =0 {rückwärts} =1 {vorwärts} other {}}",
 			"set_state_expecting": "Bereithalten",
 			"set_state_dead": "Kampfunfähig",
 			"set_state_waiting": "Abwarten"

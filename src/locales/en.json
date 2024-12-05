@@ -28,6 +28,8 @@
 	"scene_title_description": "Shows the current scene's name.",
 	"upload_alt": "Upload icon",
 	"upload_scene_description": "Lets you choose a scene to load that was previously saved to your device.",
+	"tick_join": "Join on tick",
+	"tick_move": "Tick movement",
 	"start_tour": "Start explanation tour",
 	"toggle_theme": "Toggle theme",
 	"tour_btn_next": "Next",
@@ -54,7 +56,7 @@
 	},
 	"tickselection": {
 		"tooltip": {
-			"negation": "Negates ticks",
+			"tick_direction": "{n, plural, =0 {Negates} =1 {Adds} other {}} ticks",
 			"set_state_expecting": "Expecting",
 			"set_state_waiting": "Waiting",
 			"set_state_dead": "Incapitated"

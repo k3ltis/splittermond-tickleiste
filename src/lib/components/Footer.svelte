@@ -37,12 +37,12 @@
 <footer
 	class="footer flex items-center border-t-4 border-primary-content bg-primary-content/10 p-4 text-base-content"
 >
-	<aside class="flex-1">
+	<div class="flex-1">
 		<p class="hidden sm:flex">
 			Copyright © k3ltis {new Date().getFullYear()} - {APP_NAME} v{APP_VERSION}
 		</p>
 		<p class="sm:hidden">v{APP_VERSION}</p>
-	</aside>
+	</div>
 	<button onclick={() => dataPrivacyModal.showModal()}>{$_('data_privacy')}</button>
 	<button id="ToggleLanguageBtn" onclick={() => toggleLanguage()}>
 		{#if $locale === 'en'}
@@ -56,7 +56,8 @@
 		{/if}
 	</button>
 	<nav class="flex-none">
-		<a href="https://github.com/k3ltis/splittermond-tickleiste" target="_blank">
+		<a href="https://github.com/k3ltis/splittermond-tickleiste">
+			<span class="sr-only">Github project</span>
 			<svg
 				width="24px"
 				height="24px"
