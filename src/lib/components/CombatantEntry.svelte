@@ -62,7 +62,7 @@
 			<div class="flex flex-col">
 				<input
 					type="text"
-					aria-label="Combatant name"
+					aria-label={$_('combatant_name')}
 					disabled={appMode === 'RUNNING'}
 					class="
 					input
@@ -102,7 +102,7 @@
 			{#if combatant.combatState === 'Active' || appMode === 'EDITING'}
 				<input
 					type="number"
-					aria-label="Combatant Initiative"
+					aria-label={$_('combatant_initiative')}
 					disabled={appMode === 'RUNNING'}
 					class="
 					{appMode === 'EDITING' ? 'input-bordered' : 'disabled input-ghost'}
@@ -112,13 +112,28 @@
 					bind:value={combatant.initiative}
 				/>
 			{:else}
-				<div in:fade={{ duration: 200 }} aria-label="Combatant Status">
+				<div in:fade={{ duration: 200 }}>
 					{#if combatant.combatState === 'Waiting'}
 						<Hourglass class="w-20 text-center text-info" size={48} strokeWidth={1} />
+						<span class="sr-only"
+							>{$_('combatant_status', {
+								values: { status: $_('tickselection.tooltip.set_state_waiting') }
+							})}</span
+						>
 					{:else if combatant.combatState === 'Expecting'}
 						<ClockAlert class="w-20 text-center text-info" size={48} strokeWidth={1} />
+						<span class="sr-only"
+							>{$_('combatant_status', {
+								values: { status: $_('tickselection.tooltip.set_state_expecting') }
+							})}</span
+						>
 					{:else if combatant.combatState === 'Dead'}
 						<Skull class="w-20 text-center text-error" size={48} strokeWidth={1} />
+						<span class="sr-only"
+							>{$_('combatant_status', {
+								values: { status: $_('tickselection.tooltip.set_state_dead') }
+							})}</span
+						>
 					{/if}
 				</div>
 			{/if}
