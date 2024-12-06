@@ -7,6 +7,10 @@
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { base } from '$app/paths';
 	import Tour from './Tour.svelte';
+	import { onMount } from 'svelte';
+	import { addToggleListener } from '$lib/utility/html_details_element_extension';
+
+	let details: HTMLDetailsElement;
 
 	const uploadScene = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -29,16 +33,9 @@
 		downloadJSON(sceneData, filename);
 	};
 
-	function checkAndCloseDropDown(e: MouseEvent) {
-		// Remove "focus" from div that acts as button to open the dropdown.
-		// See https://github.com/saadeghi/daisyui/issues/157#issuecomment-979073401
-		let targetEl = e.currentTarget as HTMLElement;
-		if (targetEl && targetEl.matches(':focus')) {
-			setTimeout(function () {
-				targetEl.blur();
-			}, 0);
-		}
-	}
+	onMount(() => {
+		addToggleListener(details);
+	});
 </script>
 
 <div
@@ -50,17 +47,16 @@
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
 		<Tour />
-		<div class="dropdown dropdown-end">
-			<div tabindex="-1" role="button" class="btn btn-ghost" onmousedown={checkAndCloseDropDown}>
-				<Menu />
-			</div>
+		<details class="dropdown dropdown-end" name="menu" bind:this={details}>
+			<summary class="btn btn-ghost" aria-label={$_('open_menu')}>
+				<Menu aria-hidden />
+			</summary>
 			<ul
-				tabindex="-1"
 				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-primary-content p-2 text-primary shadow"
 			>
 				<li>
 					<label id="uploadButton" for="battleScene" class="text-xl">
-						<Upload />
+						<Upload aria-hidden />
 						<span>{$_('upload_scene')}</span>
 					</label>
 					<input
@@ -73,13 +69,13 @@
 					/>
 				</li>
 				<li>
-					<button id="downloadBtn" onclick={() => downloadScene()} class="">
-						<Download />
+					<button id="downloadBtn" onclick={() => downloadScene()}>
+						<Download aria-hidden />
 						<span class="text-xl">{$_('download_scene')}</span>
 					</button>
 				</li>
 			</ul>
-		</div>
+		</details>
 	</div>
 </div>
 
