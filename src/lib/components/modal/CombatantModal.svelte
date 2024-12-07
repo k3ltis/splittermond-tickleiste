@@ -61,15 +61,6 @@
 		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-accent p-0"
 	>
 		<h3 id="tablist-for-combatant" class="sr-only">Aktion für</h3>
-		<!-- Allow closing by clicking the "X" -->
-		<form method="dialog">
-			<button
-				class="btn btn-circle btn-ghost btn-sm absolute right-4 top-4"
-				aria-label={$_('close')}
-			>
-				<X aria-hidden size={24} />
-			</button>
-		</form>
 		<div role="tablist" class="tabs-boxed tabs p-0" aria-labelledby="tablist-for-combatant">
 			<button
 				bind:this={tabButtonTicks}
@@ -113,6 +104,15 @@
 				<ConditionSelection />
 			</div>
 		</div>
+		<!-- Allow closing by clicking the "X" -->
+		<form method="dialog">
+			<button
+				class="btn btn-circle btn-ghost btn-sm absolute right-4 top-4"
+				aria-label={$_('close')}
+			>
+				<X aria-hidden size={24} />
+			</button>
+		</form>
 	</div>
 	<!-- Allows closing by clicking the free area around the modal -->
 	<form method="dialog" class="modal-backdrop">
