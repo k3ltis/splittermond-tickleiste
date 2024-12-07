@@ -115,7 +115,7 @@
 				onclick={runScene}
 			>
 				<Play />
-				<span class="sr-only lg:not-sr-only lg:flex">{$_('run_scene_button')}</span>
+				<span class="sr-only lg:not-sr-only lg:flex">{$_('run_scene')}</span>
 			</button>
 			<button
 				id="editSceneBtn"
@@ -124,7 +124,7 @@
 				onclick={editScene}
 			>
 				<Pencil aria-hidden />
-				<span class="sr-only lg:not-sr-only lg:flex">{$_('edit_scene_button')}</span>
+				<span class="sr-only lg:not-sr-only lg:flex">{$_('edit_scene')}</span>
 			</button>
 		</div>
 	</div>

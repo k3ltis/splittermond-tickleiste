@@ -31,6 +31,7 @@
 	function toggleLanguage() {
 		selected_locale = selected_locale === Locale.German ? Locale.English : Locale.German;
 		saveAttribute(KEY_LOCALE, selected_locale);
+		document.title = $_('app_title');
 	}
 </script>
 
