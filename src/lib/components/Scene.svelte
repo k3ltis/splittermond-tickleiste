@@ -141,26 +141,16 @@
 			</button>
 		</div>
 	</div>
-	<div id="combatantsTable" class="mb-2 mt-4 grid w-full grid-cols-[99fr_1fr_1fr]">
+	<div id="combatantsTable" class="mb-2 mt-4">
 		<!-- Table Header -->
-		<div
-			class="col-span-3 grid grid-cols-subgrid items-center gap-2 bg-primary-content px-6 py-2 text-xl font-bold"
-			class:rounded-t-lg={appMode === 'EDITING'}
-			class:rounded-lg={appMode === 'RUNNING'}
-		>
-			<div>{$_('column_name')}</div>
-			<div id="initiativeColumn">{$_('column_initiative')}</div>
+		<div class="grid grid-cols-[99fr_1fr_1fr] gap-x-2 rounded-lg bg-primary-content px-6 pb-4 pt-3">
+			<div class="text-xl font-bold">{$_('column_name')}</div>
+			<div class="text-xl font-bold" id="initiativeColumn">{$_('column_initiative')}</div>
 			<div class="w-16"></div>
-			<!-- Spacer for buttons column -->
-		</div>
 
-		<!-- Combatant Input Fields -->
-		{#if appMode === 'EDITING'}
-			<div
-				transition:slide
-				class="col-span-3 grid grid-cols-subgrid items-center gap-2 rounded-b-lg bg-primary-content px-6 pb-4"
-			>
-				<div>
+			<!-- Combatant Input Fields -->
+			{#if appMode === 'EDITING'}
+				<div transition:slide class="col-span-3 mt-2 grid grid-cols-subgrid">
 					<input
 						type="text"
 						placeholder={$_('placeholder_name')}
@@ -169,40 +159,38 @@
 						bind:this={combatantNameInput}
 						onkeydown={handleKeyDown}
 					/>
-				</div>
-				<div>
 					<input
 						type="number"
 						placeholder={$_('placeholder_initiative')}
 						class="
-							input
-							input-bordered
-							w-20
-							px-1
-							text-center
-							text-3xl"
+								input
+								input-bordered
+								w-20
+								px-1
+								text-center
+								text-3xl"
 						bind:value={newCombatant.initiative}
 						onfocus={(event: FocusEvent) => selectInputText(event)}
 						onkeydown={handleKeyDown}
 					/>
+					<div class="w-16 justify-center">
+						<button
+							onclick={() => addCombatant(newCombatant)}
+							class="btn btn-primary w-full"
+							aria-label={$_('add_combatant')}
+						>
+							<Plus strokeWidth={3} aria-hidden />
+						</button>
+					</div>
 				</div>
-				<div class="w-16 justify-center">
-					<button
-						onclick={() => addCombatant(newCombatant)}
-						class="btn btn-primary"
-						aria-label={$_('add_combatant')}
-					>
-						<Plus strokeWidth={3} aria-hidden />
-					</button>
-				</div>
-			</div>
-		{/if}
+			{/if}
+		</div>
 
 		<!-- <div class="my-2"></div> -->
 
 		<!-- Combatant List -->
 		{#if sceneData.combatants.length === 0}
-			<div class="w-50 card col-span-3 mt-8 bg-base-100">
+			<div class=" card mt-8 bg-base-100">
 				<div class="card-body text-center">
 					<h2 class="card-title justify-center">{$_('scene.empty_combatants_info')}</h2>
 					<p class="mt-6">

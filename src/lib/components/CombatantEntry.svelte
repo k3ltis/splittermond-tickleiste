@@ -4,7 +4,7 @@
 		type Combatant,
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
-	import { fade, slide, draw } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
@@ -142,7 +142,7 @@
 					/>
 				</div>
 			</div>
-			<div class="self-start">
+			<div>
 				<input
 					type="number"
 					aria-label={$_('combatant_initiative')}
@@ -154,7 +154,7 @@
 			<div class="w-16 text-center">
 				<button
 					in:fade={{ duration: 200 }}
-					class="btn btn-outline btn-error"
+					class="btn btn-outline btn-error w-full"
 					onclick={() => deleteCombatant(combatant.id)}
 					aria-label={$_('delete_combatant', { values: { name: combatant.name } })}
 				>
