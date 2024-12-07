@@ -29,7 +29,7 @@
 	"tick_join": "Join on tick",
 	"tick_move": "Tick movement",
 	"start_tour": "Start explanation tour",
-	"toggle_theme": "Toggle theme",
+	"toggle_theme": "Switch to {n, plural, =0 {light theme} =1 {dark theme} other {}}",
 	"tour_btn_next": "Next",
 	"tour_btn_prev": "Previous",
 	"tout_btn_done": "Done",

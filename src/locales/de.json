@@ -29,7 +29,7 @@
 	"start_tour": "Erklärungs-Tour starten",
 	"tick_join": "Tick Einstieg",
 	"tick_move": "Tick Bewegung",
-	"toggle_theme": "Theme wechseln",
+	"toggle_theme": "{n, plural, =0 {Tagmodus aktivieren} =1 {Nachtmodus aktivieren} other {}}",
 	"tour_btn_next": "Weiter",
 	"tour_btn_prev": "Zurück",
 	"tout_btn_done": "Fertig",

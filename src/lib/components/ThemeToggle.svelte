@@ -37,7 +37,11 @@
 </script>
 
 <div id="ThemeToggle">
-	<button class="btn btn-ghost" onclick={() => toggleThemeMode()} aria-label={$_('toggle_theme')}>
+	<button
+		class="btn btn-ghost"
+		onclick={() => toggleThemeMode()}
+		aria-label={$_('toggle_theme', { values: { n: Number(themeMode === ThemeMode.Light) } })}
+	>
 		{#if themeMode === ThemeMode.Light}
 			<Moon aria-hidden />
 		{:else}
