@@ -106,15 +106,18 @@
 	<div class="navbar bg-base-100 px-0">
 		<!-- Scene Title -->
 		<div id="sceneTitle" class="flex-1">
-			<input
-				type="text"
-				placeholder={$_('scene_title')}
-				disabled={appMode === 'RUNNING'}
-				class="input mr-4 w-full text-3xl {appMode === 'EDITING'
-					? 'input-bordered'
-					: 'disabled input-ghost'}"
-				bind:value={sceneData.name}
-			/>
+			{#if appMode === 'EDITING'}
+				<input
+					type="text"
+					placeholder={$_('scene_title')}
+					class="input input-bordered mr-4 w-full text-3xl"
+					bind:value={sceneData.name}
+				/>
+			{:else}
+				<p class="mr-4 w-full ps-[17px] text-3xl" aria-label={$_('scene_title')}>
+					{sceneData.name}
+				</p>
+			{/if}
 		</div>
 		<!-- Change Scene Mode Buttons -->
 		<div class="change-scene-mode flex-none space-x-2">
@@ -235,15 +238,5 @@
 	input[type='number'] {
 		-moz-appearance: textfield; /* Firefox */
 		appearance: textfield;
-	}
-
-	/* disabled:bg-transparent disabled:border-none disabled:text-base-content disabled:cursor-default */
-	input.disabled {
-		background: var(--bg-transparent);
-		border-color: transparent;
-		color: var(--text-base-content);
-		cursor: default;
-		pointer-events: none;
-		user-select: none;
 	}
 </style>
