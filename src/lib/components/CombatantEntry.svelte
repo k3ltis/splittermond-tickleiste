@@ -4,7 +4,7 @@
 		type Combatant,
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
-	import { fade } from 'svelte/transition';
+	import { fade, slide, draw } from 'svelte/transition';
 	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
@@ -63,9 +63,11 @@
 					{combatant.name}
 				</p>
 				{#if combatant === nextActingCombatant}
-					<div class="absolute -left-4 top-1" in:fade={{ duration: 200 }}>
-						<ArrowRight size="32" />
-						<span class="sr-only">{$_('active_combatant')}</span>
+					<div class="absolute -left-4 top-0.5">
+						<div in:slide={{ delay: 400, duration: 500, axis: 'x' }}>
+							<ArrowRight size="32" />
+							<span class="sr-only">{$_('active_combatant')}</span>
+						</div>
 					</div>
 				{/if}
 			</div>
