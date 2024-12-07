@@ -77,7 +77,7 @@
 					<div class="flex flex-row flex-wrap">
 						{#each combatant.conditionStates as conditionState}
 							<button
-								class="badge badge-error badge-outline badge-lg mr-1 self-end focus:outline-none focus:ring-0"
+								class="badge badge-error badge-outline badge-lg mr-1 self-end"
 								onclick={(event) => onBadgeClicked(combatant, conditionState, event)}
 							>
 								<span class="text-nowrap"

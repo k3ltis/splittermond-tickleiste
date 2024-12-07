@@ -3,15 +3,19 @@
 	import TickSelection from './TickSelection.svelte';
 	import ConditionSelection from './ConditionSelection.svelte';
 	import { X } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import { addAccesibleBehaviourToTabs } from '$lib/utility/html_tab_element_extension';
+	import { assertNever } from '$lib/utility/assert_never';
 
 	type Tab = 'actions' | 'conditions';
 
 	let modal: HTMLDialogElement;
 	let tickSelection: TickSelection;
-	let selectedTab: Tab = 'actions';
+	let tabButtonTicks: HTMLButtonElement;
+	let tabButtonConditions: HTMLButtonElement;
 
 	export function show(tab: Tab = 'actions') {
-		selectedTab = tab;
+		selectTab(tab);
 		modal.showModal();
 		tickSelection.resetModal();
 	}
@@ -27,54 +31,85 @@
 	}
 
 	function resetActiveTab() {
-		selectedTab = 'actions';
+		selectTab('actions');
 	}
 
-	function selectTab(tab: Tab, event: MouseEvent) {
-		event.preventDefault();
-		selectedTab = tab;
+	function selectTab(tab: Tab) {
+		switch (tab) {
+			case 'actions':
+				tabButtonTicks.ariaSelected = 'true';
+				tabButtonConditions.ariaSelected = 'false';
+				break;
+			case 'conditions':
+				tabButtonTicks.ariaSelected = 'false';
+				tabButtonConditions.ariaSelected = 'true';
+				break;
+			default:
+				assertNever(tab);
+				break;
+		}
 	}
+
+	onMount(() => {
+		addAccesibleBehaviourToTabs();
+	});
 </script>
 
 <dialog id="tickSelectionModal" class="modal" bind:this={modal}>
 	<div
 		id="tickSelectionModalInner"
-		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-accent pt-2"
+		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-accent p-0"
 	>
+		<h3 id="tablist-for-combatant" class="sr-only">Aktion für</h3>
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
 			<button
-				class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+				class="btn btn-circle btn-ghost btn-sm absolute right-4 top-4"
 				aria-label={$_('close')}
 			>
 				<X aria-hidden size={24} />
 			</button>
 		</form>
-		<div role="tablist" class="tabs tabs-lifted">
-			<!-- svelte-ignore a11y_invalid_attribute -->
-			<a
-				href="#"
+		<div role="tablist" class="tabs-boxed tabs p-0" aria-labelledby="tablist-for-combatant">
+			<button
+				bind:this={tabButtonTicks}
 				role="tab"
-				class="tab h-12 text-2xl focus:outline-none focus:ring-0"
-				onclick={(event) => selectTab('actions', event)}
-				class:tab-active={selectedTab === 'actions'}
+				id="tab-tick-selection"
+				class="tab m-2 me-1 h-12 text-2xl"
+				aria-controls="tabpanel-tick-selection"
+				aria-selected="true"
+				class:tab-active={tabButtonTicks?.ariaSelected === 'actions'}
 			>
 				{$_('combatant_modal.actions')}
-			</a>
-			<div class="tab-content rounded-box border-base-300 bg-base-100 p-6" hidden={true}>
+			</button>
+			<div
+				class="tab-content border-r-0 border-none bg-base-100 p-6"
+				id="tabpanel-tick-selection"
+				role="tabpanel"
+				tabindex="0"
+				aria-labelledby="tab-tick-selection"
+			>
 				<TickSelection bind:this={tickSelection} notifyDone={() => onNotifyDone()} />
 			</div>
-			<!-- svelte-ignore a11y_invalid_attribute -->
-			<a
-				href="#"
+			<button
+				bind:this={tabButtonConditions}
 				role="tab"
-				class="tab h-12 text-2xl focus:outline-none focus:ring-0"
-				onclick={(event) => selectTab('conditions', event)}
-				class:tab-active={selectedTab === 'conditions'}
+				id="tab-condition-selection"
+				class="tab m-2 me-1 ms-0 h-12 text-2xl"
+				tabindex="-1"
+				aria-controls="tabpanel-condition-selection"
+				aria-selected="false"
+				class:tab-active={tabButtonConditions?.ariaSelected === 'actions'}
 			>
 				{$_('combatant_modal.conditions')}
-			</a>
-			<div class="tab-content rounded-box border-base-300 bg-base-100 p-6">
+			</button>
+			<div
+				class="tab-content border-r-0 border-none bg-base-100 p-6"
+				id="tabpanel-condition-selection"
+				role="tabpanel"
+				tabindex="0"
+				aria-labelledby="tab-condition-selection"
+			>
 				<ConditionSelection />
 			</div>
 		</div>
