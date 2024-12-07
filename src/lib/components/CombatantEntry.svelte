@@ -51,21 +51,17 @@
 {/if}
 
 {#if appMode === 'RUNNING'}
-	<div class="rounded p-6 hover:bg-primary-content">
-		<div
-			class="grid w-full cursor-pointer grid-cols-[98fr_1fr_1fr] items-center gap-2"
+	<div class="rounded-lg p-6 hover:bg-primary-content">
+		<button
+			class="grid w-full cursor-pointer grid-cols-[98fr_1fr_1fr] gap-2"
 			onclick={() => combatantClicked(combatant)}
 			onkeydown={() => {}}
 			onkeyup={() => {}}
-			role="button"
-			tabindex="0"
 		>
 			<div class="relative">
-				<div class="flex flex-col">
-					<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-3xl">
-						{combatant.name}
-					</p>
-				</div>
+				<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-left text-3xl">
+					{combatant.name}
+				</p>
 				{#if combatant === nextActingCombatant}
 					<div class="absolute -left-4 top-1" in:fade={{ duration: 200 }}>
 						<ArrowRight size="32" />
@@ -112,7 +108,7 @@
 			<div class="w-16 text-center">
 				<div class="min-w-12"></div>
 			</div>
-		</div>
+		</button>
 		<div class="mt-2 flex flex-row flex-wrap">
 			{#each combatant.conditionStates as conditionState}
 				<button
