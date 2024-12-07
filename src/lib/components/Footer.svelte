@@ -97,7 +97,7 @@
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
 			<button
-				class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+				class="btn btn-circle btn-ghost btn-sm absolute right-4 top-4"
 				aria-label={$_('close')}
 			>
 				<X aria-hidden size={24} />
