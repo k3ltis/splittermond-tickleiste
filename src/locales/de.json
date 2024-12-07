@@ -7,6 +7,7 @@
 	"column_name": "Name",
 	"combatant_name": "Name des Kämpfers",
 	"combatant_initiative": "Initiative des Kämpfers",
+	"combatant_interaction_modal": "Interaktion für {name}",
 	"combatant_status": "Status des Kämpfers: {status}",
 	"combatants_list": "Liste der Kämpfer",
 	"combatants_list_description": "Zeigt die Liste der Kämpfer, die Teil der Szene sind.",
