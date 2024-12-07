@@ -62,7 +62,9 @@
 		}
 	},
 	"scene": {
-		"empty_combatants_list": "Klicke auf <b>Scene Bearbeiten</b> und füge ein paar Kämpfer hinzu."
+		"empty_combatants_info": "Keine Kämpfer vorhanden",
+		"empty_combatants_hint": "Informationen zum Charakter in die oberen Eingabefelder eingeben und den",
+		"empty_combatants_hint_2": "Knopf drücken, um diesen hinzuzufügen."
 	},
 	"combatant_modal": {
 		"actions": "Aktionen",

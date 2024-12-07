@@ -15,6 +15,7 @@
 	import { Pencil, Play, Plus } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
+	import { onMount } from 'svelte';
 
 	const DEFAULT_APP_MODE: AppMode = 'RUNNING';
 
@@ -75,6 +76,15 @@
 			combatantModal.show('conditions');
 		}
 	}
+
+	onMount(() => {
+		// wait half a second until everything is loaded and then check for combatants
+		setTimeout(() => {
+			if (sceneData.combatants.length === 0) {
+				appMode = 'EDITING';
+			}
+		}, 500);
+	});
 </script>
 
 <CombatantModal bind:this={combatantModal} />
@@ -189,9 +199,15 @@
 
 		<!-- Combatant List -->
 		{#if sceneData.combatants.length === 0}
-			<div class="text-l col-span-3 px-4 py-16 text-center">
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html $_('scene.empty_combatants_list')}
+			<div class="w-50 card col-span-3 mt-8 bg-base-100">
+				<div class="card-body text-center">
+					<h2 class="card-title justify-center">{$_('scene.empty_combatants_info')}</h2>
+					<p class="mt-6">
+						{$_('scene.empty_combatants_hint')}
+						<kbd class="kbd kbd-sm bg-primary text-base-100">+</kbd>
+						{$_('scene.empty_combatants_hint_2')}
+					</p>
+				</div>
 			</div>
 		{/if}
 	</div>

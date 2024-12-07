@@ -62,7 +62,9 @@
 		}
 	},
 	"scene": {
-		"empty_combatants_list": "Click <b>Edit Scene</b> and add some combatants."
+		"empty_combatants_info": "No combatants were created yet",
+		"empty_combatants_hint": "Enter details of the combatant into the inputs above and press the",
+		"empty_combatants_hint_2": "button to add them."
 	},
 	"combatant_modal": {
 		"actions": "Actions",
