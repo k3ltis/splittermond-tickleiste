@@ -46,12 +46,12 @@
 	}
 </script>
 
+{#if index >= 1}
+	<div class="divider my-0 before:bg-primary-content after:bg-primary-content"></div>
+{/if}
+
 {#if appMode === 'RUNNING'}
-	<div
-		class="
-		rounded p-6 hover:bg-primary-content
-		{index >= 1 ? 'border-t-4 border-primary-content' : ''}"
-	>
+	<div class="rounded p-6 hover:bg-primary-content">
 		<div
 			class="grid w-full cursor-pointer grid-cols-[98fr_1fr_1fr] items-center gap-2"
 			onclick={() => combatantClicked(combatant)}
@@ -132,7 +132,7 @@
 {/if}
 
 {#if appMode === 'EDITING'}
-	<div class="p-6 {index >= 1 ? 'border-t-4 border-primary-content' : ''}">
+	<div class="p-6">
 		<div class="grid w-full grid-cols-[98fr_1fr_1fr] items-center gap-2">
 			<div class="relative">
 				<div class="flex flex-col">

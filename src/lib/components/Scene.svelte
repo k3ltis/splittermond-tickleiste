@@ -138,7 +138,7 @@
 			</button>
 		</div>
 	</div>
-	<div id="combatantsTable" class="mt-4 grid w-full grid-cols-[99fr_1fr_1fr]">
+	<div id="combatantsTable" class="mb-2 mt-4 grid w-full grid-cols-[99fr_1fr_1fr]">
 		<!-- Table Header -->
 		<div
 			class="col-span-3 grid grid-cols-subgrid items-center gap-2 bg-primary-content px-6 py-2 text-xl font-bold"
