@@ -63,7 +63,7 @@
 			<div class="self-start">
 				{#if combatant.combatState === 'Active'}
 					<button
-						aria-label={$_('combatant_initiative')}
+						aria-label="{$_('combatant_initiative')}. {$_('open_interactions')}"
 						class="btn btn-primary w-20 px-1 text-center text-3xl"
 						onclick={() => combatantClicked(combatant)}
 					>
@@ -79,7 +79,8 @@
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_waiting') }
-							})}</span
+							})}.
+							{$_('open_interactions')}</span
 						>
 					</button>
 				{:else if combatant.combatState === 'Expecting'}
@@ -92,7 +93,8 @@
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_expecting') }
-							})}</span
+							})}.
+							{$_('open_interactions')}</span
 						>
 					</button>
 				{:else if combatant.combatState === 'Dead'}
@@ -105,7 +107,8 @@
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_dead') }
-							})}</span
+							})}.
+							{$_('open_interactions')}</span
 						>
 					</button>
 				{/if}
