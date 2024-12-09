@@ -147,7 +147,7 @@
 				data-tip={$_('tickselection.tooltip.set_state_expecting')}
 			>
 				<button
-					class="btn btn-outline btn-info aspect-square h-full w-full"
+					class="btn btn-info aspect-square h-full w-full"
 					onclick={() => selectCombatStateExpecting()}
 					aria-label={$_('tickselection.tooltip.set_state_expecting')}
 				>
@@ -163,7 +163,7 @@
 				data-tip={$_('tickselection.tooltip.set_state_waiting')}
 			>
 				<button
-					class="btn btn-outline btn-info aspect-square h-full w-full"
+					class="btn btn-info aspect-square h-full w-full"
 					onclick={() => selectCombatStateWaiting()}
 					aria-label={$_('tickselection.tooltip.set_state_waiting')}
 				>
@@ -179,7 +179,7 @@
 				data-tip={$_('tickselection.tooltip.set_state_dead')}
 			>
 				<button
-					class="btn btn-outline btn-error aspect-square h-full w-full"
+					class="btn btn-error aspect-square h-full w-full"
 					onclick={() => selectCombatStateDead()}
 					aria-label={$_('tickselection.tooltip.set_state_dead')}
 				>

@@ -202,12 +202,11 @@
 			</div>
 		{/if}
 	</div>
-	{#each sceneData.combatants as combatant, index (combatant.id)}
+	{#each sceneData.combatants as combatant (combatant.id)}
 		<div animate:flip={{ delay: 100, duration: 500 }}>
 			<CombatantEntry
 				{appMode}
 				{combatant}
-				{index}
 				{combatantClicked}
 				{conditionClicked}
 				{deleteCombatant}

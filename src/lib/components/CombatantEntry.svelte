@@ -14,14 +14,12 @@
 	interface Props {
 		combatant: Combatant;
 		appMode: AppMode;
-		index: number;
 		combatantClicked: (combatant: Combatant) => void;
 		conditionClicked: (combatant: Combatant, condition: ConditionState) => void;
 		deleteCombatant: (combatantId: string) => void;
 	}
 
-	let { combatant, appMode, index, combatantClicked, conditionClicked, deleteCombatant }: Props =
-		$props();
+	let { combatant, appMode, combatantClicked, conditionClicked, deleteCombatant }: Props = $props();
 
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
@@ -46,18 +44,9 @@
 	}
 </script>
 
-{#if index >= 1}
-	<div class="divider my-0 before:bg-primary-content after:bg-primary-content"></div>
-{/if}
-
 {#if appMode === 'RUNNING'}
-	<div class="rounded-lg p-6 hover:bg-primary-content">
-		<button
-			class="grid w-full cursor-pointer grid-cols-[98fr_1fr_1fr] gap-2"
-			onclick={() => combatantClicked(combatant)}
-			onkeydown={() => {}}
-			onkeyup={() => {}}
-		>
+	<div class="p-6">
+		<div class="grid w-full grid-cols-[98fr_1fr_1fr] gap-2">
 			<div class="relative">
 				<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-left text-3xl">
 					{combatant.name}
@@ -73,44 +62,58 @@
 			</div>
 			<div class="self-start">
 				{#if combatant.combatState === 'Active'}
-					<p
+					<button
 						aria-label={$_('combatant_initiative')}
-						class="	w-20 px-1 text-center text-3xl"
-						onfocus={(event: FocusEvent) => selectInputText(event)}
+						class="btn btn-primary w-20 px-1 text-center text-3xl"
+						onclick={() => combatantClicked(combatant)}
 					>
 						{combatant.initiative}
-					</p>
-				{:else}
-					<div in:fade={{ duration: 200 }}>
-						{#if combatant.combatState === 'Waiting'}
-							<Hourglass class="w-20 text-center text-info" size={48} strokeWidth={1} />
-							<span class="sr-only"
-								>{$_('combatant_status', {
-									values: { status: $_('tickselection.tooltip.set_state_waiting') }
-								})}</span
-							>
-						{:else if combatant.combatState === 'Expecting'}
-							<ClockAlert class="w-20 text-center text-info" size={48} strokeWidth={1} />
-							<span class="sr-only"
-								>{$_('combatant_status', {
-									values: { status: $_('tickselection.tooltip.set_state_expecting') }
-								})}</span
-							>
-						{:else if combatant.combatState === 'Dead'}
-							<Skull class="w-20 text-center text-error" size={48} strokeWidth={1} />
-							<span class="sr-only"
-								>{$_('combatant_status', {
-									values: { status: $_('tickselection.tooltip.set_state_dead') }
-								})}</span
-							>
-						{/if}
-					</div>
+					</button>
+				{:else if combatant.combatState === 'Waiting'}
+					<button
+						in:fade={{ duration: 200 }}
+						class="btn btn-info w-20 px-1 text-center"
+						onclick={() => combatantClicked(combatant)}
+					>
+						<Hourglass class="w-20 text-center" size={32} strokeWidth={1} />
+						<span class="sr-only"
+							>{$_('combatant_status', {
+								values: { status: $_('tickselection.tooltip.set_state_waiting') }
+							})}</span
+						>
+					</button>
+				{:else if combatant.combatState === 'Expecting'}
+					<button
+						in:fade={{ duration: 200 }}
+						class="btn btn-info w-20 px-1 text-center"
+						onclick={() => combatantClicked(combatant)}
+					>
+						<ClockAlert class="w-20 text-center" size={32} strokeWidth={1} />
+						<span class="sr-only"
+							>{$_('combatant_status', {
+								values: { status: $_('tickselection.tooltip.set_state_expecting') }
+							})}</span
+						>
+					</button>
+				{:else if combatant.combatState === 'Dead'}
+					<button
+						in:fade={{ duration: 200 }}
+						class="btn btn-error w-20 px-1 text-center"
+						onclick={() => combatantClicked(combatant)}
+					>
+						<Skull class="w-20 text-center" size={32} strokeWidth={1} />
+						<span class="sr-only"
+							>{$_('combatant_status', {
+								values: { status: $_('tickselection.tooltip.set_state_dead') }
+							})}</span
+						>
+					</button>
 				{/if}
 			</div>
 			<div class="w-16 text-center">
 				<div class="min-w-12"></div>
 			</div>
-		</button>
+		</div>
 		<div class="mt-2 flex flex-row flex-wrap">
 			{#each combatant.conditionStates as conditionState}
 				<button
@@ -164,6 +167,8 @@
 		</div>
 	</div>
 {/if}
+
+<div class="divider my-0 before:bg-primary-content after:bg-primary-content"></div>
 
 <style>
 	input[type='number']::-webkit-outer-spin-button,
