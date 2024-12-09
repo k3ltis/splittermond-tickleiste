@@ -18,6 +18,7 @@
 	const KEY_LOCALE: string = 'locale';
 	const DEFAULT_LOCALE: string = Locale.German;
 	let selected_locale: string = $state(DEFAULT_LOCALE);
+	let isModalOpen: boolean = false;
 
 	onMount(() => {
 		const locale = loadAttribute<string>(KEY_LOCALE);
@@ -33,6 +34,11 @@
 		saveAttribute(KEY_LOCALE, selected_locale);
 		document.title = $_('app_title', { locale: selected_locale });
 	}
+
+	function openDataPrivacy() {
+		isModalOpen = true;
+		dataPrivacyModal.showModal();
+	}
 </script>
 
 <footer
@@ -44,7 +50,7 @@
 		</p>
 		<p class="sm:hidden">v{APP_VERSION}</p>
 	</div>
-	<button onclick={() => dataPrivacyModal.showModal()}>{$_('data_privacy')}</button>
+	<button onclick={openDataPrivacy}>{$_('data_privacy')}</button>
 	<button id="ToggleLanguageBtn" onclick={() => toggleLanguage()}>
 		{#if $locale === 'en'}
 			<img width="30em" src="{base}/svg/flag-for-flag-germany-svgrepo-com.svg" alt="German" />
@@ -90,6 +96,8 @@
 	id="dataPrivacyModal"
 	bind:this={dataPrivacyModal}
 	class="modal"
+	class:hidden={isModalOpen}
+	onclose={() => (isModalOpen = false)}
 	aria-labelledby="dialogTitle"
 	aria-describedby="dialogDesc"
 >
