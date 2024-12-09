@@ -47,7 +47,6 @@
 				break;
 			default:
 				assertNever(tab);
-				break;
 		}
 	}
 
@@ -93,7 +92,7 @@
 				tabindex="-1"
 				aria-controls="tabpanel-condition-selection"
 				aria-selected="false"
-				class:tab-active={tabButtonConditions?.ariaSelected === 'actions'}
+				class:tab-active={tabButtonConditions?.ariaSelected === 'conditions'}
 			>
 				{$_('combatant_modal.conditions')}
 			</button>

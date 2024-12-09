@@ -1,6 +1,8 @@
 /*
  *   Typescript version of the w3.org suggested tab-behaviour
  *   https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/
+ * 
+ * 	 Function Principle
  */
 
 class TabsAutomatic {
@@ -139,10 +141,9 @@ class TabsAutomatic {
 
 // Initialize tablist
 export function addAccesibleBehaviourToTabs() {
-	window.addEventListener('load', function () {
-		const tablists = document.querySelectorAll<HTMLElement>('[role=tablist]');
-		for (let i = 0; i < tablists.length; i++) {
-			new TabsAutomatic(tablists[i]);
-		}
-	});
+	console.log("addAccesibleBehaviourToTabs")
+	const tablists = document.querySelectorAll<HTMLElement>('[role=tablist]');
+	for (let i = 0; i < tablists.length; i++) {
+		new TabsAutomatic(tablists[i]);
+	}
 }
