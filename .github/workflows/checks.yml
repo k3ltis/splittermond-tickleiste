@@ -9,7 +9,7 @@ on:
       - main
     types:
       - synchronize # Trigger when new commits are pushed to the PR
-      - opened # Trigger when the PR is opened
+      - opened # Trigger when the PR is opened n
       - reopened # Trigger when the PR is reopened
 
 jobs:
