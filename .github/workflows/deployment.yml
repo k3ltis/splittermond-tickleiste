@@ -63,10 +63,10 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          if [ -z "$GITHUB_TOKEN" ]; then
-            echo "GITHUB_TOKEN is not set. Deployment cannot proceed."
-            exit 1
-          fi
+          # if [ -z "$GITHUB_TOKEN" ]; then
+          #   echo "GITHUB_TOKEN is not set. Deployment cannot proceed."
+          #   exit 1
+          # fi
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           npx gh-pages -d build -t --cname "tickleiste.tklic.de" -u "github-
           # # git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
