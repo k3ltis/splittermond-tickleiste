@@ -41,6 +41,9 @@ jobs:
     needs: build
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Restore build artifacts from cache
         uses: actions/cache@v4
         with:
@@ -63,6 +66,10 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "GITHUB_TOKEN is not set. Deployment cannot proceed."
+            exit 1
+          fi
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           npx gh-pages -d build -t --cname "tickleiste.tklic.de" -u "github-actions-bot <support+actions@github.com>"
         env:
