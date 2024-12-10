@@ -18,7 +18,7 @@
 	const KEY_LOCALE: string = 'locale';
 	const DEFAULT_LOCALE: string = Locale.German;
 	let selected_locale: string = $state(DEFAULT_LOCALE);
-	let isModalOpen: boolean = false;
+	let isModalOpen: boolean = $state(false);
 
 	onMount(() => {
 		const locale = loadAttribute<string>(KEY_LOCALE);
