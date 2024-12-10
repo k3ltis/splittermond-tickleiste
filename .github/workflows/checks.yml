@@ -5,6 +5,8 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
     types:
       - synchronize # Trigger when new commits are pushed to the PR
       - opened # Trigger when the PR is opened

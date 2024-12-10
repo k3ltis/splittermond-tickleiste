@@ -17,7 +17,7 @@ export const loadAttribute = <T>(key: string): T | null => {
 	return null;
 };
 
-// Remove a single attribute from local storage 
+// Remove a single attribute from local storage
 export const removeAttribute = (key: string) => {
 	localStorage.removeItem(key);
 	console.log(`Data removed from localStorage with key: ${key}`);
