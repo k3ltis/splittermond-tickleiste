@@ -4,9 +4,7 @@ on: workflow_dispatch
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ./.github/workflows/.checks.yml
+    uses: ./.github/workflows/checks_callable.yml
 
   build:
     runs-on: ubuntu-latest
