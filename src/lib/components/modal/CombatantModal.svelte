@@ -15,9 +15,12 @@
 	let tabButtonTicks: HTMLButtonElement;
 	let tabButtonConditions: HTMLButtonElement;
 
+	let isModalOpen: boolean = false;
+
 	export function show(tab: Tab = 'actions') {
 		selectTab(tab);
 		modal.showModal();
+		isModalOpen = true;
 		tickSelection.resetModal();
 	}
 
@@ -55,7 +58,13 @@
 	});
 </script>
 
-<dialog id="tickSelectionModal" class="modal" bind:this={modal}>
+<dialog
+	id="tickSelectionModal"
+	class="modal"
+	class:hidden={!isModalOpen}
+	bind:this={modal}
+	onclose={() => (isModalOpen = false)}
+>
 	<div
 		id="tickSelectionModalInner"
 		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-accent p-0"

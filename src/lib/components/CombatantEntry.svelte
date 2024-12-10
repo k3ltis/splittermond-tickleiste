@@ -68,6 +68,7 @@
 						onclick={() => combatantClicked(combatant)}
 					>
 						{combatant.initiative}
+						<span class="sr-only">{$_('open_interactions')}</span>
 					</button>
 				{:else if combatant.combatState === 'Waiting'}
 					<button
@@ -79,7 +80,8 @@
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_waiting') }
-							})}</span
+							})}.
+							{$_('open_interactions')}</span
 						>
 					</button>
 				{:else if combatant.combatState === 'Expecting'}
@@ -92,7 +94,8 @@
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_expecting') }
-							})}</span
+							})}.
+							{$_('open_interactions')}</span
 						>
 					</button>
 				{:else if combatant.combatState === 'Dead'}
@@ -105,7 +108,8 @@
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_dead') }
-							})}</span
+							})}.
+							{$_('open_interactions')}</span
 						>
 					</button>
 				{/if}
