@@ -12,23 +12,8 @@ jobs:
         with:
           bun-version: 1.1.33
 
-      - name: Restore dependencies cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.bun
-          key: ${{ runner.os }}-bun-${{ hashFiles('package.json', 'bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
       - name: Install dependencies
         run: bun install
-
-      - name: Save dependencies cache
-        if: always() # Always save cache to update with latest changes
-        uses: actions/cache@v3
-        with:
-          path: ~/.bun
-          key: ${{ runner.os }}-bun-${{ hashFiles('package.json', 'bun.lockb') }}
 
       - name: Run unit tests
         run: bun run test
