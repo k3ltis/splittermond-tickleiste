@@ -76,7 +76,7 @@
 						class="btn btn-info w-20 px-1 text-center"
 						onclick={() => combatantClicked(combatant)}
 					>
-						<Hourglass class="w-20 text-center" size={32} strokeWidth={1} />
+						<Hourglass class="w-20 text-center" size={32} strokeWidth={2} />
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_waiting') }
@@ -90,7 +90,7 @@
 						class="btn btn-info w-20 px-1 text-center"
 						onclick={() => combatantClicked(combatant)}
 					>
-						<ClockAlert class="w-20 text-center" size={32} strokeWidth={1} />
+						<ClockAlert class="w-20 text-center" size={32} strokeWidth={2} />
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_expecting') }
@@ -104,7 +104,7 @@
 						class="btn btn-error w-20 px-1 text-center"
 						onclick={() => combatantClicked(combatant)}
 					>
-						<Skull class="w-20 text-center" size={32} strokeWidth={1} />
+						<Skull class="w-20 text-center" size={32} strokeWidth={2} />
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_dead') }
@@ -161,7 +161,7 @@
 			<div class="w-16 text-center">
 				<button
 					in:fade={{ duration: 200 }}
-					class="btn btn-outline btn-error w-full"
+					class="btn btn-error w-full"
 					onclick={() => deleteCombatant(combatant.id)}
 					aria-label={$_('delete_combatant', { values: { name: combatant.name } })}
 				>
@@ -172,7 +172,7 @@
 	</div>
 {/if}
 
-<div class="divider my-0 before:bg-primary-content after:bg-primary-content"></div>
+<div class="divider my-0 before:bg-secondary after:bg-secondary"></div>
 
 <style>
 	input[type='number']::-webkit-outer-spin-button,

@@ -67,7 +67,7 @@
 >
 	<div
 		id="tickSelectionModalInner"
-		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-accent p-0"
+		class="max-w-l modal-box min-h-[50%] w-11/12 border-4 border-primary p-0"
 	>
 		<h3 id="tablist-for-combatant" class="sr-only">
 			{$_('combatant_interaction_modal', { values: { name: sessionData.activeCombatant?.name } })}

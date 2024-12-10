@@ -131,9 +131,9 @@
 					})}
 				>
 					{#if negation}
-						<Plus size={48} aria-hidden />
+						<Plus size={40} strokeWidth={2} aria-hidden />
 					{:else}
-						<Minus size={48} aria-hidden />
+						<Minus size={40} strokeWidth={2} aria-hidden />
 					{/if}
 				</button>
 			</div>
@@ -151,7 +151,7 @@
 					onclick={() => selectCombatStateExpecting()}
 					aria-label={$_('tickselection.tooltip.set_state_expecting')}
 				>
-					<ClockAlert size={48} strokeWidth={1} aria-hidden />
+					<ClockAlert size={40} strokeWidth={2} aria-hidden />
 				</button>
 			</div>
 		{/if}
@@ -167,7 +167,7 @@
 					onclick={() => selectCombatStateWaiting()}
 					aria-label={$_('tickselection.tooltip.set_state_waiting')}
 				>
-					<Hourglass size={48} strokeWidth={1} aria-hidden />
+					<Hourglass size={40} strokeWidth={2} aria-hidden />
 				</button>
 			</div>
 		{/if}
@@ -183,7 +183,7 @@
 					onclick={() => selectCombatStateDead()}
 					aria-label={$_('tickselection.tooltip.set_state_dead')}
 				>
-					<Skull size={48} strokeWidth={1} aria-hidden />
+					<Skull size={40} strokeWidth={2} aria-hidden />
 				</button>
 			</div>
 		{/if}

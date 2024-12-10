@@ -42,7 +42,7 @@
 </script>
 
 <footer
-	class="footer flex items-center border-t-4 border-primary-content bg-primary-content/10 p-4 text-base-content"
+	class="footer flex items-center border-t-4 border-primary bg-primary-content/10 p-4 text-base-content"
 >
 	<div class="flex-1">
 		<p class="hidden sm:flex">
