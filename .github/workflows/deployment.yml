@@ -68,7 +68,7 @@ jobs:
           #   exit 1
           # fi
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npx gh-pages -d build -t --cname "tickleiste.tklic.de" -u "github-
+          npx gh-pages -d build -t --cname "tickleiste.tklic.de" -u "github-actions-bot <support+actions@github.com>"
           # # git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           # npx gh-pages -d build -t --cname "tickleiste.tklic.de" -u "github-actions-bot <support+actions@github.com>"
         env:
