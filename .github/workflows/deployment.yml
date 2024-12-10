@@ -52,7 +52,7 @@ jobs:
 
       - name: Git describe
         id: ghd
-        uses: proudust/gh-describe@v2.0.1
+        uses: proudust/gh-describe@v2
 
       - name: Run Version Check
         run: |
