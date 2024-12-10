@@ -10,7 +10,7 @@ const complementary_colors = {
 	'info-content': '#041016',
 	success: '#00af66',
 	'success-content': '#000b04',
-	warning: '#ffb000',
+	warning: '#fcc755',
 	'warning-content': '#160b00',
 	error: '#d35456',
 	'error-content': '#160404'

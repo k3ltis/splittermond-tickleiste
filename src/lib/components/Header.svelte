@@ -52,7 +52,7 @@
 				<Menu aria-hidden />
 			</summary>
 			<ul
-				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-secondary p-2 text-secondary-content font-bold"
+				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-secondary p-2 font-bold text-secondary-content"
 			>
 				<li>
 					<label id="uploadButton" for="battleScene" class="text-xl">
