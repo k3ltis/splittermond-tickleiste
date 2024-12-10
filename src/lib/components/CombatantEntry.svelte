@@ -73,7 +73,7 @@
 				{:else if combatant.combatState === 'Waiting'}
 					<button
 						in:fade={{ duration: 200 }}
-						class="btn btn-info w-20 px-1 text-center"
+						class="btn btn-warning btn-outline w-20 px-1 text-center"
 						onclick={() => combatantClicked(combatant)}
 					>
 						<Hourglass class="w-20 text-center" size={32} strokeWidth={2} />
@@ -87,7 +87,7 @@
 				{:else if combatant.combatState === 'Expecting'}
 					<button
 						in:fade={{ duration: 200 }}
-						class="btn btn-info w-20 px-1 text-center"
+						class="btn btn-warning w-20 px-1 text-center"
 						onclick={() => combatantClicked(combatant)}
 					>
 						<ClockAlert class="w-20 text-center" size={32} strokeWidth={2} />

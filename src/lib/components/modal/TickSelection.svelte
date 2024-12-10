@@ -103,7 +103,6 @@
 				{tick.number}
 			{/if}
 
-			<!-- {negation ? -tickNumber : tickNumber} -->
 			{#if tick.hasCombatants}
 				<span
 					class="absolute bottom-0 right-0"
@@ -147,7 +146,7 @@
 				data-tip={$_('tickselection.tooltip.set_state_expecting')}
 			>
 				<button
-					class="btn btn-info aspect-square h-full w-full"
+					class="btn btn-warning aspect-square h-full w-full"
 					onclick={() => selectCombatStateExpecting()}
 					aria-label={$_('tickselection.tooltip.set_state_expecting')}
 				>
@@ -163,7 +162,7 @@
 				data-tip={$_('tickselection.tooltip.set_state_waiting')}
 			>
 				<button
-					class="btn btn-info aspect-square h-full w-full"
+					class="btn btn-warning aspect-square h-full w-full"
 					onclick={() => selectCombatStateWaiting()}
 					aria-label={$_('tickselection.tooltip.set_state_waiting')}
 				>

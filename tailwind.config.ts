@@ -4,7 +4,7 @@ import daisyui from 'daisyui';
 import type { Config } from 'tailwindcss';
 
 const complementary_colors = {
-	accent: '#00fb7d',
+	accent: '#4fd590',
 	'accent-content': '#001505',
 	info: '#67d2ff',
 	'info-content': '#041016',
@@ -12,7 +12,7 @@ const complementary_colors = {
 	'success-content': '#000b04',
 	warning: '#ffb000',
 	'warning-content': '#160b00',
-	error: '#fe6b6e',
+	error: '#d35456',
 	'error-content': '#160404'
 };
 
@@ -24,7 +24,7 @@ const splitter_light = {
 	neutral: '#2b2f2b',
 	'neutral-content': '#d0d1d0',
 	'base-100': '#c5dbe0',
-	'base-200': '#7b939a',
+	'base-200': '#85837c',
 	'base-300': '#141918',
 	'base-content': '#141918',
 	...complementary_colors
