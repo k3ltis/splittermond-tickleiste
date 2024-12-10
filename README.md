@@ -40,4 +40,3 @@ bun run build && bun run deploy
 
 1. Bump version in `package.json`
 2. Run the [Build and Deploy](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/deployment.yml) workflow for branch `main`.
-
