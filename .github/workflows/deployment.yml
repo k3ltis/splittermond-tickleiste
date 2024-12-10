@@ -38,7 +38,8 @@ jobs:
           echo "Current version: $current_version"
           last_version="${{ steps.ghd.outputs.tag }}"
           echo "Last released version: $last_version"
-          ./check_version.sh $current_version $last_version
+          ./check_version.sh "$current_version" "$last_version"
+          git tag "$current_version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
