@@ -1,9 +1,6 @@
 name: Checks
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_call
 
 jobs:
   test:

@@ -1,9 +1,12 @@
 name: Checks
 
-on: workflow_call
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/.checks.yml
+      - uses: ./.github/workflows/checks_callable.yml
