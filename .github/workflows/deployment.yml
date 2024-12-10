@@ -3,6 +3,12 @@ name: Build and Deploy
 on: workflow_dispatch
 
 jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/.checks.yml
+
   build:
     runs-on: ubuntu-latest
     steps:
