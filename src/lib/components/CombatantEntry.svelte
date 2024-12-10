@@ -63,11 +63,12 @@
 			<div class="self-start">
 				{#if combatant.combatState === 'Active'}
 					<button
-						aria-label="{$_('combatant_initiative')}. {$_('open_interactions')}"
+						aria-label={$_('combatant_initiative')}
 						class="btn btn-primary w-20 px-1 text-center text-3xl"
 						onclick={() => combatantClicked(combatant)}
 					>
 						{combatant.initiative}
+						<span class="sr-only">{$_('open_interactions')}</span>
 					</button>
 				{:else if combatant.combatState === 'Waiting'}
 					<button
