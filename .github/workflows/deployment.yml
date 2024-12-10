@@ -3,8 +3,12 @@ name: Build and Deploy
 on: workflow_dispatch
 
 jobs:
-  build:
+  test:
+    uses: ./.github/workflows/checks_callable.yml
+
+  build-and-deploy:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -14,28 +18,28 @@ jobs:
         with:
           bun-version: 1.1.33
 
+      - name: Install dependencies
+        run: bun install
+
+      - name: Git describe
+        id: ghd
+        uses: proudust/gh-describe@v2
+
+      - name: Run Version Check
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          cd scripts
+          chmod +x ./check_version.sh  # Ensure the script is executable
+          current_version=$(node -p "require('../package.json').version")
+          echo "Current version: $current_version"
+          last_version="${{ steps.ghd.outputs.tag }}"
+          echo "Last released version: $last_version"
+          ./check_version.sh "$current_version" "$last_version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build project
         run: bun run build
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      # - name: Git describe
-      #   id: ghd
-      #   uses: proudust/gh-describe@v2.0.1
-
-      # - name: Run Version Check
-      #   run: |
-      #     git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-      #     cd scripts
-      #     chmod +x ./check_version.sh  # Ensure the script is executable
-      #     current_version=$(node -p "require('../package.json').version")
-      #     echo "Current version: $current_version"
-      #     last_version="${{ steps.ghd.outputs.tag }}"
-      #     echo "Last released version: $last_version"
-      #     ./check_version.sh $current_version $last_version
 
       - name: Deploy to GitHub Pages
         run: |
@@ -45,5 +49,14 @@ jobs:
           fi
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           npx gh-pages -d build -t --cname "tickleiste.tklic.de" -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push release tag
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          current_version=$(node -p "require('./package.json').version")
+          git tag "$current_version"
+          git push origin "$current_version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
