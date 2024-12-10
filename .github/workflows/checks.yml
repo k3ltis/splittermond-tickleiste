@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - synchronize # Trigger when new commits are pushed to the PR
+      - opened # Trigger when the PR is opened
+      - reopened # Trigger when the PR is reopened
 
 jobs:
   test:
