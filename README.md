@@ -39,6 +39,5 @@ bun run build && bun run deploy
 ## Release
 
 1. Bump version in `package.json`
-2. Merge to main and wait for pipeline to succeed - the app is now published
-3. Final acceptance test on published instance
-4. Create and push a git tag
+2. Run the [Build and Deploy](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/deployment.yml) workflow for branch `main`.
+
