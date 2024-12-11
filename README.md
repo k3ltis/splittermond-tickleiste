@@ -1,5 +1,7 @@
 # Splittermond Tickleiste
 
+[![Checks](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/checks.yml/badge.svg?branch=main)](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/checks.yml)
+
 ![Alt Text](docs/splimoapp.gif)
 
 Small responsive web app to manage the tickbar (Tickleiste) for Splittermond.
@@ -22,21 +24,13 @@ Try it out on [tickleiste.tklic.de](tickleiste.tklic.de), it's hosted via Github
 
 ## Development
 
-Start the dev server
-
-```bash
-bun run dev
-```
-
-## Deployment
-
-Manual deployment to Github Pages
-
-```bash
-bun run build && bun run deploy
-```
+Install dependencies with `bun install`, then start the server with `bun run dev`.
+To check for linting errors use `bun run lint` or automatically fix them using `bun run format`.
+To check for a11y features the [firefox axe extension](https://addons.mozilla.org/en-US/firefox/addon/axe-devtools/) is recommended.
 
 ## Release
+
+Except for the version bump, releasing is automated.
 
 1. Bump version in `package.json`
 2. Run the [Build and Deploy](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/deployment.yml) workflow for branch `main`.
