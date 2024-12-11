@@ -25,7 +25,7 @@ const splitter_light = {
 	'neutral-content': '#d0d1d0',
 	'base-100': '#c5dbe0',
 	'base-200': '#85837c',
-	'base-300': '#141918',
+	'base-300': '#696969',
 	'base-content': '#141918',
 	...complementary_colors
 };
@@ -39,7 +39,7 @@ const splitter_dark = {
 	'neutral-content': '#d0d1d0',
 	'base-100': '#1f2624',
 	'base-200': '#444440',
-	'base-300': '#141918',
+	'base-300': '#383834',
 	'base-content': '#C7E7F1',
 	...complementary_colors
 };

@@ -123,7 +123,7 @@
 			>
 				<button
 					class="btn h-full w-full"
-					class:btn-active={negation}
+					class:btn-primary={negation}
 					onclick={() => toggleNegation()}
 					aria-label={$_('tickselection.tooltip.tick_direction', {
 						values: { n: Number(negation) }
