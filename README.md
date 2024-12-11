@@ -6,7 +6,7 @@
 
 Small responsive web app to manage the tickbar (Tickleiste) for Splittermond.
 
-Try it out on [tickleiste.tklic.de](tickleiste.tklic.de), it's hosted via Github Pages.
+Try it out on [tickleiste.tklic.de](https://tickleiste.tklic.de), it's hosted via Github Pages.
 
 **Features**
 
