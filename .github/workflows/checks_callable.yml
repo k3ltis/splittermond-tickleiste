@@ -15,6 +15,7 @@ jobs:
       - name: Run Version Check
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git fetch --tags
           last_version="${{ steps.ghd.outputs.tag }}"
           echo "Last released version: $last_version"
         env:
