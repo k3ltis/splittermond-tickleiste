@@ -5,6 +5,9 @@ jobs:
     name: Code and dependency checks
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: latest version
         id: ghd
         uses: proudust/gh-describe@v2
