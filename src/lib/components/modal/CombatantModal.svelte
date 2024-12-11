@@ -12,10 +12,12 @@
 
 	let modal: HTMLDialogElement;
 	let tickSelection: TickSelection;
+	// svelte-ignore non_reactive_update
 	let tabButtonTicks: HTMLButtonElement;
+	// svelte-ignore non_reactive_update
 	let tabButtonConditions: HTMLButtonElement;
 
-	let isModalOpen: boolean = false;
+	let isModalOpen: boolean = $state(false);
 
 	export function show(tab: Tab = 'actions') {
 		selectTab(tab);

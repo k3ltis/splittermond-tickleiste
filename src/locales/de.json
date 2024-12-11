@@ -64,7 +64,7 @@
 	},
 	"scene": {
 		"empty_combatants_info": "Keine Kämpfer vorhanden",
-		"empty_combatants_hint": "Informationen zum Charakter in die oberen Eingabefelder eingeben und den",
+		"empty_combatants_hint": "Informationen zum Kämpfer in die oberen Eingabefelder eingeben und den",
 		"empty_combatants_hint_2": "Knopf drücken, um diesen hinzuzufügen."
 	},
 	"combatant_modal": {

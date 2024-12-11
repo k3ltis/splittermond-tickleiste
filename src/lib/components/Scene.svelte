@@ -83,7 +83,7 @@
 			if (sceneData.combatants.length === 0) {
 				appMode = 'EDITING';
 			}
-		}, 500);
+		}, 0);
 	});
 </script>
 
@@ -125,6 +125,7 @@
 				id="runSceneBtn"
 				class="btn btn-primary text-xl"
 				class:hidden={appMode == 'RUNNING'}
+				disabled={sceneData.combatants.length === 0}
 				onclick={runScene}
 			>
 				<Play />
