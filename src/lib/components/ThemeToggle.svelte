@@ -10,8 +10,8 @@
 	};
 
 	const ThemesForThemeMode = {
-		[ThemeMode.Light]: 'light',
-		[ThemeMode.Dark]: 'dark'
+		[ThemeMode.Light]: 'splitter_light',
+		[ThemeMode.Dark]: 'splitter_dark'
 	};
 	const KEY_THEME_MODE: string = 'theme_mode';
 	const DEFAULT_THEME_MODE: string = ThemeMode.Light;

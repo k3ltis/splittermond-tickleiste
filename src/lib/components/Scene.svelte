@@ -143,7 +143,7 @@
 	</div>
 	<div id="combatantsTable" class="mb-2 mt-4">
 		<!-- Table Header -->
-		<div class="grid grid-cols-[99fr_1fr_1fr] gap-x-2 rounded-lg bg-primary-content px-6 pb-4 pt-3">
+		<div class="grid grid-cols-[99fr_1fr_1fr] gap-x-2 rounded-lg bg-secondary px-6 pb-4 pt-3">
 			<div class="text-xl font-bold">{$_('column_name')}</div>
 			<div class="text-xl font-bold" id="initiativeColumn">{$_('column_initiative')}</div>
 			<div class="w-16"></div>

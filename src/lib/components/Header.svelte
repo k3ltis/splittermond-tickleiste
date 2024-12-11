@@ -39,7 +39,7 @@
 </script>
 
 <div
-	class="navbar fixed top-0 z-[1] border-b-4 border-primary-content bg-primary-content/20 backdrop-blur-xl"
+	class="navbar fixed top-0 z-[1] border-b-4 border-primary bg-primary-content/20 backdrop-blur-xl"
 >
 	<div class="flex-1">
 		<img class="max-h-12 md:max-h-16" src="{base}/logo.png" alt="splittermond logo" />
@@ -47,12 +47,12 @@
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
 		<Tour />
-		<details class="dropdown dropdown-end" name="menu" bind:this={details}>
+		<details class="dropdown dropdown-end drop-shadow-xl" bind:this={details}>
 			<summary class="btn btn-ghost" aria-label={$_('open_menu')}>
 				<Menu aria-hidden />
 			</summary>
 			<ul
-				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-primary-content p-2 text-primary shadow"
+				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-secondary p-2 font-bold text-secondary-content"
 			>
 				<li>
 					<label id="uploadButton" for="battleScene" class="text-xl">
