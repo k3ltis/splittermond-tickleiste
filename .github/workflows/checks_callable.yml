@@ -8,6 +8,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Fetch tags
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git fetch --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
       - name: latest version
         id: ghd
         uses: proudust/gh-describe@v2
