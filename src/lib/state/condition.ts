@@ -13,6 +13,9 @@ export type ConditionType =
 	| 'panicked'
 	| 'frenzied'
 	| 'dying'
+	| 'sleeping'
+	| 'wasting'
+	| 'struggling'
 	| 'wounded';
 
 export type Condition = {
@@ -71,6 +74,18 @@ export const conditions: Condition[] = [
 	{
 		id: 'dying',
 		i18n: 'condition.dying'
+	},
+	{
+		id: 'sleeping',
+		i18n: 'condition.sleeping'
+	},
+	{
+		id: 'wasting',
+		i18n: 'condition.wasting'
+	},
+	{
+		id: 'struggling',
+		i18n: 'condition.struggling'
 	},
 	{
 		id: 'wounded',

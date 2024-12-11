@@ -5,7 +5,7 @@
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
 	import { fade, slide } from 'svelte/transition';
-	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight } from 'lucide-svelte';
+	import { Trash, Hourglass, ClockAlert, Skull, ArrowRight, Timer } from 'lucide-svelte';
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
@@ -125,10 +125,11 @@
 					onclick={(event) => onBadgeClicked(combatant, conditionState, event)}
 				>
 					<span class="text-nowrap"
-						>{resolveLabel(conditionState.id)} ({calculateConditionDuration(
-							combatant,
-							conditionState
-						)})</span
+						>{resolveLabel(conditionState.id)} (<Timer
+							class="mb-1 inline-block align-middle"
+							size={16}
+							strokeWidth={2}
+						/>&nbsp;{calculateConditionDuration(combatant, conditionState)})</span
 					>
 				</button>
 			{/each}
