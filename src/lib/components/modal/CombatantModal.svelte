@@ -108,7 +108,7 @@
 				{$_('combatant_modal.conditions')}
 			</button>
 			<div
-				class="tab-content border-r-0 border-none bg-base-100 p-6"
+				class="tab-content min-w-full border-r-0 border-none bg-base-100 p-6"
 				id="tabpanel-condition-selection"
 				role="tabpanel"
 				tabindex="0"
