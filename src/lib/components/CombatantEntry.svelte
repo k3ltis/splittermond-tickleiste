@@ -118,7 +118,7 @@
 				<div class="min-w-12"></div>
 			</div>
 		</div>
-		<div class="mt-2 flex flex-row flex-wrap">
+		<div class="mt-2 flex flex-row flex-wrap" class:hidden={combatant.conditionStates.length === 0}>
 			{#each combatant.conditionStates as conditionState}
 				<button
 					class="badge badge-error badge-outline badge-lg mr-1 self-end"
