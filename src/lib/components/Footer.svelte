@@ -96,7 +96,7 @@
 	id="dataPrivacyModal"
 	bind:this={dataPrivacyModal}
 	class="modal"
-	class:hidden={isModalOpen}
+	class:hidden={!isModalOpen}
 	onclose={() => (isModalOpen = false)}
 	aria-labelledby="dialogTitle"
 	aria-describedby="dialogDesc"

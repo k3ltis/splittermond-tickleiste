@@ -15,7 +15,7 @@
 	let tabButtonTicks: HTMLButtonElement;
 	let tabButtonConditions: HTMLButtonElement;
 
-	let isModalOpen: boolean = false;
+	let isModalOpen: boolean = $state(false);
 
 	export function show(tab: Tab = 'actions') {
 		selectTab(tab);
