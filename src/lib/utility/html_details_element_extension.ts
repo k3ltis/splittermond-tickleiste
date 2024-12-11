@@ -11,8 +11,10 @@ export function addToggleListener(details: HTMLDetailsElement) {
 	details.addEventListener('toggle', () => {
 		if (details.open) {
 			addListenersForDetailsElement(details);
+			details.querySelector('summary')?.classList.add('btn-active');
 		} else {
 			destroyListenersForDetailsElement(details);
+			details.querySelector('summary')?.classList.remove('btn-active');
 		}
 	});
 }
