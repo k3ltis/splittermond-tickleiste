@@ -87,7 +87,7 @@
 				{$_('combatant_modal.actions')}
 			</button>
 			<div
-				class="tab-content border-r-0 border-none bg-base-100 p-6"
+				class="tab-content min-w-full border-r-0 border-none bg-base-100 p-6"
 				id="tabpanel-tick-selection"
 				role="tabpanel"
 				tabindex="0"
