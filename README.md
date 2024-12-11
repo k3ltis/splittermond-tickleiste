@@ -1,5 +1,7 @@
 # Splittermond Tickleiste
 
+[![Checks](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/checks.yml/badge.svg?branch=main)](https://github.com/k3ltis/splittermond-tickleiste/actions/workflows/checks.yml)
+
 ![Alt Text](docs/splimoapp.gif)
 
 Small responsive web app to manage the tickbar (Tickleiste) for Splittermond.
