@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
-import { type ConditionType } from './condition';
+import { conditions, getConditionById, type ConditionType } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
 
 // Types
@@ -16,6 +16,8 @@ export type Scene = {
 export type ConditionState = {
 	id: ConditionType;
 	activeSinceTick: number;
+	// 1-based condition level
+	activeLevel: number;
 };
 
 export type Combatant = {
@@ -294,22 +296,47 @@ export function toggleCondition(combatantId: string, conditionId: ConditionType)
 		console.error('cannot find combatant with id ' + combatantId);
 		return;
 	}
+	const condition = getConditionById(conditionId);
+	if (!condition) {
+		console.error('cannot find condition with id ' + conditionId);
+		return;
+	}
 
 	const conditionStateIndex = combatant.conditionStates.findIndex(
 		(conditionState) => conditionState.id === conditionId
 	);
-	if (conditionStateIndex >= 0) {
-		// remove condition
+
+	// condition did not exist yet
+	if (conditionStateIndex < 0) {
+		console.log(`add condition ${conditionId} to combatant ${combatantId}`);
+		const conditionLevel = condition.maxLevel > 0 ? 1 : 0;
+		// create new condition
+		const conditionState: ConditionState = {
+			id: conditionId,
+			activeSinceTick: combatant.initiative,
+			activeLevel: conditionLevel
+		};
+		// add new condition
+		combatant.conditionStates.push(conditionState);
+		return;
+	}
+
+	// condition does exist
+	const conditionState = combatant.conditionStates[conditionStateIndex];
+
+	// max level was reached, remove the condition
+	if (conditionState.activeLevel >= condition.maxLevel) {
 		console.log(`remove condition ${conditionId} from combatant ${combatantId}`);
 		combatant.conditionStates.splice(conditionStateIndex, 1);
-	} else {
-		// add condition
-		console.log(`add condition ${conditionId} to combatant ${combatantId}`);
-		combatant.conditionStates.push({
-			id: conditionId,
-			activeSinceTick: combatant.initiative
-		});
+		return;
 	}
+
+	// condition exists and has not reached max level yet, increase level
+	const previousLevel = conditionState.activeLevel;
+	conditionState.activeLevel += 1;
+	console.log(
+		`increase level of condition state ${conditionState.id} from ${previousLevel} to ${conditionState.activeLevel}`
+	);
 }
 
 function getMinimalActiveInitiative(): number {

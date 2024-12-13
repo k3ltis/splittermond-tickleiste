@@ -1,6 +1,12 @@
 <script lang="ts">
-	import { conditions, type Condition, type ConditionType } from '$lib/state/condition';
+	import {
+		conditions,
+		LEVEL_NUMBER_TO_STRING,
+		type Condition,
+		type ConditionType
+	} from '$lib/state/condition';
 	import { sessionData, toggleCondition } from '$lib/state/scene_data.svelte';
+	import { Timer } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
 	function select(conditionId: ConditionType) {
@@ -37,6 +43,22 @@
 		_conditions.sort((a, b) => ($_(a.i18n) > $_(b.i18n) ? 1 : -1));
 		return _conditions;
 	}
+
+	function resolveLevelNumber(conditionId: ConditionType): string {
+		if (!sessionData.activeCombatant) {
+			return '';
+		}
+		const conditionState = sessionData.activeCombatant.conditionStates.find(
+			(c) => c.id === conditionId
+		);
+		if (!conditionState) {
+			return '';
+		}
+		if (conditionState.activeLevel > 0) {
+			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
+		}
+		return '';
+	}
 </script>
 
 <div class="grid grid-cols-2 gap-4">
@@ -48,9 +70,13 @@
 			onclick={() => select(condition.id)}
 		>
 			<span class="text-nowrap">
-				{$_(condition.i18n)}
+				{$_(condition.i18n)}{resolveLevelNumber(condition.id)}
 				{#if isActiveOnActiveCombatant(condition.id)}
-					({calculateConditionDuration(condition.id)})
+					(<Timer
+						class="mb-1 inline-block align-middle"
+						size={16}
+						strokeWidth={2}
+					/>&nbsp;{calculateConditionDuration(condition.id)})
 				{/if}
 			</span>
 		</button>

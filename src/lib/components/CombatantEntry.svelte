@@ -9,7 +9,7 @@
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
-	import { conditions, type ConditionType } from '$lib/state/condition';
+	import { conditions, LEVEL_NUMBER_TO_STRING, type ConditionType } from '$lib/state/condition';
 
 	interface Props {
 		combatant: Combatant;
@@ -41,6 +41,13 @@
 	function onBadgeClicked(combatant: Combatant, conditionState: ConditionState, event: MouseEvent) {
 		event.stopPropagation();
 		conditionClicked(combatant, conditionState);
+	}
+
+	function resolveLevelNumber(conditionState: ConditionState): string {
+		if (conditionState.activeLevel > 0) {
+			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
+		}
+		return '';
 	}
 </script>
 
@@ -125,7 +132,7 @@
 					onclick={(event) => onBadgeClicked(combatant, conditionState, event)}
 				>
 					<span class="text-nowrap"
-						>{resolveLabel(conditionState.id)} (<Timer
+						>{resolveLabel(conditionState.id)}{resolveLevelNumber(conditionState)} (<Timer
 							class="mb-1 inline-block align-middle"
 							size={16}
 							strokeWidth={2}
