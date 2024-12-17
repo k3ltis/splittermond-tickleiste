@@ -4,28 +4,50 @@
 	import { CircleHelp } from 'lucide-svelte';
 	import { sessionData } from '$lib/state/scene_data.svelte';
 
-	const forceOpenDropdown = (element?: Element) => {
-		let dropdownElement = element?.closest('.dropdown');
-		dropdownElement?.classList.add('dropdown-open');
+	const COMBATANT_MODAL_ELEMENT_ID = 'tickSelectionModal';
+	const TICKS_BUTTON_ELEMENT_ID = 'tab-tick-selection';
+	const CONDITIONS_BUTTON_ELEMENT_ID = 'tab-condition-selection';
+	const HEADER_MENU_DROPDOWN_ELEMENT_ID = 'header-menu-dropdown';
+
+	const forceOpenDropdown = () => {
+		let dropdownElement = document.getElementById(HEADER_MENU_DROPDOWN_ELEMENT_ID);
+		dropdownElement?.setAttribute('open', 'open');
 	};
 
-	const closeDropdown = (element?: Element) => {
-		let dropdownElement = element?.closest('.dropdown');
-		dropdownElement?.classList.remove('dropdown-open');
+	const closeDropdown = () => {
+		let dropdownElement = document.getElementById(HEADER_MENU_DROPDOWN_ELEMENT_ID);
+		dropdownElement?.removeAttribute('open');
 	};
 
 	const forceOpenTickSelectionModal = () => {
-		let modal = document.getElementById('tickSelectionModal');
+		let modal = document.getElementById(COMBATANT_MODAL_ELEMENT_ID);
 		modal?.classList.add('modal-open');
+		modal?.classList.remove('hidden');
 	};
 
 	const closeTickSelectionModal = () => {
-		let modal = document.getElementById('tickSelectionModal');
+		let modal = document.getElementById(COMBATANT_MODAL_ELEMENT_ID);
 		modal?.classList.remove('modal-open');
+		modal?.classList.add('hidden');
 	};
+
+	function selectTicksButton() {
+		let tickbutton = document.getElementById(TICKS_BUTTON_ELEMENT_ID);
+		tickbutton?.setAttribute('aria-selected', 'true');
+		let conditionButton = document.getElementById(CONDITIONS_BUTTON_ELEMENT_ID);
+		conditionButton?.setAttribute('aria-selected', 'false');
+	}
+
+	function selectConditionButton() {
+		let tickbutton = document.getElementById(TICKS_BUTTON_ELEMENT_ID);
+		tickbutton?.setAttribute('aria-selected', 'false');
+		let conditionButton = document.getElementById(CONDITIONS_BUTTON_ELEMENT_ID);
+		conditionButton?.setAttribute('aria-selected', 'true');
+	}
 
 	const explainPage = () => {
 		const driverObj = driver({
+			popoverClass: 'driverjs-theme',
 			showProgress: true,
 			nextBtnText: $_('tour_btn_next'),
 			prevBtnText: $_('tour_btn_prev'),
@@ -46,25 +68,19 @@
 				{
 					element: '.change-scene-mode',
 					popover: {
-						title: $_('edit_scene'),
-						description: $_('edit_scene_description')
-					}
-				},
-				{
-					element: '.change-scene-mode',
-					popover: {
-						title: $_('run_scene'),
-						description: $_('run_scene_description')
+						title: $_('tour.toggle_scene_mode.title'),
+						description: $_('tour.toggle_scene_mode.content')
 					}
 				},
 				{
 					element: '#tickSelectionModalInner',
 					popover: {
-						title: $_('tour.tick_selection_modal.overview.title'),
-						description: $_('tour.tick_selection_modal.overview.content')
+						title: $_('tour.combatant_modal.ticks.title'),
+						description: $_('tour.combatant_modal.ticks.content')
 					},
 					onHighlightStarted: () => {
 						forceOpenTickSelectionModal();
+						selectTicksButton();
 						sessionData.ticks = [
 							{
 								number: 1,
@@ -94,16 +110,31 @@
 					}
 				},
 				{
+					element: '#tickSelectionModalInner',
+					popover: {
+						title: $_('tour.combatant_modal.conditions.title'),
+						description: $_('tour.combatant_modal.conditions.content')
+					},
+					onHighlightStarted: () => {
+						forceOpenTickSelectionModal();
+						selectConditionButton();
+					},
+					onDeselected: () => {
+						sessionData.ticks = [];
+						closeTickSelectionModal();
+					}
+				},
+				{
 					element: '#downloadBtn',
 					popover: {
 						title: $_('download_scene'),
 						description: $_('download_scene_description')
 					},
-					onHighlightStarted: (element?: Element) => {
-						forceOpenDropdown(element);
+					onHighlightStarted: () => {
+						forceOpenDropdown();
 					},
-					onDeselected: (element?: Element) => {
-						closeDropdown(element);
+					onDeselected: () => {
+						closeDropdown();
 					}
 				},
 				{
@@ -112,11 +143,11 @@
 						title: $_('upload_scene'),
 						description: $_('upload_scene_description')
 					},
-					onHighlightStarted: (element?: Element) => {
-						forceOpenDropdown(element);
+					onHighlightStarted: () => {
+						forceOpenDropdown();
 					},
-					onDeselected: (element?: Element) => {
-						closeDropdown(element);
+					onDeselected: () => {
+						closeDropdown();
 					}
 				},
 				{
@@ -143,3 +174,23 @@
 <button onclick={() => explainPage()} class="btn btn-ghost" aria-label={$_('start_tour')}>
 	<CircleHelp aria-hidden />
 </button>
+
+<style>
+	:global(.driverjs-theme) {
+		background-color: #48b3d1;
+		color: #000;
+	}
+
+	:global(.driver-popover-progress-text) {
+		color: #000;
+	}
+
+	:global(.driver-popover-navigation-btns > button) {
+		color: #000;
+		background-color: #c5dbe0;
+	}
+
+	:global(.driver-popover-close-btn) {
+		color: #000;
+	}
+</style>
