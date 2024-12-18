@@ -112,8 +112,10 @@
 			</button>
 		</form>
 		<h3 class="text-lg font-bold" id="dialogTitle">{$_('data_privacy_header')}</h3>
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<p class="py-4" id="dialogDesc">{@html $_('data_privacy_content')}</p>
+		<div class="py-4" id="dialogDesc">
+			<p>{$_('data_privacy_content_1')}</p>
+			<p class="mt-6">{$_('data_privacy_content_2')}</p>
+		</div>
 	</div>
 	<!-- Allows closing by clicking the free area around the modal -->
 	<form method="dialog" class="modal-backdrop">
