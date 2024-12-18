@@ -63,13 +63,13 @@
 
 	// Resolves the condition level range in roman letters, e.g. "I-IV", or empty string if no levels exist.
 	function resolveLevelRange(conditionId: ConditionType): string {
-		const condition = conditions.find(c => c.id === conditionId)
+		const condition = conditions.find((c) => c.id === conditionId);
 		if (condition && condition.maxLevel > 0) {
-			const maxLevelRoman = LEVEL_NUMBER_TO_STRING[condition.maxLevel]
-			return `(I-${maxLevelRoman})`
+			const maxLevelRoman = LEVEL_NUMBER_TO_STRING[condition.maxLevel];
+			return `(I-${maxLevelRoman})`;
 		}
 
-		return ""
+		return '';
 	}
 </script>
 
