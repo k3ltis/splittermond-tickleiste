@@ -175,22 +175,23 @@
 	<CircleHelp aria-hidden />
 </button>
 
-<style>
+<style lang=postcss>
 	:global(.driverjs-theme) {
-		background-color: #48b3d1;
-		color: #000;
+		background-color: theme(colors.primary);
+		color: theme(colors.primary-content);
 	}
 
 	:global(.driver-popover-progress-text) {
-		color: #000;
+		color: theme(colors.primary-content);
 	}
 
 	:global(.driver-popover-navigation-btns > button) {
-		color: #000;
-		background-color: #c5dbe0;
+		color: theme(colors.info-content);
+		text-shadow: 0px 0px 0 #fff;
+		background-color: theme(colors.info);
 	}
 
 	:global(.driver-popover-close-btn) {
-		color: #000;
+		color: theme(colors.primary-content);
 	}
 </style>
