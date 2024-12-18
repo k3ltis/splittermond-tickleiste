@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
-import { conditions, getConditionById, type ConditionType } from './condition';
+import { getConditionById, type ConditionType } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
 
 // Types
@@ -74,7 +74,8 @@ export function createNewCombatant(): Combatant {
 }
 
 export function loadScene(_sceneData: Scene) {
-	console.log(`Load scene ${JSON.stringify(_sceneData)}`);
+	console.info('Load scene:');
+	console.dir(_sceneData);
 	Object.assign(sceneData, migrateSceneData(_sceneData));
 	sortCombatantsByInitiative();
 }
@@ -293,12 +294,12 @@ export function sortCombatantsByInitiative(
 export function toggleCondition(combatantId: string, conditionId: ConditionType) {
 	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
 	if (!combatant) {
-		console.error('cannot find combatant with id ' + combatantId);
+		console.error('Cannot find combatant with id ' + combatantId);
 		return;
 	}
 	const condition = getConditionById(conditionId);
 	if (!condition) {
-		console.error('cannot find condition with id ' + conditionId);
+		console.error('Cannot find condition with id ' + conditionId);
 		return;
 	}
 
@@ -308,7 +309,7 @@ export function toggleCondition(combatantId: string, conditionId: ConditionType)
 
 	// condition did not exist yet
 	if (conditionStateIndex < 0) {
-		console.log(`add condition ${conditionId} to combatant ${combatantId}`);
+		console.info(`Add condition ${conditionId} to combatant ${combatantId}`);
 		const conditionLevel = condition.maxLevel > 0 ? 1 : 0;
 		// create new condition
 		const conditionState: ConditionState = {
@@ -326,7 +327,7 @@ export function toggleCondition(combatantId: string, conditionId: ConditionType)
 
 	// max level was reached, remove the condition
 	if (conditionState.activeLevel >= condition.maxLevel) {
-		console.log(`remove condition ${conditionId} from combatant ${combatantId}`);
+		console.info(`Remove condition ${conditionId} from combatant ${combatantId}`);
 		combatant.conditionStates.splice(conditionStateIndex, 1);
 		return;
 	}
@@ -334,8 +335,8 @@ export function toggleCondition(combatantId: string, conditionId: ConditionType)
 	// condition exists and has not reached max level yet, increase level
 	const previousLevel = conditionState.activeLevel;
 	conditionState.activeLevel += 1;
-	console.log(
-		`increase level of condition state ${conditionState.id} from ${previousLevel} to ${conditionState.activeLevel}`
+	console.info(
+		`Increase level of condition state ${conditionState.id} from ${previousLevel} to ${conditionState.activeLevel}`
 	);
 }
 
