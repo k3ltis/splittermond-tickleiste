@@ -20,6 +20,7 @@
 	"download_scene_description": "Ermöglicht es Ihnen, die aktuelle Szene als JSON-Datei herunterzuladen.",
 	"edit_scene": "Szene bearbeiten",
 	"edit_scene_description": "Wechselt in den Bearbeitungsmodus, um den Szenennamen und die Liste der Kämpfer zu ändern.",
+	"loading_scene": "Lade Szene",
 	"open_menu": "Menü öffnen",
 	"open_interactions": "Interaktions Fenster öffen",
 	"placeholder_initiative": "Initiative",
