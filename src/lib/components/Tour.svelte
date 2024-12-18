@@ -175,7 +175,7 @@
 	<CircleHelp aria-hidden />
 </button>
 
-<style lang=postcss>
+<style lang="postcss">
 	:global(.driverjs-theme) {
 		background-color: theme(colors.primary);
 		color: theme(colors.primary-content);
