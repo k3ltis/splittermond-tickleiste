@@ -249,6 +249,7 @@ describe('toggleCondition', () => {
 		]);
 		expect(sceneData.combatants.find((c) => c.id === 'GandalfId')?.conditionStates).toEqual([]);
 
+		// Verify that Gandals condition is unaffected by Merry's tick progression
 		moveCombatantByTicks('MerryId', 5);
 		toggleCondition('GandalfId', 'burning');
 		expect(sceneData.combatants.find((c) => c.id === 'MerryId')?.conditionStates).toEqual([
@@ -266,6 +267,7 @@ describe('toggleCondition', () => {
 			}
 		]);
 
+		// Advance Gandalf and verify both combatants
 		moveCombatantByTicks('GandalfId', 5);
 		toggleCondition('GandalfId', 'burning');
 		toggleCondition('GandalfId', 'burning');
@@ -281,6 +283,20 @@ describe('toggleCondition', () => {
 				activeLevel: 3,
 				id: 'burning',
 				activeSinceTick: 4
+			}
+		]);
+
+		// Toggle burning away from Gandalf
+		toggleCondition('GandalfId', 'burning');
+		expect(sceneData.combatants.find((c) => c.id === 'GandalfId')?.conditionStates).toEqual([]);
+
+		// When burning is readded it starts at Gandalfs current offset
+		toggleCondition('GandalfId', 'burning');
+		expect(sceneData.combatants.find((c) => c.id === 'GandalfId')?.conditionStates).toEqual([
+			{
+				activeLevel: 1,
+				id: 'burning',
+				activeSinceTick: 9
 			}
 		]);
 	});
