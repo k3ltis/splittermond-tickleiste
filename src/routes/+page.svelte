@@ -6,8 +6,12 @@
 	import Scene from '$lib/components/Scene.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import '../i18n';
+	import { _ } from 'svelte-i18n';
 
 	onMount(() => {
+		// ensure that title of HTML is set in correct language
+		document.title = $_('app_title');
+
 		const _scene = loadSceneFromLocalStorage();
 		if (_scene) {
 			loadScene(_scene);
