@@ -47,11 +47,19 @@
 			"title": "Toggle Language",
 			"content": "Switch between German and English."
 		},
-		"tick_selection_modal": {
-			"overview": {
+		"combatant_modal": {
+			"ticks": {
 				"title": "Tick Selection Dialog",
 				"content": "Here you can select the <b>ticks</b> to add or subtract, as well as special combat states like <b>expecting</b>, <b>waiting</b>, or <b>incapitated</b>."
+			},
+			"conditions": {
+				"title": "Condition Selection",
+				"content": "Here you can toggle conditions."
 			}
+		},
+		"toggle_scene_mode": {
+			"title": "Scene Mode Toggle",
+			"content": "Toggles between edit mode and play mode.<br/><br/> In <b>edit mode</b>, new combatants and their initial initiative can be added.<br/><br/> In <b>play mode</b>, combatants are sorted in ascending order based on their initiative. The button in the initiative column opens the dialog for selecting ticks and conditions."
 		}
 	},
 	"tickselection": {

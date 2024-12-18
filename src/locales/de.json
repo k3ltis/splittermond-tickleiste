@@ -47,11 +47,19 @@
 			"title": "Sprache umschalten",
 			"content": "Zwischen Deutsch und Englisch wechseln."
 		},
-		"tick_selection_modal": {
-			"overview": {
-				"title": "Tick Auswahl Dialog",
+		"combatant_modal": {
+			"ticks": {
+				"title": "Tick Auswahl",
 				"content": "Hier kannst du sowohl die <b>Ticks</b> auswählen, die hinzugefügt oder abgezogen werden sollen, als auch spezielle Kampfmodi aktivieren, wie <b>Aktion bereithalten</b>, <b>Abwarten </b>oder <b>kampfunfähig</b>."
+			},
+			"conditions": {
+				"title": "Zustands Auswahl",
+				"content": "Hier kannst du Zustände aktivieren und deaktivieren."
 			}
+		},
+		"toggle_scene_mode": {
+			"title": "Szenen Modus Toggle",
+			"content": "Wechselt zwischen Bearbeitungsmodus und Spielmodus hin und her.<br/><br/> Im <b>Bearbeitungsmodus</b> können neue Kämpfer sowie ihre initiale Initiative hinzugefügt werden.<br/><br/> Im <b>Spielmodus</b> werden die Kämpfer aufsteigend nach ihrer Initiative sortiert. Über den button in der Initiativ-Spalte öffnet sich der Dialog für die Auswahl von Ticks und Zuständen."
 		}
 	},
 	"tickselection": {

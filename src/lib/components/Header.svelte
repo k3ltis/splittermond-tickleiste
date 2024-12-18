@@ -47,7 +47,11 @@
 	<div class="flex-none space-x-2">
 		<ThemeToggle />
 		<Tour />
-		<details class="dropdown dropdown-end drop-shadow-xl" bind:this={details}>
+		<details
+			id="header-menu-dropdown"
+			class="dropdown dropdown-end drop-shadow-xl"
+			bind:this={details}
+		>
 			<summary class="btn btn-ghost" aria-label={$_('open_menu')}>
 				<Menu aria-hidden />
 			</summary>
