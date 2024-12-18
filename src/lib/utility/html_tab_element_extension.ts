@@ -141,7 +141,6 @@ class TabsAutomatic {
 
 // Initialize tablist
 export function addAccesibleBehaviourToTabs() {
-	console.log('addAccesibleBehaviourToTabs');
 	const tablists = document.querySelectorAll<HTMLElement>('[role=tablist]');
 	for (let i = 0; i < tablists.length; i++) {
 		new TabsAutomatic(tablists[i]);

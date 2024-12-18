@@ -78,12 +78,9 @@
 	}
 
 	onMount(() => {
-		// wait half a second until everything is loaded and then check for combatants
-		setTimeout(() => {
-			if (sceneData.combatants.length === 0) {
-				appMode = 'EDITING';
-			}
-		}, 0);
+		if (sceneData.combatants.length === 0) {
+			appMode = 'EDITING';
+		}
 	});
 </script>
 
