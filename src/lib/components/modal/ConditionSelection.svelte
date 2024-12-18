@@ -44,7 +44,8 @@
 		return _conditions;
 	}
 
-	function resolveLevelNumber(conditionId: ConditionType): string {
+	// Resolves the current condition level as roman letters, e.v. "IV", or empty string if no levels exist.
+	function resolveCurrentLevel(conditionId: ConditionType): string {
 		if (!sessionData.activeCombatant) {
 			return '';
 		}
@@ -59,6 +60,17 @@
 		}
 		return '';
 	}
+
+	// Resolves the condition level range in roman letters, e.g. "I-IV", or empty string if no levels exist.
+	function resolveLevelRange(conditionId: ConditionType): string {
+		const condition = conditions.find(c => c.id === conditionId)
+		if (condition && condition.maxLevel > 0) {
+			const maxLevelRoman = LEVEL_NUMBER_TO_STRING[condition.maxLevel]
+			return `(I-${maxLevelRoman})`
+		}
+
+		return ""
+	}
 </script>
 
 <div class="grid grid-cols-2 gap-4">
@@ -70,13 +82,15 @@
 			onclick={() => select(condition.id)}
 		>
 			<span class="text-nowrap">
-				{$_(condition.i18n)}{resolveLevelNumber(condition.id)}
+				{$_(condition.i18n)}{resolveCurrentLevel(condition.id)}
 				{#if isActiveOnActiveCombatant(condition.id)}
 					(<Timer
 						class="mb-1 inline-block align-middle"
 						size={16}
 						strokeWidth={2}
 					/>&nbsp;{calculateConditionDuration(condition.id)})
+				{:else}
+					<span class="text-sm">{resolveLevelRange(condition.id)}</span>
 				{/if}
 			</span>
 		</button>
