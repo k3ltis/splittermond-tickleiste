@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		determineNextActingCombatant,
+		getAllConditions,
 		type Combatant,
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
@@ -9,7 +10,7 @@
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
-	import { conditions, LEVEL_NUMBER_TO_STRING, type ConditionType } from '$lib/state/condition';
+	import { LEVEL_NUMBER_TO_STRING } from '$lib/state/condition';
 
 	interface Props {
 		combatant: Combatant;
@@ -23,8 +24,8 @@
 
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
-	function resolveLabel(conditionId: ConditionType): string {
-		const condition = conditions.find((c) => c.id === conditionId);
+	function resolveLabel(conditionId: string): string {
+		const condition = getAllConditions().find((c) => c.id === conditionId);
 		if (!condition) {
 			return conditionId;
 		}

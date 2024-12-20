@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
-import { getConditionById, type Condition, type ConditionType } from './condition';
+import { conditions, type Condition } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
 import { generateUUID } from '$lib/utility/uuid';
 
@@ -21,7 +21,7 @@ export type Scene = {
 };
 
 export type ConditionState = {
-	id: ConditionType;
+	id: string;
 	activeSinceTick: number;
 	// 1-based condition level
 	activeLevel: number;
@@ -299,6 +299,24 @@ export function sortCombatantsByInitiative(
 	);
 }
 
+export function getConditionById(id: string) {
+	return getAllConditions().find((c) => c.id === id);
+}
+
+export function getAllConditions(
+	{ onlyActive }: { onlyActive: boolean } = { onlyActive: false }
+): Condition[] {
+	const allConditions = [...conditions, ...sceneData.settings.customConditions];
+
+	if (!onlyActive) return allConditions;
+
+	const activeCondtions = allConditions.filter((condition: Condition) => {
+		return !sceneData.settings.disabledConditions.includes(condition.id);
+	});
+
+	return activeCondtions;
+}
+
 export function toggleConditionVisibility(conditionId: string) {
 	const disabledConditionIndex = sceneData.settings.disabledConditions.findIndex(
 		(disabledConditionId: string) => {
@@ -343,7 +361,7 @@ export function deleteCustomCondition(conditionId: string) {
 	sceneData.settings.customConditions.splice(conditionToBeDeletedIndex, 1);
 }
 
-export function toggleCondition(combatantId: string, conditionId: ConditionType) {
+export function toggleCondition(combatantId: string, conditionId: string) {
 	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
 	if (!combatant) {
 		console.error('Cannot find combatant with id ' + combatantId);

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { conditions, LEVEL_NUMBER_TO_STRING, type Condition } from '$lib/state/condition';
-	import { sceneData, sessionData, toggleCondition } from '$lib/state/scene_data.svelte';
+	import { LEVEL_NUMBER_TO_STRING, type Condition } from '$lib/state/condition';
+	import { getAllConditions, sessionData, toggleCondition } from '$lib/state/scene_data.svelte';
 	import { Timer } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
-	// const allActiveConditions: Condition[] = $state(getActiveConditions());
+	const allActiveConditions: Condition[] = $state(getAllConditions({ onlyActive: true }));
 
 	function select(conditionId: string) {
 		if (!sessionData.activeCombatant) {
@@ -36,18 +36,9 @@
 	}
 
 	function getSortedConditions(unsortedConditions: Condition[]): Condition[] {
-		const _conditions = unsortedConditions;
+		const _conditions = [...unsortedConditions];
 		_conditions.sort((a, b) => ($_(a.i18n) > $_(b.i18n) ? 1 : -1));
 		return _conditions;
-	}
-
-	function getActiveConditions(): Condition[] {
-		const allConditions = [...conditions, ...sceneData.settings.customConditions];
-		const activeCondtions = allConditions.filter((condition: Condition) => {
-			return !sceneData.settings.disabledConditions.includes(condition.id);
-		});
-
-		return activeCondtions;
 	}
 
 	// Resolves the current condition level as roman letters, e.v. "IV", or empty string if no levels exist.
@@ -80,7 +71,7 @@
 </script>
 
 <div class="grid grid-cols-2 gap-4">
-	{#each getSortedConditions(getActiveConditions()) as condition}
+	{#each getSortedConditions(getAllConditions({ onlyActive: true })) as condition}
 		<button
 			class:btn-outline={!isActiveOnActiveCombatant(condition.id)}
 			class:btn-error={isActiveOnActiveCombatant(condition.id)}
@@ -97,7 +88,7 @@
 					/>&nbsp;{calculateConditionDuration(condition.id)})
 				{:else}
 					<span class="text-sm"
-						>{resolveLevelRange(condition.id, getSortedConditions(getActiveConditions()))}</span
+						>{resolveLevelRange(condition.id, getSortedConditions(getAllConditions()))}</span
 					>
 				{/if}
 			</span>

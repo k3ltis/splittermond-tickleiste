@@ -121,6 +121,3 @@ export const conditions: Condition[] = [
 		maxLevel: 3
 	}
 ];
-export function getConditionById(id: string) {
-	return conditions.find((c) => c.id === id);
-}
