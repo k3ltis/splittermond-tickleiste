@@ -10,6 +10,8 @@
 	import { _ } from 'svelte-i18n';
 
 	let settingsModal: HTMLDialogElement;
+	let customConditionName: string = $state('');
+	let customConditionMaxLevel: string = $state('0');
 	let isModalOpen: boolean = $state(true);
 
 	export function show() {
@@ -27,13 +29,12 @@
 		});
 	}
 
-	function onAddCondition(event: Event) {
-		if (!event.target) return;
+	function onAddCustomCondition(event: Event) {
+		event.preventDefault();
 
-		const formValues = new FormData(event.target as HTMLFormElement);
 		addCustomCondition({
-			i18n: String(formValues.get('condition_name')),
-			maxLevel: Number(formValues.get('condition_max_level'))
+			i18n: String(customConditionName),
+			maxLevel: Number(customConditionMaxLevel)
 		});
 	}
 
@@ -51,7 +52,7 @@
 	aria-labelledby="settingsDialogTitle"
 	aria-describedby="dialogDesc"
 >
-	<div class="modal-box w-11/12 max-w-2xl">
+	<div class="modal-box border-4 border-primary">
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
 			<button
@@ -61,11 +62,13 @@
 				<X aria-hidden size={24} />
 			</button>
 		</form>
-		<h3 class="text-lg font-bold" id="settingsDialogTitle">__SETTINGS_HEADER__</h3>
+		<h3 class="mb-6 text-xl font-bold" id="settingsDialogTitle">__SETTINGS_HEADER__</h3>
 
 		{#each conditions as condition}
 			<div class="my-2 flex flex-row">
-				<label for={condition.id} class="flex-1 text-2xl">{$_(condition.i18n)}</label>
+				<label for={condition.id} class="flex-1 text-2xl hover:cursor-pointer"
+					>{$_(condition.i18n)}</label
+				>
 				<input
 					type="checkbox"
 					id={condition.id}
@@ -76,15 +79,20 @@
 			</div>
 		{/each}
 
-		<div class="divider before:bg-secondary after:bg-secondary">Custom conditions</div>
-		<form action="" class="flex" onsubmit={onAddCondition}>
+		<div class="divider uppercase before:bg-secondary after:bg-secondary">Custom conditions</div>
+		<form action="" class="flex" onsubmit={onAddCustomCondition}>
 			<input
 				type="text"
-				name="condition_name"
+				bind:value={customConditionName}
+				name="custom_condition_name"
 				placeholder="_NAME OF CONDITION_"
 				class="input input-bordered mr-4 w-full text-xl"
 			/>
-			<select class="select select-bordered mr-4 text-center text-xl" name="condition_max_level">
+			<select
+				class="select select-bordered mr-4 text-center text-xl"
+				name="custom_condition_max_level"
+				bind:value={customConditionMaxLevel}
+			>
 				<option value="0">I</option>
 				<option value="2">II</option>
 				<option value="3">III</option>
@@ -92,12 +100,16 @@
 				<option value="4">V</option>
 			</select>
 
-			<button class="btn btn-primary" type="submit"><Plus strokeWidth={3} aria-hidden /></button>
+			<button class="btn btn-primary" type="submit" disabled={customConditionName.length === 0}
+				><Plus strokeWidth={3} aria-hidden /></button
+			>
 		</form>
 
-		{#each sceneData.settings.customConditions as condition}
-			<div class="my-2 flex flex-row">
-				<label for={condition.id} class="flex-1 text-2xl">{$_(condition.i18n)}</label>
+		{#each sceneData.settings.customConditions as condition (condition.id)}
+			<div class="my-2 flex flex-row items-center">
+				<label for={condition.id} class="flex-1 text-2xl hover:cursor-pointer"
+					>{$_(condition.i18n)}</label
+				>
 				<input
 					type="checkbox"
 					id={condition.id}
