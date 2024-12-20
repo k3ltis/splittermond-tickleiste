@@ -8,25 +8,6 @@ export const LEVEL_NUMBER_TO_STRING: {
 	4: 'IV',
 	5: 'V'
 };
-// // Missing conditions: 'sleeping', 'wasting', 'struggling'
-// export type ConditionType =
-// 	| 'fearful'
-// 	| 'dazed'
-// 	| 'unconscious'
-// 	| 'bleeding'
-// 	| 'burning'
-// 	| 'exhausted'
-// 	| 'blinded'
-// 	| 'crisis_of_faith'
-// 	| 'sick'
-// 	| 'crippled'
-// 	| 'panicked'
-// 	| 'frenzied'
-// 	| 'dying'
-// 	| 'sleeping'
-// 	| 'wasting'
-// 	| 'struggling'
-// 	| 'wounded';
 
 export type Condition = {
 	id: string;

@@ -73,14 +73,16 @@
 		<h3 class="mb-6 text-xl font-bold" id="settingsDialogTitle">__SETTINGS_HEADER__</h3>
 
 		{#each conditions as condition}
-			<div class="my-2 flex flex-row">
-				<label for={condition.id} class="flex-1 text-xl hover:cursor-pointer md:text-2xl"
+			<div
+				class="my-1 flex flex-row items-center rounded focus-within:bg-base-300 hover:bg-base-300"
+			>
+				<label for={condition.id} class="flex-1 p-3 text-xl hover:cursor-pointer md:text-2xl"
 					>{$_(condition.i18n)} {resolveLevelrange(condition.maxLevel)}</label
 				>
 				<input
 					type="checkbox"
 					id={condition.id}
-					class="toggle toggle-success"
+					class="toggle toggle-success mr-3"
 					checked={isConditionEnabled(condition.id)}
 					onclick={() => onToggleCondition(condition.id)}
 				/>
@@ -108,14 +110,18 @@
 				<option value="4">V</option>
 			</select>
 
-			<button class="btn btn-primary" type="submit" disabled={customConditionName.length === 0}
-				><Plus strokeWidth={3} aria-hidden /></button
+			<button
+				class="btn btn-primary mr-2 w-12"
+				type="submit"
+				disabled={customConditionName.length === 0}><Plus strokeWidth={3} aria-hidden /></button
 			>
 		</form>
 
 		{#each sceneData.settings.customConditions as condition (condition.id)}
-			<div class="my-2 flex flex-row items-center">
-				<label for={condition.id} class="flex-1 text-xl hover:cursor-pointer md:text-2xl"
+			<div
+				class="my-1 flex flex-row items-center rounded focus-within:bg-base-300 hover:bg-base-300"
+			>
+				<label for={condition.id} class="flex-1 p-3 text-xl hover:cursor-pointer md:text-2xl"
 					>{$_(condition.i18n)} {resolveLevelrange(condition.maxLevel)}</label
 				>
 				<input
@@ -125,7 +131,10 @@
 					checked={isConditionEnabled(condition.id)}
 					onclick={() => onToggleCondition(condition.id)}
 				/>
-				<button class="btn btn-error" onclick={() => onDeleteCustomCondition(condition.id)}>
+				<button
+					class="btn btn-error btn-sm mr-2 w-12"
+					onclick={() => onDeleteCustomCondition(condition.id)}
+				>
 					<Trash aria-hidden />
 				</button>
 			</div>
