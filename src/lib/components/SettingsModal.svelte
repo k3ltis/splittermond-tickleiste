@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { conditions } from '$lib/state/condition';
-	import { sceneData, toggleConditionVisibility } from '$lib/state/scene_data.svelte';
-	import { X } from 'lucide-svelte';
+	import {
+		addCustomCondition,
+		deleteCustomCondition,
+		sceneData,
+		toggleConditionVisibility
+	} from '$lib/state/scene_data.svelte';
+	import { Plus, Trash, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
 	let settingsModal: HTMLDialogElement;
@@ -20,6 +25,20 @@
 		return sceneData.settings.disabledConditions.every((disabledConditionId: string) => {
 			return disabledConditionId !== conditionId;
 		});
+	}
+
+	function onAddCondition(event: Event) {
+		if (!event.target) return;
+
+		const formValues = new FormData(event.target as HTMLFormElement);
+		addCustomCondition({
+			i18n: String(formValues.get('condition_name')),
+			maxLevel: Number(formValues.get('condition_max_level'))
+		});
+	}
+
+	function onDeleteCustomCondition(conditionId: string) {
+		deleteCustomCondition(conditionId);
 	}
 </script>
 
@@ -54,6 +73,41 @@
 					checked={isConditionEnabled(condition.id)}
 					onclick={() => onToggleCondition(condition.id)}
 				/>
+			</div>
+		{/each}
+
+		<div class="divider before:bg-secondary after:bg-secondary">Custom conditions</div>
+		<form action="" class="flex" onsubmit={onAddCondition}>
+			<input
+				type="text"
+				name="condition_name"
+				placeholder="_NAME OF CONDITION_"
+				class="input input-bordered mr-4 w-full text-xl"
+			/>
+			<select class="select select-bordered mr-4 text-center text-xl" name="condition_max_level">
+				<option value="0">I</option>
+				<option value="2">II</option>
+				<option value="3">III</option>
+				<option value="4">IV</option>
+				<option value="4">V</option>
+			</select>
+
+			<button class="btn btn-primary" type="submit"><Plus strokeWidth={3} aria-hidden /></button>
+		</form>
+
+		{#each sceneData.settings.customConditions as condition}
+			<div class="my-2 flex flex-row">
+				<label for={condition.id} class="flex-1 text-2xl">{$_(condition.i18n)}</label>
+				<input
+					type="checkbox"
+					id={condition.id}
+					class="toggle toggle-success mr-4"
+					checked={isConditionEnabled(condition.id)}
+					onclick={() => onToggleCondition(condition.id)}
+				/>
+				<button class="btn btn-error" onclick={() => onDeleteCustomCondition(condition.id)}>
+					<Trash aria-hidden />
+				</button>
 			</div>
 		{/each}
 		<!-- Allows closing by clicking the free area around the modal -->

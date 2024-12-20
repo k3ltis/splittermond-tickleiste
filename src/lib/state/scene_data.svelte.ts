@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
 import { getConditionById, type Condition, type ConditionType } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
+import { generateUUID } from '$lib/utility/uuid';
 
 // Types
 export type CombatState = 'Active' | 'Dead' | 'Waiting' | 'Expecting';
@@ -313,6 +314,33 @@ export function toggleConditionVisibility(conditionId: string) {
 
 	// Enable condition
 	sceneData.settings.disabledConditions.splice(disabledConditionIndex, 1);
+}
+
+export function addCustomCondition(condition: Pick<Condition, 'i18n' | 'maxLevel'>) {
+	sceneData.settings.customConditions.push({
+		i18n: condition.i18n,
+		maxLevel: condition.maxLevel,
+		id: generateUUID()
+	});
+}
+
+export function deleteCustomCondition(conditionId: string) {
+	const conditionToBeDeletedIndex = sceneData.settings.customConditions.findIndex(
+		(condition: Condition) => {
+			return condition.id === conditionId;
+		}
+	);
+
+	// No condition with given ID found
+	if (conditionToBeDeletedIndex < 0) {
+		console.error(
+			`Custom deletion unsuccessful: Condition with ID "${conditionId}" could not be found in custom conditions.`
+		);
+		return;
+	}
+
+	// delete custom condition
+	sceneData.settings.customConditions.splice(conditionToBeDeletedIndex, 1);
 }
 
 export function toggleCondition(combatantId: string, conditionId: ConditionType) {

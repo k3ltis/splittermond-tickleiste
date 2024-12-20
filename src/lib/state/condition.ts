@@ -28,7 +28,7 @@ export type ConditionType =
 	| 'wounded';
 
 export type Condition = {
-	id: ConditionType;
+	id: string;
 	i18n: string;
 	// The maximum condition level for this condition.
 	maxLevel: number;
