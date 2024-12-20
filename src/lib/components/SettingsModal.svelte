@@ -12,7 +12,7 @@
 	let settingsModal: HTMLDialogElement;
 	let customConditionName: string = $state('');
 	let customConditionMaxLevel: string = $state('0');
-	let isModalOpen: boolean = $state(true);
+	let isModalOpen: boolean = $state(false);
 
 	export function show() {
 		settingsModal.showModal();
@@ -54,7 +54,7 @@
 <dialog
 	id="settingsModal"
 	bind:this={settingsModal}
-	class="modal modal-open"
+	class="modal"
 	class:hidden={!isModalOpen}
 	onclose={() => (isModalOpen = false)}
 	aria-labelledby="settingsDialogTitle"
