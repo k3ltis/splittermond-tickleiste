@@ -28,7 +28,7 @@
 	$inspect(sceneData);
 
 	$effect(() => {
-		saveScene();
+		if (!loading) saveScene();
 	});
 </script>
 
