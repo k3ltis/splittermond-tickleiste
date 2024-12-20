@@ -5,15 +5,15 @@
 	import { loadSceneFromLocalStorage } from '$lib/state/localstorage';
 	import Scene from '$lib/components/Scene.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import '../i18n';
+	import { initI18n } from '../i18n';
 	import { _ } from 'svelte-i18n';
 	import { base } from '$app/paths';
 	import { fade } from 'svelte/transition';
 
 	let loading = $state(true);
 
-	onMount(() => {
-		// ensure that title of HTML is set in correct language
+	onMount(async () => {
+		await initI18n();
 
 		const _scene = loadSceneFromLocalStorage();
 		if (_scene) {
@@ -21,6 +21,8 @@
 		}
 		// hide loading state after everything has been initialized
 		loading = false;
+		// ensure that title of HTML is set in correct language
+		document.title = $_('app_title');
 	});
 
 	$inspect(sceneData);
@@ -39,7 +41,6 @@
 		>
 			<img class="max-h-20" src="{base}/logo.png" alt="splittermond logo" />
 			<span class="loading loading-ring loading-lg my-8 text-primary"></span>
-			<p class="sr-only">{$_('loading_scene')}</p>
 		</div>
 	{:else}
 		<div in:fade={{ delay: 200 }} class="flex min-h-screen flex-col">

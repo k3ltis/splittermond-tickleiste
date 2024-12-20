@@ -2,37 +2,23 @@
 	import { X } from 'lucide-svelte';
 	import { base } from '$app/paths';
 	import { loadAttribute, saveAttribute } from '$lib/state/localstorage';
-	import { onMount } from 'svelte';
 	let dataPrivacyModal: HTMLDialogElement;
 	import { _, locale } from 'svelte-i18n';
+	import { DEFAULT_LOCALE, KEY_LOCALE, Locale } from '$lib/utility/locale';
 
 	// eslint-disable-next-line no-undef
 	const APP_NAME = __APP_NAME__;
 	// eslint-disable-next-line no-undef
 	const APP_VERSION = __APP_VERSION__;
 
-	const Locale = {
-		German: 'de',
-		English: 'en'
-	};
-	const KEY_LOCALE: string = 'locale';
-	const DEFAULT_LOCALE: string = Locale.German;
-	let selected_locale: string = $state(DEFAULT_LOCALE);
+	let selected_locale: string = $state(loadAttribute<string>(KEY_LOCALE) || DEFAULT_LOCALE);
 	let isModalOpen: boolean = $state(false);
-
-	onMount(() => {
-		const locale = loadAttribute<string>(KEY_LOCALE);
-		selected_locale = locale || DEFAULT_LOCALE;
-	});
-
-	$effect(() => {
-		$locale = selected_locale || DEFAULT_LOCALE;
-	});
 
 	function toggleLanguage() {
 		selected_locale = selected_locale === Locale.German ? Locale.English : Locale.German;
 		saveAttribute(KEY_LOCALE, selected_locale);
-		document.title = $_('app_title', { locale: selected_locale });
+		$locale = selected_locale;
+		document.title = $_('app_title');
 	}
 
 	function openDataPrivacy() {
@@ -53,12 +39,16 @@
 	<button onclick={openDataPrivacy}>{$_('data_privacy')}</button>
 	<button id="ToggleLanguageBtn" onclick={() => toggleLanguage()}>
 		{#if $locale === 'en'}
-			<img width="30em" src="{base}/svg/flag-for-flag-germany-svgrepo-com.svg" alt="German" />
+			<img
+				width="30em"
+				src="{base}/svg/flag-for-flag-germany-svgrepo-com.svg"
+				alt="Sprache auf Deutsch stellen"
+			/>
 		{:else}
 			<img
 				width="30em"
 				src="{base}/svg/flag-for-flag-united-kingdom-svgrepo-com.svg"
-				alt="English"
+				alt="Set language to English"
 			/>
 		{/if}
 	</button>
