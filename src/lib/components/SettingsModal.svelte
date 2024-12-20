@@ -17,7 +17,7 @@
 	}
 
 	function isConditionEnabled(conditionId: string): boolean {
-		return sceneData.settings.disabledConditions.some((disabledConditionId: string) => {
+		return sceneData.settings.disabledConditions.every((disabledConditionId: string) => {
 			return disabledConditionId !== conditionId;
 		});
 	}
@@ -46,9 +46,10 @@
 
 		{#each conditions as condition}
 			<div class="flex flex-row">
-				<p class="flex-1 text-xl">{$_(condition.i18n)}</p>
+				<label for={condition.id} class="flex-1 text-xl">{$_(condition.i18n)}</label>
 				<input
 					type="checkbox"
+					id={condition.id}
 					class="toggle toggle-success"
 					checked={isConditionEnabled(condition.id)}
 					onclick={() => onToggleCondition(condition.id)}
