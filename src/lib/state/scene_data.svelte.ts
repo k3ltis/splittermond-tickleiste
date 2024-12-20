@@ -1,16 +1,22 @@
 import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
-import { getConditionById, type ConditionType } from './condition';
+import { getConditionById, type Condition, type ConditionType } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
 
 // Types
 export type CombatState = 'Active' | 'Dead' | 'Waiting' | 'Expecting';
+
+export type Settings = {
+	disabledConditions: string[];
+	customConditions: Condition[];
+};
 
 export type Scene = {
 	version: number;
 	name: string;
 	combatants: Combatant[];
 	mostRecentTick: number;
+	settings: Settings;
 };
 
 export type ConditionState = {
@@ -50,7 +56,8 @@ export const sceneData: Scene = $state({
 	version: 0,
 	name: 'My Scene',
 	combatants: [] as Combatant[],
-	mostRecentTick: 0
+	mostRecentTick: 0,
+	settings: { customConditions: [], disabledConditions: [] }
 });
 
 export const sessionData: SessionData = $state({
@@ -289,6 +296,23 @@ export function sortCombatantsByInitiative(
 		...combatantPartitions.Active,
 		...combatantPartitions.Dead
 	);
+}
+
+export function toggleConditionVisibility(conditionId: string) {
+	const disabledConditionIndex = sceneData.settings.disabledConditions.findIndex(
+		(disabledConditionId: string) => {
+			return disabledConditionId === conditionId;
+		}
+	);
+
+	// Disable condition
+	if (disabledConditionIndex < 0) {
+		sceneData.settings.disabledConditions.push(conditionId);
+		return;
+	}
+
+	// Enable condition
+	sceneData.settings.disabledConditions.splice(disabledConditionIndex, 1);
 }
 
 export function toggleCondition(combatantId: string, conditionId: ConditionType) {

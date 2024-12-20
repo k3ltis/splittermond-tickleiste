@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { conditions } from '$lib/state/condition';
+	import { sceneData, toggleConditionVisibility } from '$lib/state/scene_data.svelte';
 	import { X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
@@ -8,6 +10,16 @@
 	export function show() {
 		settingsModal.showModal();
 		isModalOpen = true;
+	}
+
+	function onToggleCondition(conditionId: string) {
+		toggleConditionVisibility(conditionId);
+	}
+
+	function isConditionEnabled(conditionId: string): boolean {
+		return sceneData.settings.disabledConditions.some((disabledConditionId: string) => {
+			return disabledConditionId !== conditionId;
+		});
 	}
 </script>
 
@@ -31,9 +43,21 @@
 			</button>
 		</form>
 		<h3 class="text-lg font-bold" id="settingsDialogTitle">__SETTINGS_HEADER__</h3>
+
+		{#each conditions as condition}
+			<div class="flex flex-row">
+				<p class="flex-1 text-xl">{$_(condition.i18n)}</p>
+				<input
+					type="checkbox"
+					class="toggle toggle-success"
+					checked={isConditionEnabled(condition.id)}
+					onclick={() => onToggleCondition(condition.id)}
+				/>
+			</div>
+		{/each}
+		<!-- Allows closing by clicking the free area around the modal -->
+		<form method="dialog" class="modal-backdrop">
+			<button>{$_('close')}</button>
+		</form>
 	</div>
-	<!-- Allows closing by clicking the free area around the modal -->
-	<form method="dialog" class="modal-backdrop">
-		<button>{$_('close')}</button>
-	</form>
 </dialog>
