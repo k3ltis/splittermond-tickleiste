@@ -32,7 +32,7 @@
 	aria-labelledby="settingsDialogTitle"
 	aria-describedby="dialogDesc"
 >
-	<div class="modal-box w-11/12 max-w-5xl">
+	<div class="modal-box w-11/12 max-w-2xl">
 		<!-- Allow closing by clicking the "X" -->
 		<form method="dialog">
 			<button
@@ -45,8 +45,8 @@
 		<h3 class="text-lg font-bold" id="settingsDialogTitle">__SETTINGS_HEADER__</h3>
 
 		{#each conditions as condition}
-			<div class="flex flex-row">
-				<label for={condition.id} class="flex-1 text-xl">{$_(condition.i18n)}</label>
+			<div class="my-2 flex flex-row">
+				<label for={condition.id} class="flex-1 text-2xl">{$_(condition.i18n)}</label>
 				<input
 					type="checkbox"
 					id={condition.id}
