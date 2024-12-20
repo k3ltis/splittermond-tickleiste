@@ -3,16 +3,18 @@
 	import { extractFileContent, downloadJSON } from '$lib/state/fileio.svelte';
 	import 'driver.js/dist/driver.css';
 	import { _ } from 'svelte-i18n';
-	import { Download, Upload, Menu } from 'lucide-svelte';
+	import { Download, Upload, Menu, Settings } from 'lucide-svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { base } from '$app/paths';
 	import Tour from './Tour.svelte';
 	import { onMount } from 'svelte';
 	import { addToggleListener } from '$lib/utility/html_details_element_extension';
+	import SettingsModal from './SettingsModal.svelte';
 
 	let details: HTMLDetailsElement;
+	let settingsModal: SettingsModal;
 
-	const uploadScene = (event: Event) => {
+	function uploadScene(event: Event) {
 		const target = event.target as HTMLInputElement;
 		if (target && target.files) {
 			const file = target.files[0];
@@ -25,13 +27,17 @@
 			// see https://stackoverflow.com/a/56258902 for details
 			target.value = '';
 		}
-	};
+	}
 
-	const downloadScene = () => {
+	function downloadScene() {
 		const sceneData = getSceneDataForExport();
 		let filename = sceneData.name.toLowerCase().trim().replace(/\s+/g, '_');
 		downloadJSON(sceneData, filename);
-	};
+	}
+
+	function openSettings() {
+		settingsModal.show();
+	}
 
 	onMount(() => {
 		addToggleListener(details);
@@ -78,10 +84,18 @@
 						<span class="text-xl">{$_('download_scene')}</span>
 					</button>
 				</li>
+				<li>
+					<button id="settingsBtn" onclick={() => openSettings()}>
+						<Settings aria-hidden />
+						<span class="text-xl">__Settings__</span>
+					</button>
+				</li>
 			</ul>
 		</details>
 	</div>
 </div>
+
+<SettingsModal bind:this={settingsModal} />
 
 <style>
 	.battle-scene-file-input {

@@ -9,7 +9,7 @@
 	} from '$lib/state/scene_data.svelte';
 	import { slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import CombatantModal from './modal/CombatantModal.svelte';
+	import CombatantModal from './combatant_modal/CombatantModal.svelte';
 	import CombatantEntry from './CombatantEntry.svelte';
 	import { _ } from 'svelte-i18n';
 	import { Pencil, Play, Plus } from 'lucide-svelte';
