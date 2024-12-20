@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { conditions } from '$lib/state/condition';
+	import { conditions, LEVEL_NUMBER_TO_STRING } from '$lib/state/condition';
 	import {
 		addCustomCondition,
 		deleteCustomCondition,
@@ -41,6 +41,14 @@
 	function onDeleteCustomCondition(conditionId: string) {
 		deleteCustomCondition(conditionId);
 	}
+
+	function resolveLevelrange(maxLevel: number): string {
+		if (maxLevel === 0 || maxLevel === 1) {
+			return '';
+		}
+
+		return `(I - ${LEVEL_NUMBER_TO_STRING[maxLevel]})`;
+	}
 </script>
 
 <dialog
@@ -66,8 +74,8 @@
 
 		{#each conditions as condition}
 			<div class="my-2 flex flex-row">
-				<label for={condition.id} class="flex-1 text-2xl hover:cursor-pointer"
-					>{$_(condition.i18n)}</label
+				<label for={condition.id} class="flex-1 text-xl hover:cursor-pointer md:text-2xl"
+					>{$_(condition.i18n)} {resolveLevelrange(condition.maxLevel)}</label
 				>
 				<input
 					type="checkbox"
@@ -85,11 +93,11 @@
 				type="text"
 				bind:value={customConditionName}
 				name="custom_condition_name"
-				placeholder="_NAME OF CONDITION_"
-				class="input input-bordered mr-4 w-full text-xl"
+				placeholder="_CONDITION "
+				class="input input-bordered mr-4 w-full text-xl md:text-2xl"
 			/>
 			<select
-				class="select select-bordered mr-4 text-center text-xl"
+				class="select select-bordered mr-4 text-center text-xl md:text-2xl"
 				name="custom_condition_max_level"
 				bind:value={customConditionMaxLevel}
 			>
@@ -107,8 +115,8 @@
 
 		{#each sceneData.settings.customConditions as condition (condition.id)}
 			<div class="my-2 flex flex-row items-center">
-				<label for={condition.id} class="flex-1 text-2xl hover:cursor-pointer"
-					>{$_(condition.i18n)}</label
+				<label for={condition.id} class="flex-1 text-xl hover:cursor-pointer md:text-2xl"
+					>{$_(condition.i18n)} {resolveLevelrange(condition.maxLevel)}</label
 				>
 				<input
 					type="checkbox"
