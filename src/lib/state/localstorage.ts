@@ -25,7 +25,7 @@ export const removeAttribute = (key: string) => {
 
 export const saveSceneToLocalStorage = (scene: Scene) => {
 	localStorage.setItem('scene', JSON.stringify(scene));
-	console.info('Data saved to localStorage');
+	console.info('Scene saved to localStorage');
 };
 
 export const loadSceneFromLocalStorage = (): Scene | null => {
