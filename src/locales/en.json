@@ -111,6 +111,12 @@
 		"custom_conditions": "Custom Conditions",
 		"conditions": "Conditions",
 		"title": "Settings",
-		"in_use": "Assigned conditions can not be modified."
+		"in_use": "Assigned conditions can not be modified.",
+		"add_new_condition": "Add new condition",
+		"new_condition_name": "Name for new condition",
+		"new_condition_level": "Max level for new condition",
+		"activate_condition": "Activate condition {name}",
+		"deactivate_condition": "Deactivate condition {name}",
+		"delete_condition": "Delete conditino {name}"
 	}
 }

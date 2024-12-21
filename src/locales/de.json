@@ -111,6 +111,12 @@
 		"custom_condition_placeholder": "Zustand",
 		"custom_conditions": "Eigene Zustände",
 		"title": "Einstellungen",
-		"in_use": "Zugewiesene Zustände können nicht bearbeitet werden."
+		"in_use": "Zugewiesene Zustände können nicht bearbeitet werden.",
+		"add_new_condition": "Neuen Zustand hinzufügen",
+		"new_condition_name": "Name für neuen Zustand",
+		"new_condition_level": "Max Level für neuen Zustand",
+		"activate_condition": "Zustand {name} aktivieren",
+		"deactivate_condition": "Zustand {name} deaktivieren",
+		"delete_condition": "Zustand {name} löschen"
 	}
 }

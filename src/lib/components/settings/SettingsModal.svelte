@@ -73,19 +73,24 @@
 				name="custom_condition_name"
 				placeholder="{$_('settings.custom_condition_placeholder')} "
 				class="input input-bordered mr-4 w-full text-xl md:text-2xl"
+				aria-label={$_('settings.new_condition_name')}
 			/>
 			<select
 				class="select select-bordered mr-4 text-center text-xl md:text-2xl"
 				name="custom_condition_max_level"
 				bind:value={customConditionMaxLevel}
+				aria-label={$_('settings.new_condition_level')}
 			>
 				{#each getPossibleLevels() as level, index}
 					<option value={index + 1}>{level}</option>
 				{/each}
 			</select>
 
-			<button class="btn btn-primary mr-2" type="submit" disabled={customConditionName.length === 0}
-				><Plus strokeWidth={3} aria-hidden /></button
+			<button
+				class="btn btn-primary mr-2"
+				type="submit"
+				disabled={customConditionName.length === 0}
+				aria-label={$_('settings.add_new_condition')}><Plus strokeWidth={3} aria-hidden /></button
 			>
 		</form>
 

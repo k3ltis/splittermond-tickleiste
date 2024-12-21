@@ -77,6 +77,9 @@
 			checked={isConditionEnabled(condition.id)}
 			onclick={() => onToggleCondition(condition.id)}
 			disabled={isConditionInUse(condition.id)}
+			aria-label={isConditionEnabled(condition.id)
+				? $_('settings.deactivate_condition', { values: { name: $_(condition.i18n) } })
+				: $_('settings.activate_condition', { values: { name: $_(condition.i18n) } })}
 		/>
 
 		{#if deletableConditions}
@@ -84,6 +87,7 @@
 				class="btn btn-error btn-sm mr-2 w-14"
 				onclick={() => onDeleteCustomCondition(condition.id)}
 				disabled={isConditionInUse(condition.id)}
+				aria-label={$_('settings.delete_condition', { values: { name: condition.i18n } })}
 			>
 				<Trash aria-hidden />
 			</button>
