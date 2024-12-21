@@ -9,9 +9,10 @@
 	import { Plus, Trash, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
+	const DEFAULT_CUSTOM_CONDITION_MAX_LEVEL = 1;
 	let settingsModal: HTMLDialogElement;
 	let customConditionName: string = $state('');
-	let customConditionMaxLevel: string = $state('0');
+	let customConditionMaxLevel: number = $state(DEFAULT_CUSTOM_CONDITION_MAX_LEVEL);
 	let isModalOpen: boolean = $state(false);
 
 	export function show() {
@@ -44,6 +45,9 @@
 			i18n: String(customConditionName),
 			maxLevel: Number(customConditionMaxLevel)
 		});
+
+		customConditionName = '';
+		customConditionMaxLevel = DEFAULT_CUSTOM_CONDITION_MAX_LEVEL;
 	}
 
 	function onDeleteCustomCondition(conditionId: string) {
@@ -56,6 +60,13 @@
 		}
 
 		return `(I - ${LEVEL_NUMBER_TO_STRING[maxLevel]})`;
+	}
+
+	function getPossibleLevels(): string[] {
+		return Object.values(LEVEL_NUMBER_TO_STRING).reduce((acc, curr) => {
+			acc.push(curr);
+			return acc;
+		}, Array<string>());
 	}
 </script>
 
@@ -78,8 +89,11 @@
 				<X aria-hidden size={24} />
 			</button>
 		</form>
-		<h3 class="mb-6 text-xl font-bold" id="settingsDialogTitle">__SETTINGS_HEADER__</h3>
+		<h3 class="mb-6 text-xl font-bold" id="settingsDialogTitle">{$_('settings.title')}</h3>
 
+		<div class="divider uppercase before:bg-secondary after:bg-secondary">
+			{$_('settings.conditions')}
+		</div>
 		{#each conditions as condition}
 			<div
 				class="my-1 flex flex-row items-center rounded focus-within:bg-base-300 hover:bg-base-300"
@@ -97,13 +111,15 @@
 			</div>
 		{/each}
 
-		<div class="divider uppercase before:bg-secondary after:bg-secondary">Custom conditions</div>
+		<div class="divider uppercase before:bg-secondary after:bg-secondary">
+			{$_('settings.custom_conditions')}
+		</div>
 		<form action="" class="flex" onsubmit={onAddCustomCondition}>
 			<input
 				type="text"
 				bind:value={customConditionName}
 				name="custom_condition_name"
-				placeholder="_CONDITION "
+				placeholder="{$_('settings.custom_condition_placeholder')} "
 				class="input input-bordered mr-4 w-full text-xl md:text-2xl"
 			/>
 			<select
@@ -111,15 +127,13 @@
 				name="custom_condition_max_level"
 				bind:value={customConditionMaxLevel}
 			>
-				<option value="0">I</option>
-				<option value="2">II</option>
-				<option value="3">III</option>
-				<option value="4">IV</option>
-				<option value="4">V</option>
+				{#each getPossibleLevels() as level, index}
+					<option value={index + 1}>{level}</option>
+				{/each}
 			</select>
 
 			<button
-				class="btn btn-primary mr-2 w-12"
+				class="btn btn-primary mr-2"
 				type="submit"
 				class:btn-disabled={customConditionName.length === 0}
 				><Plus strokeWidth={3} aria-hidden /></button
@@ -131,7 +145,13 @@
 				class="my-1 flex flex-row items-center rounded focus-within:bg-base-300 hover:bg-base-300"
 			>
 				<label for={condition.id} class="flex-1 p-3 text-xl hover:cursor-pointer md:text-2xl"
-					>{$_(condition.i18n)} {resolveLevelrange(condition.maxLevel)}</label
+					>{$_(condition.i18n)}
+					{resolveLevelrange(condition.maxLevel)}
+					<span class="text-sm text-error">
+						{#if isConditionInUse(condition.id)}
+							(in use)
+						{/if}
+					</span></label
 				>
 				<input
 					type="checkbox"
@@ -149,9 +169,9 @@
 				</button>
 			</div>
 		{/each}
-		<!-- Allows closing by clicking the free area around the modal -->
-		<form method="dialog" class="modal-backdrop">
-			<button>{$_('close')}</button>
-		</form>
 	</div>
+	<!-- Allows closing by clicking the free area around the modal -->
+	<form method="dialog" class="modal-backdrop">
+		<button>{$_('close')}</button>
+	</form>
 </dialog>

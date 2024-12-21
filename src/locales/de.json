@@ -62,6 +62,12 @@
 		"toggle_scene_mode": {
 			"title": "Szenen Modus Toggle",
 			"content": "Wechselt zwischen Bearbeitungsmodus und Spielmodus hin und her.<br/><br/> Im <b>Bearbeitungsmodus</b> können neue Kämpfer sowie ihre initiale Initiative hinzugefügt werden.<br/><br/> Im <b>Spielmodus</b> werden die Kämpfer aufsteigend nach ihrer Initiative sortiert. Über den button in der Initiativ-Spalte öffnet sich der Dialog für die Auswahl von Ticks und Zuständen."
+		},
+		"header": {
+			"settings": {
+				"content": "Hier können die Sichtbarkeit von Zuständen im Zustandstab sowie eigene Zustände definiert werden.",
+				"title": "Einstellungen"
+			}
 		}
 	},
 	"tickselection": {
@@ -99,5 +105,11 @@
 		"wasting": "Siechtum",
 		"dying": "Sterbend",
 		"wounded": "Verwundet"
+	},
+	"settings": {
+		"conditions": "Zustände",
+		"custom_condition_placeholder": "Zustand",
+		"custom_conditions": "Benutzerdefinierte Zustände",
+		"title": "Einstellungen"
 	}
 }

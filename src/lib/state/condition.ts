@@ -1,7 +1,6 @@
 export const LEVEL_NUMBER_TO_STRING: {
 	[level: number]: string;
 } = {
-	0: 'I',
 	1: 'I',
 	2: 'II',
 	3: 'III',

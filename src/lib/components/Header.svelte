@@ -87,7 +87,7 @@
 				<li>
 					<button id="settingsBtn" onclick={() => openSettings()}>
 						<Settings aria-hidden />
-						<span class="text-xl">__Settings__</span>
+						<span class="text-xl">{$_('settings.title')}</span>
 					</button>
 				</li>
 			</ul>

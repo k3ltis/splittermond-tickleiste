@@ -62,6 +62,12 @@
 		"toggle_scene_mode": {
 			"title": "Scene Mode Toggle",
 			"content": "Toggles between edit mode and play mode.<br/><br/> In <b>edit mode</b>, new combatants and their initial initiative can be added.<br/><br/> In <b>play mode</b>, combatants are sorted in ascending order based on their initiative. The button in the initiative column opens the dialog for selecting ticks and conditions."
+		},
+		"header": {
+			"settings": {
+				"title": "Settings",
+				"content": "Here you can customize which conditions to be displayed in the conditions tab as well as define custom conditions."
+			}
 		}
 	},
 	"tickselection": {
@@ -99,5 +105,11 @@
 		"wasting": "Wasting",
 		"dying": "Dying",
 		"wounded": "Wounded"
+	},
+	"settings": {
+		"custom_condition_placeholder": "Condition",
+		"custom_conditions": "Custom Conditions",
+		"conditions": "Conditions",
+		"title": "Settings"
 	}
 }
