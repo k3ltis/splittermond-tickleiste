@@ -9,7 +9,7 @@
 	import Tour from './Tour.svelte';
 	import { onMount } from 'svelte';
 	import { addToggleListener } from '$lib/utility/html_details_element_extension';
-	import SettingsModal from './SettingsModal.svelte';
+	import SettingsModal from './settings/SettingsModal.svelte';
 
 	let details: HTMLDetailsElement;
 	let settingsModal: SettingsModal;
