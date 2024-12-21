@@ -110,6 +110,7 @@
 		"custom_condition_placeholder": "Condition",
 		"custom_conditions": "Custom Conditions",
 		"conditions": "Conditions",
-		"title": "Settings"
+		"title": "Settings",
+		"in_use": "Assigned conditions can not be modified."
 	}
 }

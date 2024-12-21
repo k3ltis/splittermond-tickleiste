@@ -109,7 +109,8 @@
 	"settings": {
 		"conditions": "Zustände",
 		"custom_condition_placeholder": "Zustand",
-		"custom_conditions": "Benutzerdefinierte Zustände",
-		"title": "Einstellungen"
+		"custom_conditions": "Eigene Zustände",
+		"title": "Einstellungen",
+		"in_use": "Zugewiesene Zustände können nicht bearbeitet werden."
 	}
 }
