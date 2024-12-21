@@ -4,7 +4,8 @@ export const TEST_SCENE_EMPTY: Scene = {
 	name: 'My Scene',
 	combatants: [] as Combatant[],
 	mostRecentTick: 0,
-	version: 0
+	version: 0,
+	settings: { customConditions: [], disabledConditions: [] }
 };
 export const TEST_SCENE_SMALL: Scene = {
 	name: 'Fighting Saruman',
@@ -32,7 +33,8 @@ export const TEST_SCENE_SMALL: Scene = {
 		}
 	],
 	mostRecentTick: 0,
-	version: 0
+	version: 0,
+	settings: { customConditions: [], disabledConditions: [] }
 };
 export const TEST_SCENE_BIG: Scene = {
 	name: 'Fighting Saruman',
@@ -81,5 +83,34 @@ export const TEST_SCENE_BIG: Scene = {
 		}
 	],
 	mostRecentTick: 0,
-	version: 0
+	version: 0,
+	settings: { customConditions: [], disabledConditions: [] }
+};
+export const TEST_SCENE_WITH_CONDITIONS: Scene = {
+	name: 'TEST_SCENE_WITH_CONDITIONS',
+	combatants: [
+		{
+			id: 'combatant_1',
+			name: 'Combatant 1',
+			initiative: 7,
+			combatState: 'Active',
+			conditionStates: [{ id: 'custom_condition_id', activeLevel: 1, activeSinceTick: 3 }]
+		},
+		{
+			id: 'combatant_2',
+			name: 'Combatant 2',
+			initiative: -3,
+			combatState: 'Active',
+			conditionStates: [{ id: 'burning', activeLevel: 2, activeSinceTick: 3 }]
+		}
+	],
+	mostRecentTick: 0,
+	version: 0,
+	settings: {
+		customConditions: [
+			{ i18n: 'custom condition', id: 'custom_condition_id', maxLevel: 4 },
+			{ i18n: 'custom condition 2', id: 'custom_condition_2_id', maxLevel: 4 }
+		],
+		disabledConditions: ['bleeding', 'custom_condition_2_id']
+	}
 };

@@ -3,9 +3,9 @@
 	import {
 		addCustomCondition,
 		deleteCustomCondition,
-		sceneData,
 		toggleConditionVisibility
-	} from '$lib/state/scene_data.svelte';
+	} from '$lib/state/scene_data.conditions.svelte';
+	import { sceneData } from '$lib/state/scene_data.svelte';
 	import { Plus, Trash, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 

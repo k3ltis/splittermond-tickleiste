@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { LEVEL_NUMBER_TO_STRING, type Condition } from '$lib/state/condition';
-	import { getAllConditions, sessionData, toggleCondition } from '$lib/state/scene_data.svelte';
+	import { getAllConditions, toggleCondition } from '$lib/state/scene_data.conditions.svelte';
+	import { sessionData } from '$lib/state/scene_data.svelte';
 	import { Timer } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
-
-	const allActiveConditions: Condition[] = $state(getAllConditions({ onlyActive: true }));
 
 	function select(conditionId: string) {
 		if (!sessionData.activeCombatant) {

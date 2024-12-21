@@ -1,7 +1,6 @@
 <script lang="ts">
 	import {
 		determineNextActingCombatant,
-		getAllConditions,
 		type Combatant,
 		type ConditionState
 	} from '$lib/state/scene_data.svelte';
@@ -11,6 +10,7 @@
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
 	import { LEVEL_NUMBER_TO_STRING } from '$lib/state/condition';
+	import { getAllConditions } from '$lib/state/scene_data.conditions.svelte';
 
 	interface Props {
 		combatant: Combatant;
