@@ -45,7 +45,7 @@
 	}
 
 	function resolveLevelNumber(conditionState: ConditionState): string {
-		if (conditionState.activeLevel > 0) {
+		if (conditionState.activeLevel > 1) {
 			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
 		}
 		return '';

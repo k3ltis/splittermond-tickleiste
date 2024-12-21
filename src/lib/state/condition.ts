@@ -18,7 +18,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'fearful',
 		i18n: 'condition.fearful',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'dazed',
@@ -28,7 +28,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'unconscious',
 		i18n: 'condition.unconscious',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'bleeding',
@@ -58,22 +58,22 @@ export const conditions: Condition[] = [
 	{
 		id: 'sick',
 		i18n: 'condition.sick',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'crippled',
 		i18n: 'condition.crippled',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'panicked',
 		i18n: 'condition.panicked',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'frenzied',
 		i18n: 'condition.frenzied',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'dying',
@@ -83,7 +83,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'sleeping',
 		i18n: 'condition.sleeping',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'wasting',
@@ -93,7 +93,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'struggling',
 		i18n: 'condition.struggling',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'wounded',

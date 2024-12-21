@@ -104,7 +104,10 @@
 		"sleeping": "Sleeping",
 		"wasting": "Wasting",
 		"dying": "Dying",
-		"wounded": "Wounded"
+		"wounded": "Wounded",
+		"no_conditions_selected": "No active conditions",
+		"no_conditions_selected_hint": "To display conditions in this view, click in the top right corner of the menu bar on",
+		"no_conditions_selected_hint_2": "and add new conditions or active existing ones."
 	},
 	"settings": {
 		"custom_condition_placeholder": "Condition",
@@ -117,6 +120,9 @@
 		"new_condition_level": "Max level for new condition",
 		"activate_condition": "Activate condition {name}",
 		"deactivate_condition": "Deactivate condition {name}",
-		"delete_condition": "Delete conditino {name}"
+		"delete_condition": "Delete conditino {name}",
+		"empty_custom_conditions": "No custom conditions were created yet",
+		"empty_custom_conditions_hint": "Enter details of for a custom condition into the inputs above and press the",
+		"empty_custom_conditions_hint_2": "button to add."
 	}
 }

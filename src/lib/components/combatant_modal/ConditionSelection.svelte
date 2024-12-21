@@ -2,7 +2,7 @@
 	import { LEVEL_NUMBER_TO_STRING, type Condition } from '$lib/state/condition';
 	import { getAllConditions, toggleCondition } from '$lib/state/scene_data.conditions.svelte';
 	import { sessionData } from '$lib/state/scene_data.svelte';
-	import { Timer } from 'lucide-svelte';
+	import { Timer, Menu, Settings } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
 	function select(conditionId: string) {
@@ -51,7 +51,7 @@
 		if (!conditionState) {
 			return '';
 		}
-		if (conditionState.activeLevel > 0) {
+		if (conditionState.activeLevel > 1) {
 			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
 		}
 		return '';
@@ -60,7 +60,7 @@
 	// Resolves the condition level range in roman letters, e.g. "I-IV", or empty string if no levels exist.
 	function resolveLevelRange(conditionId: string, activeConditions: Condition[]): string {
 		const condition = activeConditions.find((c) => c.id === conditionId);
-		if (condition && condition.maxLevel > 0) {
+		if (condition && condition.maxLevel > 1) {
 			const maxLevelRoman = LEVEL_NUMBER_TO_STRING[condition.maxLevel];
 			return `(I-${maxLevelRoman})`;
 		}
@@ -92,5 +92,17 @@
 				{/if}
 			</span>
 		</button>
+	{:else}
+		<div class="my-6 text-center col-span-2">
+			<h2 class="card-title justify-center">{$_('condition.no_conditions_selected')}</h2>
+			<p class="mt-6">
+				{$_('condition.no_conditions_selected_hint')}
+				<kbd class="kbd kbd-sm bg-base-200 text-base-content"><Menu size={16} /></kbd> &#8594;
+				<kbd class="kbd kbd-sm bg-base-200 text-base-content"
+					><Settings size={16} />&nbsp;{$_('settings.title')}</kbd
+				>
+				{$_('condition.no_conditions_selected_hint_2')}
+			</p>
+		</div>
 	{/each}
 </div>

@@ -104,7 +104,10 @@
 		"sleeping": "Schlafend",
 		"wasting": "Siechtum",
 		"dying": "Sterbend",
-		"wounded": "Verwundet"
+		"wounded": "Verwundet",
+		"no_conditions_selected": "Keine Zustände aktiviert",
+		"no_conditions_selected_hint": "Um Zustände hier anzuzeigen, klicke oben rechts in der Menüleiste auf",
+		"no_conditions_selected_hint_2": "und füge neue Zustände hinzu oder aktiviere vorhandene Zustände."
 	},
 	"settings": {
 		"conditions": "Zustände",
@@ -117,6 +120,9 @@
 		"new_condition_level": "Max Level für neuen Zustand",
 		"activate_condition": "Zustand {name} aktivieren",
 		"deactivate_condition": "Zustand {name} deaktivieren",
-		"delete_condition": "Zustand {name} löschen"
+		"delete_condition": "Zustand {name} löschen",
+		"empty_custom_conditions": "Keine eigenen Zustände vorhanden",
+		"empty_custom_conditions_hint": "Informationen für einen Zustand in die oberen Eingabefelder eingeben und den",
+		"empty_custom_conditions_hint_2": "Knopf drücken, um diesen hinzuzufügen."
 	}
 }

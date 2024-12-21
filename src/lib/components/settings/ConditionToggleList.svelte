@@ -50,11 +50,11 @@
 	}
 
 	function resolveLevelrange(maxLevel: number): string {
-		if (maxLevel === 0 || maxLevel === 1) {
+		if (maxLevel === 1) {
 			return '';
 		}
 
-		return `(I - ${LEVEL_NUMBER_TO_STRING[maxLevel]})`;
+		return `(I-${LEVEL_NUMBER_TO_STRING[maxLevel]})`;
 	}
 </script>
 
@@ -92,5 +92,14 @@
 				<Trash aria-hidden />
 			</button>
 		{/if}
+	</div>
+{:else}
+	<div class="my-6 text-center">
+		<h2 class="card-title justify-center">{$_('settings.empty_custom_conditions')}</h2>
+		<p class="mt-6">
+			{$_('settings.empty_custom_conditions_hint')}
+			<kbd class="kbd kbd-sm bg-primary text-base-100">+</kbd>
+			{$_('settings.empty_custom_conditions_hint_2')}
+		</p>
 	</div>
 {/each}
