@@ -5,7 +5,7 @@
 		deleteCustomCondition,
 		toggleConditionVisibility
 	} from '$lib/state/scene_data.conditions.svelte';
-	import { sceneData } from '$lib/state/scene_data.svelte';
+	import { sceneData, type Combatant } from '$lib/state/scene_data.svelte';
 	import { Plus, Trash, X } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
@@ -26,6 +26,14 @@
 	function isConditionEnabled(conditionId: string): boolean {
 		return sceneData.settings.disabledConditions.every((disabledConditionId: string) => {
 			return disabledConditionId !== conditionId;
+		});
+	}
+
+	function isConditionInUse(conditionId: string): boolean {
+		return sceneData.combatants.some((combatant: Combatant) => {
+			return combatant.conditionStates.some((c) => {
+				return c.id === conditionId;
+			});
 		});
 	}
 
@@ -113,7 +121,8 @@
 			<button
 				class="btn btn-primary mr-2 w-12"
 				type="submit"
-				disabled={customConditionName.length === 0}><Plus strokeWidth={3} aria-hidden /></button
+				class:btn-disabled={customConditionName.length === 0}
+				><Plus strokeWidth={3} aria-hidden /></button
 			>
 		</form>
 
@@ -134,6 +143,7 @@
 				<button
 					class="btn btn-error btn-sm mr-2 w-12"
 					onclick={() => onDeleteCustomCondition(condition.id)}
+					class:btn-disabled={isConditionInUse(condition.id)}
 				>
 					<Trash aria-hidden />
 				</button>
