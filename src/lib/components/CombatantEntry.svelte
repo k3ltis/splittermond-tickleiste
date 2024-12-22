@@ -9,7 +9,8 @@
 	import type { AppMode } from '$lib/domain/app';
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
-	import { conditions, LEVEL_NUMBER_TO_STRING, type ConditionType } from '$lib/state/condition';
+	import { LEVEL_NUMBER_TO_STRING } from '$lib/state/condition';
+	import { getAllConditions, getConditionById } from '$lib/state/scene_data.conditions.svelte';
 
 	interface Props {
 		combatant: Combatant;
@@ -23,8 +24,8 @@
 
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
-	function resolveLabel(conditionId: ConditionType): string {
-		const condition = conditions.find((c) => c.id === conditionId);
+	function resolveLabel(conditionId: string): string {
+		const condition = getAllConditions().find((c) => c.id === conditionId);
 		if (!condition) {
 			return conditionId;
 		}
@@ -44,7 +45,12 @@
 	}
 
 	function resolveLevelNumber(conditionState: ConditionState): string {
-		if (conditionState.activeLevel > 0) {
+		const condition = getConditionById(conditionState.id);
+		if (!condition) {
+			console.error(`Cannot find condition ${conditionState.id}`);
+			return '';
+		}
+		if (condition.maxLevel > 1) {
 			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
 		}
 		return '';

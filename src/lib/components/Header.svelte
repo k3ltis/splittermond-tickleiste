@@ -3,16 +3,18 @@
 	import { extractFileContent, downloadJSON } from '$lib/state/fileio.svelte';
 	import 'driver.js/dist/driver.css';
 	import { _ } from 'svelte-i18n';
-	import { Download, Upload, Menu } from 'lucide-svelte';
+	import { Download, Upload, Menu, Settings } from 'lucide-svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { base } from '$app/paths';
 	import Tour from './Tour.svelte';
 	import { onMount } from 'svelte';
 	import { addToggleListener } from '$lib/utility/html_details_element_extension';
+	import SettingsModal from './settings/SettingsModal.svelte';
 
 	let details: HTMLDetailsElement;
+	let settingsModal: SettingsModal;
 
-	const uploadScene = (event: Event) => {
+	function uploadScene(event: Event) {
 		const target = event.target as HTMLInputElement;
 		if (target && target.files) {
 			const file = target.files[0];
@@ -25,13 +27,17 @@
 			// see https://stackoverflow.com/a/56258902 for details
 			target.value = '';
 		}
-	};
+	}
 
-	const downloadScene = () => {
+	function downloadScene() {
 		const sceneData = getSceneDataForExport();
 		let filename = sceneData.name.toLowerCase().trim().replace(/\s+/g, '_');
 		downloadJSON(sceneData, filename);
-	};
+	}
+
+	function openSettings() {
+		settingsModal.show();
+	}
 
 	onMount(() => {
 		addToggleListener(details);
@@ -56,10 +62,10 @@
 				<Menu aria-hidden />
 			</summary>
 			<ul
-				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-secondary p-2 font-bold text-secondary-content"
+				class="menu dropdown-content z-[10] w-[270px] rounded-box bg-neutral text-xl text-neutral-content"
 			>
 				<li>
-					<label id="uploadButton" for="battleScene" class="text-xl">
+					<label id="uploadButton" for="battleScene" class="hover:bg-secondary">
 						<Upload aria-hidden />
 						<span>{$_('upload_scene')}</span>
 					</label>
@@ -73,15 +79,23 @@
 					/>
 				</li>
 				<li>
-					<button id="downloadBtn" onclick={() => downloadScene()}>
+					<button id="downloadBtn" class="hover:bg-secondary" onclick={() => downloadScene()}>
 						<Download aria-hidden />
-						<span class="text-xl">{$_('download_scene')}</span>
+						<span>{$_('download_scene')}</span>
+					</button>
+				</li>
+				<li>
+					<button id="settingsBtn" class="hover:bg-secondary" onclick={() => openSettings()}>
+						<Settings aria-hidden />
+						<span>{$_('settings.title')}</span>
 					</button>
 				</li>
 			</ul>
 		</details>
 	</div>
 </div>
+
+<SettingsModal bind:this={settingsModal} />
 
 <style>
 	.battle-scene-file-input {

@@ -125,6 +125,19 @@
 					}
 				},
 				{
+					element: '#uploadButton',
+					popover: {
+						title: $_('upload_scene'),
+						description: $_('upload_scene_description')
+					},
+					onHighlightStarted: () => {
+						forceOpenDropdown();
+					},
+					onDeselected: () => {
+						closeDropdown();
+					}
+				},
+				{
 					element: '#downloadBtn',
 					popover: {
 						title: $_('download_scene'),
@@ -138,10 +151,10 @@
 					}
 				},
 				{
-					element: '#uploadButton',
+					element: '#settingsBtn',
 					popover: {
-						title: $_('upload_scene'),
-						description: $_('upload_scene_description')
+						title: $_('tour.header.settings.title'),
+						description: $_('tour.header.settings.content')
 					},
 					onHighlightStarted: () => {
 						forceOpenDropdown();

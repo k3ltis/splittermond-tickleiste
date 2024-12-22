@@ -1,20 +1,26 @@
 import { v4 as uuid } from 'uuid';
 import { saveSceneToLocalStorage } from './localstorage';
-import { getConditionById, type ConditionType } from './condition';
+import { type Condition } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
 
 // Types
 export type CombatState = 'Active' | 'Dead' | 'Waiting' | 'Expecting';
+
+export type Settings = {
+	disabledConditions: string[];
+	customConditions: Condition[];
+};
 
 export type Scene = {
 	version: number;
 	name: string;
 	combatants: Combatant[];
 	mostRecentTick: number;
+	settings: Settings;
 };
 
 export type ConditionState = {
-	id: ConditionType;
+	id: string;
 	activeSinceTick: number;
 	// 1-based condition level
 	activeLevel: number;
@@ -50,7 +56,8 @@ export const sceneData: Scene = $state({
 	version: 0,
 	name: 'My Scene',
 	combatants: [] as Combatant[],
-	mostRecentTick: 0
+	mostRecentTick: 0,
+	settings: { customConditions: [], disabledConditions: [] }
 });
 
 export const sessionData: SessionData = $state({
@@ -288,55 +295,6 @@ export function sortCombatantsByInitiative(
 		...combatantPartitions.Expecting,
 		...combatantPartitions.Active,
 		...combatantPartitions.Dead
-	);
-}
-
-export function toggleCondition(combatantId: string, conditionId: ConditionType) {
-	const combatant = sceneData.combatants.find((c) => c.id === combatantId);
-	if (!combatant) {
-		console.error('Cannot find combatant with id ' + combatantId);
-		return;
-	}
-	const condition = getConditionById(conditionId);
-	if (!condition) {
-		console.error('Cannot find condition with id ' + conditionId);
-		return;
-	}
-
-	const conditionStateIndex = combatant.conditionStates.findIndex(
-		(conditionState) => conditionState.id === conditionId
-	);
-
-	// condition did not exist yet
-	if (conditionStateIndex < 0) {
-		console.info(`Add condition ${conditionId} to combatant ${combatantId}`);
-		const conditionLevel = condition.maxLevel > 0 ? 1 : 0;
-		// create new condition
-		const conditionState: ConditionState = {
-			id: conditionId,
-			activeSinceTick: combatant.initiative,
-			activeLevel: conditionLevel
-		};
-		// add new condition
-		combatant.conditionStates.push(conditionState);
-		return;
-	}
-
-	// condition does exist
-	const conditionState = combatant.conditionStates[conditionStateIndex];
-
-	// max level was reached, remove the condition
-	if (conditionState.activeLevel >= condition.maxLevel) {
-		console.info(`Remove condition ${conditionId} from combatant ${combatantId}`);
-		combatant.conditionStates.splice(conditionStateIndex, 1);
-		return;
-	}
-
-	// condition exists and has not reached max level yet, increase level
-	const previousLevel = conditionState.activeLevel;
-	conditionState.activeLevel += 1;
-	console.info(
-		`Increase level of condition state ${conditionState.id} from ${previousLevel} to ${conditionState.activeLevel}`
 	);
 }
 

@@ -2,10 +2,10 @@
 	import { X } from 'lucide-svelte';
 	import { base } from '$app/paths';
 	import { loadAttribute, saveAttribute } from '$lib/state/localstorage';
-	let dataPrivacyModal: HTMLDialogElement;
 	import { _, locale } from 'svelte-i18n';
 	import { DEFAULT_LOCALE, KEY_LOCALE, Locale } from '$lib/utility/locale';
 
+	let dataPrivacyModal: HTMLDialogElement;
 	// eslint-disable-next-line no-undef
 	const APP_NAME = __APP_NAME__;
 	// eslint-disable-next-line no-undef
@@ -88,7 +88,7 @@
 	class="modal"
 	class:hidden={!isModalOpen}
 	onclose={() => (isModalOpen = false)}
-	aria-labelledby="dialogTitle"
+	aria-labelledby="footerDialogTitle"
 	aria-describedby="dialogDesc"
 >
 	<div class="modal-box">
@@ -101,7 +101,7 @@
 				<X aria-hidden size={24} />
 			</button>
 		</form>
-		<h3 class="text-lg font-bold" id="dialogTitle">{$_('data_privacy_header')}</h3>
+		<h3 class="text-lg font-bold" id="footerDialogTitle">{$_('data_privacy_header')}</h3>
 		<div class="py-4" id="dialogDesc">
 			<p>{$_('data_privacy_content_1')}</p>
 			<p class="mt-6">{$_('data_privacy_content_2')}</p>

@@ -62,6 +62,12 @@
 		"toggle_scene_mode": {
 			"title": "Scene Mode Toggle",
 			"content": "Toggles between edit mode and play mode.<br/><br/> In <b>edit mode</b>, new combatants and their initial initiative can be added.<br/><br/> In <b>play mode</b>, combatants are sorted in ascending order based on their initiative. The button in the initiative column opens the dialog for selecting ticks and conditions."
+		},
+		"header": {
+			"settings": {
+				"title": "Settings",
+				"content": "Here you can customize which conditions to be displayed in the conditions tab as well as define custom conditions."
+			}
 		}
 	},
 	"tickselection": {
@@ -98,6 +104,25 @@
 		"sleeping": "Sleeping",
 		"wasting": "Wasting",
 		"dying": "Dying",
-		"wounded": "Wounded"
+		"wounded": "Wounded",
+		"no_conditions_selected": "No active conditions",
+		"no_conditions_selected_hint": "To display conditions in this view, click in the top right corner of the menu bar on",
+		"no_conditions_selected_hint_2": "and add new conditions or active existing ones."
+	},
+	"settings": {
+		"custom_condition_placeholder": "Condition",
+		"custom_conditions": "Custom Conditions",
+		"conditions": "Conditions",
+		"title": "Settings",
+		"in_use": "Assigned conditions can not be modified.",
+		"add_new_condition": "Add new condition",
+		"new_condition_name": "Name for new condition",
+		"new_condition_level": "Max level for new condition",
+		"activate_condition": "Activate condition {name}",
+		"deactivate_condition": "Deactivate condition {name}",
+		"delete_condition": "Delete conditino {name}",
+		"empty_custom_conditions": "No custom conditions were created yet",
+		"empty_custom_conditions_hint": "Enter details of for a custom condition into the inputs above and press the",
+		"empty_custom_conditions_hint_2": "button to add."
 	}
 }

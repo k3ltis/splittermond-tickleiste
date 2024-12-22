@@ -13,7 +13,18 @@ function migrationStep1(scene: Scene): Scene {
 	return scene;
 }
 
+function migrationStep2(scene: Scene): Scene {
+	const version = 2;
+	scene.version = version;
+
+	if (!scene.settings) {
+		scene.settings = { customConditions: [], disabledConditions: [] };
+	}
+	return scene;
+}
+
 export function migrateScene(scene: Scene): Scene {
 	scene = migrationStep1(scene);
+	scene = migrationStep2(scene);
 	return scene;
 }

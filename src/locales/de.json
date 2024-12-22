@@ -62,6 +62,12 @@
 		"toggle_scene_mode": {
 			"title": "Szenen Modus Toggle",
 			"content": "Wechselt zwischen Bearbeitungsmodus und Spielmodus hin und her.<br/><br/> Im <b>Bearbeitungsmodus</b> können neue Kämpfer sowie ihre initiale Initiative hinzugefügt werden.<br/><br/> Im <b>Spielmodus</b> werden die Kämpfer aufsteigend nach ihrer Initiative sortiert. Über den button in der Initiativ-Spalte öffnet sich der Dialog für die Auswahl von Ticks und Zuständen."
+		},
+		"header": {
+			"settings": {
+				"content": "Hier können die Sichtbarkeit von Zuständen im Zustandstab sowie eigene Zustände definiert werden.",
+				"title": "Einstellungen"
+			}
 		}
 	},
 	"tickselection": {
@@ -98,6 +104,25 @@
 		"sleeping": "Schlafend",
 		"wasting": "Siechtum",
 		"dying": "Sterbend",
-		"wounded": "Verwundet"
+		"wounded": "Verwundet",
+		"no_conditions_selected": "Keine Zustände aktiviert",
+		"no_conditions_selected_hint": "Um Zustände hier anzuzeigen, klicke oben rechts in der Menüleiste auf",
+		"no_conditions_selected_hint_2": "und füge neue Zustände hinzu oder aktiviere vorhandene Zustände."
+	},
+	"settings": {
+		"conditions": "Zustände",
+		"custom_condition_placeholder": "Zustand",
+		"custom_conditions": "Eigene Zustände",
+		"title": "Einstellungen",
+		"in_use": "Zugewiesene Zustände können nicht bearbeitet werden.",
+		"add_new_condition": "Neuen Zustand hinzufügen",
+		"new_condition_name": "Name für neuen Zustand",
+		"new_condition_level": "Max Level für neuen Zustand",
+		"activate_condition": "Zustand {name} aktivieren",
+		"deactivate_condition": "Zustand {name} deaktivieren",
+		"delete_condition": "Zustand {name} löschen",
+		"empty_custom_conditions": "Keine eigenen Zustände vorhanden",
+		"empty_custom_conditions_hint": "Informationen für einen Zustand in die oberen Eingabefelder eingeben und den",
+		"empty_custom_conditions_hint_2": "Knopf drücken, um diesen hinzuzufügen."
 	}
 }

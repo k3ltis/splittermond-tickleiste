@@ -1,15 +1,15 @@
 <script lang="ts">
+	import { LEVEL_NUMBER_TO_STRING, type Condition } from '$lib/state/condition';
 	import {
-		conditions,
-		LEVEL_NUMBER_TO_STRING,
-		type Condition,
-		type ConditionType
-	} from '$lib/state/condition';
-	import { sessionData, toggleCondition } from '$lib/state/scene_data.svelte';
-	import { Timer } from 'lucide-svelte';
+		getAllConditions,
+		getConditionById,
+		toggleCondition
+	} from '$lib/state/scene_data.conditions.svelte';
+	import { sessionData } from '$lib/state/scene_data.svelte';
+	import { Timer, Menu, Settings } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 
-	function select(conditionId: ConditionType) {
+	function select(conditionId: string) {
 		if (!sessionData.activeCombatant) {
 			console.warn('No active combatant. Cannot toggle condition type ' + conditionId);
 			return;
@@ -17,7 +17,7 @@
 		toggleCondition(sessionData.activeCombatant.id, conditionId);
 	}
 
-	function isActiveOnActiveCombatant(conditionId: ConditionType) {
+	function isActiveOnActiveCombatant(conditionId: string) {
 		if (!sessionData.activeCombatant) {
 			return;
 		}
@@ -25,7 +25,7 @@
 		return sessionData.activeCombatant.conditionStates.some((s) => s.id === conditionId);
 	}
 
-	function calculateConditionDuration(conditionId: ConditionType): number {
+	function calculateConditionDuration(conditionId: string): number {
 		if (!sessionData.activeCombatant) {
 			return 0;
 		}
@@ -38,14 +38,14 @@
 		return Math.abs(sessionData.activeCombatant.initiative - conditionState.activeSinceTick);
 	}
 
-	function getSortedConditions(): Condition[] {
-		const _conditions = conditions;
+	function getSortedConditions(unsortedConditions: Condition[]): Condition[] {
+		const _conditions = [...unsortedConditions];
 		_conditions.sort((a, b) => ($_(a.i18n) > $_(b.i18n) ? 1 : -1));
 		return _conditions;
 	}
 
 	// Resolves the current condition level as roman letters, e.v. "IV", or empty string if no levels exist.
-	function resolveCurrentLevel(conditionId: ConditionType): string {
+	function resolveCurrentLevel(conditionId: string): string {
 		if (!sessionData.activeCombatant) {
 			return '';
 		}
@@ -55,16 +55,21 @@
 		if (!conditionState) {
 			return '';
 		}
-		if (conditionState.activeLevel > 0) {
+		const condition = getConditionById(conditionState.id);
+		if (!condition) {
+			console.error(`Cannot find condition ${conditionState.id}`);
+			return '';
+		}
+		if (condition.maxLevel > 1) {
 			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
 		}
 		return '';
 	}
 
 	// Resolves the condition level range in roman letters, e.g. "I-IV", or empty string if no levels exist.
-	function resolveLevelRange(conditionId: ConditionType): string {
-		const condition = conditions.find((c) => c.id === conditionId);
-		if (condition && condition.maxLevel > 0) {
+	function resolveLevelRange(conditionId: string, activeConditions: Condition[]): string {
+		const condition = activeConditions.find((c) => c.id === conditionId);
+		if (condition && condition.maxLevel > 1) {
 			const maxLevelRoman = LEVEL_NUMBER_TO_STRING[condition.maxLevel];
 			return `(I-${maxLevelRoman})`;
 		}
@@ -74,7 +79,7 @@
 </script>
 
 <div class="grid grid-cols-2 gap-4">
-	{#each getSortedConditions() as condition}
+	{#each getSortedConditions(getAllConditions({ onlyActive: true })) as condition}
 		<button
 			class:btn-outline={!isActiveOnActiveCombatant(condition.id)}
 			class:btn-error={isActiveOnActiveCombatant(condition.id)}
@@ -90,9 +95,23 @@
 						strokeWidth={2}
 					/>&nbsp;{calculateConditionDuration(condition.id)})
 				{:else}
-					<span class="text-sm">{resolveLevelRange(condition.id)}</span>
+					<span class="text-sm"
+						>{resolveLevelRange(condition.id, getSortedConditions(getAllConditions()))}</span
+					>
 				{/if}
 			</span>
 		</button>
+	{:else}
+		<div class="my-6 text-center col-span-2">
+			<h2 class="card-title justify-center">{$_('condition.no_conditions_selected')}</h2>
+			<p class="mt-6">
+				{$_('condition.no_conditions_selected_hint')}
+				<kbd class="kbd kbd-sm bg-base-200 text-base-content"><Menu size={16} /></kbd> &#8594;
+				<kbd class="kbd kbd-sm bg-base-200 text-base-content"
+					><Settings size={16} />&nbsp;{$_('settings.title')}</kbd
+				>
+				{$_('condition.no_conditions_selected_hint_2')}
+			</p>
+		</div>
 	{/each}
 </div>

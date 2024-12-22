@@ -7,28 +7,9 @@ export const LEVEL_NUMBER_TO_STRING: {
 	4: 'IV',
 	5: 'V'
 };
-// Missing conditions: 'sleeping', 'wasting', 'struggling'
-export type ConditionType =
-	| 'fearful'
-	| 'dazed'
-	| 'unconscious'
-	| 'bleeding'
-	| 'burning'
-	| 'exhausted'
-	| 'blinded'
-	| 'crisis_of_faith'
-	| 'sick'
-	| 'crippled'
-	| 'panicked'
-	| 'frenzied'
-	| 'dying'
-	| 'sleeping'
-	| 'wasting'
-	| 'struggling'
-	| 'wounded';
 
 export type Condition = {
-	id: ConditionType;
+	id: string;
 	i18n: string;
 	// The maximum condition level for this condition.
 	maxLevel: number;
@@ -37,7 +18,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'fearful',
 		i18n: 'condition.fearful',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'dazed',
@@ -47,7 +28,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'unconscious',
 		i18n: 'condition.unconscious',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'bleeding',
@@ -77,22 +58,22 @@ export const conditions: Condition[] = [
 	{
 		id: 'sick',
 		i18n: 'condition.sick',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'crippled',
 		i18n: 'condition.crippled',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'panicked',
 		i18n: 'condition.panicked',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'frenzied',
 		i18n: 'condition.frenzied',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'dying',
@@ -102,7 +83,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'sleeping',
 		i18n: 'condition.sleeping',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'wasting',
@@ -112,7 +93,7 @@ export const conditions: Condition[] = [
 	{
 		id: 'struggling',
 		i18n: 'condition.struggling',
-		maxLevel: 0
+		maxLevel: 1
 	},
 	{
 		id: 'wounded',
@@ -120,6 +101,3 @@ export const conditions: Condition[] = [
 		maxLevel: 3
 	}
 ];
-export function getConditionById(id: string) {
-	return conditions.find((c) => c.id === id);
-}

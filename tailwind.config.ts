@@ -1,5 +1,4 @@
 import containerQueries from '@tailwindcss/container-queries';
-import forms from '@tailwindcss/forms';
 import daisyui from 'daisyui';
 import type { Config } from 'tailwindcss';
 
@@ -51,7 +50,7 @@ export default {
 		extend: {}
 	},
 
-	plugins: [forms, containerQueries, daisyui],
+	plugins: [containerQueries, daisyui],
 
 	daisyui: {
 		themes: [{ splitter_dark, splitter_light }]
