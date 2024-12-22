@@ -62,10 +62,10 @@
 				<Menu aria-hidden />
 			</summary>
 			<ul
-				class="menu dropdown-content z-[10] w-[350px] rounded-box bg-secondary p-2 font-bold text-secondary-content"
+				class="menu dropdown-content z-[10] w-[270px] rounded-box bg-neutral text-xl text-neutral-content"
 			>
 				<li>
-					<label id="uploadButton" for="battleScene" class="text-xl">
+					<label id="uploadButton" for="battleScene" class="hover:bg-secondary">
 						<Upload aria-hidden />
 						<span>{$_('upload_scene')}</span>
 					</label>
@@ -79,15 +79,15 @@
 					/>
 				</li>
 				<li>
-					<button id="downloadBtn" onclick={() => downloadScene()}>
+					<button id="downloadBtn" class="hover:bg-secondary" onclick={() => downloadScene()}>
 						<Download aria-hidden />
-						<span class="text-xl">{$_('download_scene')}</span>
+						<span>{$_('download_scene')}</span>
 					</button>
 				</li>
 				<li>
-					<button id="settingsBtn" onclick={() => openSettings()}>
+					<button id="settingsBtn" class="hover:bg-secondary" onclick={() => openSettings()}>
 						<Settings aria-hidden />
-						<span class="text-xl">{$_('settings.title')}</span>
+						<span>{$_('settings.title')}</span>
 					</button>
 				</li>
 			</ul>
