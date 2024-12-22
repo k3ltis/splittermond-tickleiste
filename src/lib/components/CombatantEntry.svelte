@@ -10,7 +10,7 @@
 	import { selectInputText } from '$lib/utility/html_utilities';
 	import { _ } from 'svelte-i18n';
 	import { LEVEL_NUMBER_TO_STRING } from '$lib/state/condition';
-	import { getAllConditions } from '$lib/state/scene_data.conditions.svelte';
+	import { getAllConditions, getConditionById } from '$lib/state/scene_data.conditions.svelte';
 
 	interface Props {
 		combatant: Combatant;
@@ -45,7 +45,12 @@
 	}
 
 	function resolveLevelNumber(conditionState: ConditionState): string {
-		if (conditionState.activeLevel > 1) {
+		const condition = getConditionById(conditionState.id);
+		if (!condition) {
+			console.error(`Cannot find condition ${conditionState.id}`);
+			return '';
+		}
+		if (condition.maxLevel > 1) {
 			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
 		}
 		return '';

@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { LEVEL_NUMBER_TO_STRING, type Condition } from '$lib/state/condition';
-	import { getAllConditions, toggleCondition } from '$lib/state/scene_data.conditions.svelte';
+	import {
+		getAllConditions,
+		getConditionById,
+		toggleCondition
+	} from '$lib/state/scene_data.conditions.svelte';
 	import { sessionData } from '$lib/state/scene_data.svelte';
 	import { Timer, Menu, Settings } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
@@ -51,7 +55,12 @@
 		if (!conditionState) {
 			return '';
 		}
-		if (conditionState.activeLevel > 1) {
+		const condition = getConditionById(conditionState.id);
+		if (!condition) {
+			console.error(`Cannot find condition ${conditionState.id}`);
+			return '';
+		}
+		if (condition.maxLevel > 1) {
 			return ' ' + LEVEL_NUMBER_TO_STRING[conditionState.activeLevel];
 		}
 		return '';
