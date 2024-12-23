@@ -3,6 +3,8 @@ import { saveSceneToLocalStorage } from './localstorage';
 import { type Condition } from './condition';
 import { migrateScene as migrateSceneData } from './data_migration';
 
+export type HEX = `#${string}`;
+
 // Types
 export type CombatState = 'Active' | 'Dead' | 'Waiting' | 'Expecting';
 
@@ -32,6 +34,7 @@ export type Combatant = {
 	initiative: number;
 	combatState: CombatState;
 	conditionStates: ConditionState[];
+	color: HEX | null;
 };
 
 export type SessionData = {
@@ -76,7 +79,8 @@ export function createNewCombatant(): Combatant {
 		name: '',
 		initiative: 0,
 		combatState: 'Active',
-		conditionStates: []
+		conditionStates: [],
+		color: null
 	};
 }
 
