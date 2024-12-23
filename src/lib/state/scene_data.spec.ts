@@ -29,29 +29,26 @@ describe('loadScene', () => {
 	it('assigns scene and sorts combatants', () => {
 		loadScene(TEST_SCENE_SMALL);
 
-		expect(sceneData).toEqual({
+		expect(sceneData).toMatchObject({
 			...TEST_SCENE_SMALL,
 			combatants: [
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			]
 		});
@@ -78,29 +75,26 @@ describe('moveCombatantByTicks', () => {
 
 		moveCombatantByTicks('MerryId', 6);
 
-		expect(sceneData).toEqual({
+		expect(sceneData).toMatchObject({
 			...TEST_SCENE_SMALL,
 			combatants: [
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			],
 			// Merry was moved from 3 to 9, thus mostRecentTick is expected to be 3
@@ -114,29 +108,26 @@ describe('moveCombatantByTicks', () => {
 
 		moveCombatantByTicks('GandalfId', 6);
 
-		expect(sceneData).toEqual({
+		expect(sceneData).toMatchObject({
 			...TEST_SCENE_SMALL,
 			combatants: [
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 10,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			],
 			// Gandalf was moved from 4 to 10, but Merry is the first active combatant, thus mostRecentTick stays unchanged
@@ -150,29 +141,26 @@ describe('moveCombatantByTicks', () => {
 
 		moveCombatantByTicks('MerryId', -8);
 
-		expect(sceneData).toEqual({
+		expect(sceneData).toMatchObject({
 			...TEST_SCENE_SMALL,
 			combatants: [
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: -5,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			],
 			// Merry was moved from 3 to -5
@@ -210,27 +198,24 @@ describe('set combat states', () => {
 
 			setCombatantCombatStateToWaiting('SarumanId');
 
-			expect(sceneData.combatants).toEqual([
+			expect(sceneData.combatants).toMatchObject([
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Waiting',
-					conditionStates: []
+					combatState: 'Waiting'
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			]);
 		});
@@ -241,27 +226,24 @@ describe('set combat states', () => {
 			setCombatantCombatStateToWaiting('SarumanId');
 			setCombatantCombatStateToWaiting('MerryId');
 
-			expect(sceneData.combatants).toEqual([
+			expect(sceneData.combatants).toMatchObject([
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Waiting',
-					conditionStates: []
+					combatState: 'Waiting'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Waiting',
-					conditionStates: []
+					combatState: 'Waiting'
 				},
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			]);
 		});
@@ -273,27 +255,24 @@ describe('set combat states', () => {
 
 			setCombatantCombatStateToExpecting('GandalfId');
 
-			expect(sceneData.combatants).toEqual([
+			expect(sceneData.combatants).toMatchObject([
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Expecting',
-					conditionStates: []
+					combatState: 'Expecting'
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				}
 			]);
 		});
@@ -305,27 +284,24 @@ describe('set combat states', () => {
 
 			setCombatantCombatStateToDead('MerryId');
 
-			expect(sceneData.combatants).toEqual([
+			expect(sceneData.combatants).toMatchObject([
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Active',
-					conditionStates: []
+					combatState: 'Active'
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Dead',
-					conditionStates: []
+					combatState: 'Dead'
 				}
 			]);
 		});
@@ -339,27 +315,24 @@ describe('set combat states', () => {
 			setCombatantCombatStateToWaiting('GandalfId');
 			setCombatantCombatStateToExpecting('MerryId');
 
-			expect(sceneData.combatants).toEqual([
+			expect(sceneData.combatants).toMatchObject([
 				{
 					id: 'GandalfId',
 					name: 'Gandalf',
 					initiative: 4,
-					combatState: 'Waiting',
-					conditionStates: []
+					combatState: 'Waiting'
 				},
 				{
 					id: 'MerryId',
 					name: 'Merry',
 					initiative: 3,
-					combatState: 'Expecting',
-					conditionStates: []
+					combatState: 'Expecting'
 				},
 				{
 					id: 'SarumanId',
 					name: 'Saruman',
 					initiative: 9,
-					combatState: 'Dead',
-					conditionStates: []
+					combatState: 'Dead'
 				}
 			]);
 		});

@@ -15,21 +15,24 @@ export const TEST_SCENE_SMALL: Scene = {
 			name: 'Merry',
 			initiative: 3,
 			combatState: 'Active',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'GandalfId',
 			name: 'Gandalf',
 			initiative: 4,
 			combatState: 'Active',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'SarumanId',
 			name: 'Saruman',
 			initiative: 9,
 			combatState: 'Active',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		}
 	],
 	mostRecentTick: 0,
@@ -44,42 +47,48 @@ export const TEST_SCENE_BIG: Scene = {
 			name: 'Arwen',
 			initiative: 7,
 			combatState: 'Waiting',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'OrcCommanderId',
 			name: 'Orc Commander',
 			initiative: -3,
 			combatState: 'Expecting',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'SarumanId',
 			name: 'Saruman',
 			initiative: 19,
 			combatState: 'Active',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'MerryId',
 			name: 'Merry',
 			initiative: 13,
 			combatState: 'Active',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'GandalfId',
 			name: 'Gandalf',
 			initiative: 14,
 			combatState: 'Active',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		},
 		{
 			id: 'UrukId',
 			name: 'Uruk',
 			initiative: 14,
 			combatState: 'Dead',
-			conditionStates: []
+			conditionStates: [],
+			color: null
 		}
 	],
 	mostRecentTick: 0,
@@ -94,14 +103,16 @@ export const TEST_SCENE_WITH_CONDITIONS: Scene = {
 			name: 'Combatant 1',
 			initiative: 7,
 			combatState: 'Active',
-			conditionStates: [{ id: 'custom_condition_id', activeLevel: 1, activeSinceTick: 3 }]
+			conditionStates: [{ id: 'custom_condition_id', activeLevel: 1, activeSinceTick: 3 }],
+			color: null
 		},
 		{
 			id: 'combatant_2',
 			name: 'Combatant 2',
 			initiative: -3,
 			combatState: 'Active',
-			conditionStates: [{ id: 'burning', activeLevel: 2, activeSinceTick: 3 }]
+			conditionStates: [{ id: 'burning', activeLevel: 2, activeSinceTick: 3 }],
+			color: null
 		}
 	],
 	mostRecentTick: 0,
