@@ -85,7 +85,7 @@
 	}
 </script>
 
-<div class="grid grid-cols-4 gap-1 md:grid-cols-5">
+<div class="grid grid-cols-4 gap-2 md:grid-cols-5">
 	{#each sessionData.ticks as tick}
 		<button
 			class="tick-selection btn relative aspect-square h-full w-full min-[320px]:text-2xl sm:text-3xl"
@@ -114,7 +114,7 @@
 		</button>
 	{/each}
 </div>
-<div class="mt-1 grid grid-cols-4 gap-1 md:grid-cols-5">
+<div class="mt-2 grid grid-cols-4 gap-2 md:grid-cols-5">
 	<div>
 		{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === 'Active'}
 			<div

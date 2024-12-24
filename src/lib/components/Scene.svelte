@@ -107,11 +107,11 @@
 				<input
 					type="text"
 					placeholder={$_('scene_title')}
-					class="input input-bordered mr-4 w-full text-2xl md:text-3xl"
+					class="input input-bordered mr-2 w-full text-2xl md:text-3xl"
 					bind:value={sceneData.name}
 				/>
 			{:else}
-				<p class="mr-4 w-full ps-[17px] text-2xl md:text-3xl" aria-label={$_('scene_title')}>
+				<p class="mr-2 w-full ps-[17px] text-2xl md:text-3xl" aria-label={$_('scene_title')}>
 					{sceneData.name}
 				</p>
 			{/if}
@@ -120,7 +120,7 @@
 		<div class="change-scene-mode flex-none space-x-2">
 			<button
 				id="runSceneBtn"
-				class="btn btn-primary"
+				class="btn btn-primary text-xl"
 				class:hidden={appMode == 'RUNNING'}
 				disabled={sceneData.combatants.length === 0}
 				onclick={runScene}
