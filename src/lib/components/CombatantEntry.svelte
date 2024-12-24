@@ -58,10 +58,13 @@
 </script>
 
 {#if appMode === 'RUNNING'}
-	<div class="p-6">
-		<div class="grid w-full grid-cols-[98fr_1fr_1fr] gap-2">
+	<div class="p-3 md:p-6">
+		<div class="flex w-full items-center justify-between">
 			<div class="relative">
-				<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-left text-3xl">
+				<p
+					aria-label={$_('combatant_name')}
+					class="my-auto w-full ps-4 text-left text-2xl md:text-3xl"
+				>
 					{combatant.name}
 				</p>
 				{#if combatant === nextActingCombatant}
@@ -73,11 +76,11 @@
 					</div>
 				{/if}
 			</div>
-			<div class="self-start">
+			<div class="mx-2 mr-16 self-start">
 				{#if combatant.combatState === 'Active'}
 					<button
 						aria-label={$_('combatant_initiative')}
-						class="btn btn-primary w-20 px-1 text-center text-3xl"
+						class="btn btn-primary w-16 px-1 text-center text-2xl md:w-20 md:text-3xl"
 						onclick={() => combatantClicked(combatant)}
 					>
 						{combatant.initiative}
@@ -86,10 +89,10 @@
 				{:else if combatant.combatState === 'Waiting'}
 					<button
 						in:fade={{ duration: 200 }}
-						class="btn btn-warning w-20 px-1 text-center"
+						class="btn btn-warning w-16 px-1 text-center md:w-20"
 						onclick={() => combatantClicked(combatant)}
 					>
-						<Hourglass class="w-20 text-center" size={32} strokeWidth={2} />
+						<Hourglass class="w-16 text-center md:w-20" size={32} strokeWidth={2} />
 						<span class="sr-only"
 							>{$_('combatant_status', {
 								values: { status: $_('tickselection.tooltip.set_state_waiting') }
@@ -100,7 +103,7 @@
 				{:else if combatant.combatState === 'Expecting'}
 					<button
 						in:fade={{ duration: 200 }}
-						class="btn btn-warning w-20 px-1 text-center"
+						class="btn btn-warning w-16 px-1 text-center md:w-20"
 						onclick={() => combatantClicked(combatant)}
 					>
 						<ClockAlert class="w-20 text-center" size={32} strokeWidth={2} />
@@ -114,7 +117,7 @@
 				{:else if combatant.combatState === 'Dead'}
 					<button
 						in:fade={{ duration: 200 }}
-						class="btn btn-error w-20 px-1 text-center"
+						class="px btn btn-error w-16 text-center md:w-20"
 						onclick={() => combatantClicked(combatant)}
 					>
 						<Skull class="w-20 text-center" size={32} strokeWidth={2} />
@@ -127,11 +130,8 @@
 					</button>
 				{/if}
 			</div>
-			<div class="w-16 text-center">
-				<div class="min-w-12"></div>
-			</div>
 		</div>
-		<div class="mt-2 flex flex-row flex-wrap" class:hidden={combatant.conditionStates.length === 0}>
+		<div class="mt-1 flex flex-row flex-wrap" class:hidden={combatant.conditionStates.length === 0}>
 			{#each combatant.conditionStates as conditionState}
 				<button
 					class="badge badge-error badge-outline badge-lg mr-1 self-end hover:bg-error hover:text-neutral"
@@ -151,37 +151,29 @@
 {/if}
 
 {#if appMode === 'EDITING'}
-	<div class="p-6">
-		<div class="grid w-full grid-cols-[98fr_1fr_1fr] items-center gap-2">
-			<div class="relative">
-				<div class="flex flex-col">
-					<input
-						type="text"
-						aria-label={$_('combatant_name')}
-						class="input input-bordered my-auto w-full text-3xl"
-						bind:value={combatant.name}
-					/>
-				</div>
-			</div>
-			<div>
-				<input
-					type="number"
-					aria-label={$_('combatant_initiative')}
-					class="input input-bordered w-20 px-1 text-center text-3xl"
-					onfocus={(event: FocusEvent) => selectInputText(event)}
-					bind:value={combatant.initiative}
-				/>
-			</div>
-			<div class="w-16 text-center">
-				<button
-					in:fade={{ duration: 200 }}
-					class="btn btn-error w-full"
-					onclick={() => deleteCombatant(combatant.id)}
-					aria-label={$_('delete_combatant', { values: { name: combatant.name } })}
-				>
-					<Trash aria-hidden />
-				</button>
-			</div>
+	<div class="p-3 md:p-6">
+		<div class="flex w-full items-center">
+			<input
+				type="text"
+				aria-label={$_('combatant_name')}
+				class="input input-bordered my-auto w-full text-2xl md:text-3xl"
+				bind:value={combatant.name}
+			/>
+			<input
+				type="number"
+				aria-label={$_('combatant_initiative')}
+				class="input input-bordered mx-2 w-16 px-1 text-center text-2xl md:w-20 md:text-3xl"
+				onfocus={(event: FocusEvent) => selectInputText(event)}
+				bind:value={combatant.initiative}
+			/>
+			<button
+				in:fade={{ duration: 200 }}
+				class="btn btn-error"
+				onclick={() => deleteCombatant(combatant.id)}
+				aria-label={$_('delete_combatant', { values: { name: combatant.name } })}
+			>
+				<Trash aria-hidden />
+			</button>
 		</div>
 	</div>
 {/if}
