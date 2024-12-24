@@ -107,11 +107,11 @@
 				<input
 					type="text"
 					placeholder={$_('scene_title')}
-					class="input input-bordered mr-4 w-full text-3xl"
+					class="input input-bordered mr-4 w-full text-2xl md:text-3xl"
 					bind:value={sceneData.name}
 				/>
 			{:else}
-				<p class="mr-4 w-full ps-[17px] text-3xl" aria-label={$_('scene_title')}>
+				<p class="mr-4 w-full ps-[17px] text-2xl md:text-3xl" aria-label={$_('scene_title')}>
 					{sceneData.name}
 				</p>
 			{/if}
@@ -120,7 +120,7 @@
 		<div class="change-scene-mode flex-none space-x-2">
 			<button
 				id="runSceneBtn"
-				class="btn btn-primary text-xl"
+				class="btn btn-primary"
 				class:hidden={appMode == 'RUNNING'}
 				disabled={sceneData.combatants.length === 0}
 				onclick={runScene}
@@ -141,18 +141,20 @@
 	</div>
 	<div id="combatantsTable" class="mb-2 mt-4">
 		<!-- Table Header -->
-		<div class="grid grid-cols-[99fr_1fr_1fr] gap-x-2 rounded-lg bg-secondary px-6 pb-4 pt-3">
-			<div class="text-xl font-bold">{$_('column_name')}</div>
-			<div class="text-xl font-bold" id="initiativeColumn">{$_('column_initiative')}</div>
-			<div class="w-16"></div>
-
+		<div class="column rounded-lg bg-secondary p-3 md:p-6">
+			<div class="flex w-full justify-between">
+				<div class="pl-1 text-xl">{$_('column_name')}</div>
+				<div class="mr-16 w-16 pl-1 text-xl md:w-20" id="initiativeColumn">
+					{$_('column_initiative')}
+				</div>
+			</div>
 			<!-- Combatant Input Fields -->
 			{#if appMode === 'EDITING'}
-				<div transition:slide class="col-span-3 mt-2 grid grid-cols-subgrid">
+				<div transition:slide class="col-span-3 flex w-full">
 					<input
 						type="text"
 						placeholder={$_('placeholder_name')}
-						class="input input-bordered w-full text-3xl"
+						class="input input-bordered w-full text-2xl md:text-3xl"
 						bind:value={newCombatant.name}
 						bind:this={combatantNameInput}
 						onkeydown={handleKeyDown}
@@ -161,20 +163,23 @@
 						type="number"
 						placeholder={$_('placeholder_initiative')}
 						class="
-								input
-								input-bordered
-								w-20
-								px-1
-								text-center
-								text-3xl"
+						input
+						input-bordered
+						mx-1.5
+						w-16
+						px-1
+						text-center
+						text-2xl
+						md:w-20
+						md:text-3xl"
 						bind:value={newCombatant.initiative}
 						onfocus={(event: FocusEvent) => selectInputText(event)}
 						onkeydown={handleKeyDown}
 					/>
-					<div class="w-16 justify-center">
+					<div class="justify-center">
 						<button
 							onclick={() => addCombatant(newCombatant)}
-							class="btn btn-primary w-full"
+							class="btn btn-primary"
 							aria-label={$_('add_combatant')}
 						>
 							<Plus strokeWidth={3} aria-hidden />
@@ -184,11 +189,9 @@
 			{/if}
 		</div>
 
-		<!-- <div class="my-2"></div> -->
-
 		<!-- Combatant List -->
 		{#if sceneData.combatants.length === 0}
-			<div class=" card mt-8 bg-base-100">
+			<div class="card mt-8 bg-base-100">
 				<div class="card-body text-center">
 					<h2 class="card-title justify-center">{$_('scene.empty_combatants_info')}</h2>
 					<p class="mt-6">
