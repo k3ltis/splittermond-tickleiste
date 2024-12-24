@@ -79,7 +79,7 @@
 				bind:this={tabButtonTicks}
 				role="tab"
 				id="tab-tick-selection"
-				class="tab m-2 me-1 h-12 text-2xl"
+				class="tab m-2 me-1 h-12 text-xl"
 				aria-controls="tabpanel-tick-selection"
 				aria-selected="true"
 				class:tab-active={tabButtonTicks?.ariaSelected === 'actions'}
@@ -87,7 +87,7 @@
 				{$_('combatant_modal.actions')}
 			</button>
 			<div
-				class="tab-content min-w-full border-r-0 border-none bg-base-100 p-6"
+				class="tab-content min-w-full border-r-0 border-none bg-base-100 p-3 md:p-6"
 				id="tabpanel-tick-selection"
 				role="tabpanel"
 				tabindex="0"
@@ -99,7 +99,7 @@
 				bind:this={tabButtonConditions}
 				role="tab"
 				id="tab-condition-selection"
-				class="tab m-2 me-1 ms-0 h-12 text-2xl"
+				class="tab m-2 me-1 ms-0 h-12 text-xl"
 				tabindex="-1"
 				aria-controls="tabpanel-condition-selection"
 				aria-selected="false"
@@ -108,7 +108,7 @@
 				{$_('combatant_modal.conditions')}
 			</button>
 			<div
-				class="tab-content min-w-full border-r-0 border-none bg-base-100 p-6"
+				class="tab-content min-w-full border-r-0 border-none bg-base-100 p-3 md:p-6"
 				id="tabpanel-condition-selection"
 				role="tabpanel"
 				tabindex="0"
