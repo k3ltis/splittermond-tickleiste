@@ -74,7 +74,11 @@
 		<h3 id="tablist-for-combatant" class="sr-only">
 			{$_('combatant_interaction_modal', { values: { name: sessionData.activeCombatant?.name } })}
 		</h3>
-		<div role="tablist" class="tabs-boxed tabs p-0" aria-labelledby="tablist-for-combatant">
+		<div
+			role="tablist"
+			class="tabs-boxed tabs overflow-hidden p-0"
+			aria-labelledby="tablist-for-combatant"
+		>
 			<button
 				bind:this={tabButtonTicks}
 				role="tab"
