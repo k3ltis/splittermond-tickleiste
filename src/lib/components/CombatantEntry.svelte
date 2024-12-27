@@ -180,10 +180,10 @@
 {#if appMode === 'EDITING'}
 	<div class="flex">
 		<div style:background-color={combatant.color} class="min-w-2">&nbsp;</div>
-		<div class="flex p-3 md:p-6">
+		<div class="flex w-full p-3 md:p-6">
 			<div class="flex w-full items-center">
-				<div class="relative">
-					<div class="flex flex-col">
+				<div class="grow relative">
+					<div class="flex flex-col mr-1">
 						<input
 							type="text"
 							aria-label={$_('combatant_name')}
@@ -194,7 +194,7 @@
 				</div>
 				<details
 					id="color-dropdown-{combatant.id}"
-					class="dropdown dropdown-end z-20 drop-shadow-xl"
+					class="dropdown dropdown-end z-20 drop-shadow-xl mr-1"
 					bind:this={colorDetails}
 				>
 					<summary
@@ -231,7 +231,7 @@
 						{/each}
 					</ul>
 				</details>
-				<div>
+				<div class="mr-1">
 					<input
 						type="number"
 						aria-label={$_('combatant_initiative')}
