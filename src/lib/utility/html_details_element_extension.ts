@@ -41,7 +41,6 @@ function tabListener(details: HTMLDetailsElement) {
 		if (event.key !== 'Tab' || !window.document.activeElement) return;
 
 		const focusableElements = details.querySelectorAll('summary, li, button');
-		console.log(focusableElements);
 		const focusedElementIndex = Array.from(focusableElements).indexOf(
 			window.document.activeElement
 		);
