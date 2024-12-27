@@ -13,6 +13,7 @@ Try it out on [tickleiste.tklic.de](https://tickleiste.tklic.de), it's hosted vi
 - **Create a scene** with any number of combatants
 - Supports **special combat states** like _Waiting, Expecting, and Incapitated_
 - Supports **conditions**, **condition levels** and **user defined conditions** like `panicked`, `burning II` or `glowing`
+- **Choose a color** for each of the combatants
 - **Save and load** the scene to and from your local device
 - **No server** involved, **no login** necessary, scene data will be saved to the browsers **local storage**
 - Optimized for **mobile** and **keyboard only control**
