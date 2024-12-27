@@ -31,13 +31,22 @@
 		deleteCombatant: (combatantId: string) => void;
 	}
 
-	const colors: HEX[] = ['#40bb03', '#e7b500', '#d41c3e', '#940be6', '#3a75f1', '#070706', '#4a4a4a', '#ffffff'];
+	const colors: HEX[] = [
+		'#40bb03',
+		'#e7b500',
+		'#d41c3e',
+		'#940be6',
+		'#3a75f1',
+		'#070706',
+		'#4a4a4a',
+		'#ffffff'
+	];
 	// svelte-ignore non_reactive_update
 	let colorDetails: HTMLDetailsElement;
 	// Used to position the dropdown top and bottom
-	let detailsButtonInLowerHalf = $state(false)
+	let detailsButtonInLowerHalf = $state(false);
 	// Used to handle the z-indexing
-	let colorDetailsOpen = $state(false)
+	let colorDetailsOpen = $state(false);
 	let { combatant, appMode, combatantClicked, conditionClicked, deleteCombatant }: Props = $props();
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
@@ -88,16 +97,16 @@
 			// register listener for additional behavior
 			colorDetails.addEventListener('toggle', () => {
 				if (colorDetails.open) {
-					colorDetailsOpen = true
+					colorDetailsOpen = true;
 
 					// open dropdown top- or bottom-aligned depending on where
 					// the triggering button is, more on the upper or more on
 					// the lower half of the screen
 					const rect: DOMRect = colorDetails.getBoundingClientRect();
 					const isInLowerHalf = rect.top > window.innerHeight * 0.7;
-					detailsButtonInLowerHalf = isInLowerHalf
+					detailsButtonInLowerHalf = isInLowerHalf;
 				} else {
-					colorDetailsOpen = false
+					colorDetailsOpen = false;
 				}
 			});
 		}
@@ -220,7 +229,9 @@
 				</div>
 				<details
 					id="color-dropdown-{combatant.id}"
-					class="dropdown dropdown-end {detailsButtonInLowerHalf ? 'dropdown-top' : 'dropdown-bottom'} mr-1 drop-shadow-xl { colorDetailsOpen ? 'z-[1]' : ''}"
+					class="dropdown dropdown-end {detailsButtonInLowerHalf
+						? 'dropdown-top'
+						: 'dropdown-bottom'} mr-1 drop-shadow-xl {colorDetailsOpen ? 'z-[1]' : ''}"
 					bind:this={colorDetails}
 				>
 					<summary
