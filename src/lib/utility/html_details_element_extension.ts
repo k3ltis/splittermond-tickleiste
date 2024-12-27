@@ -5,9 +5,8 @@
 
 export function addToggleListener(details: HTMLDetailsElement) {
 	if (!details) return;
-
 	// Add those functionalities when a details-element is open and
-	// destroy dem when the element is closed again
+	// destroy them when the element is closed again
 	details.addEventListener('toggle', () => {
 		if (details.open) {
 			addListenersForDetailsElement(details);
@@ -41,7 +40,8 @@ function tabListener(details: HTMLDetailsElement) {
 	return function (event: KeyboardEvent) {
 		if (event.key !== 'Tab' || !window.document.activeElement) return;
 
-		const focusableElements = details.querySelectorAll('summary, li');
+		const focusableElements = details.querySelectorAll('summary, li, button');
+		console.log(focusableElements);
 		const focusedElementIndex = Array.from(focusableElements).indexOf(
 			window.document.activeElement
 		);

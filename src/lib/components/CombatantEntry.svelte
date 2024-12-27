@@ -13,7 +13,6 @@
 		Skull,
 		ArrowRight,
 		Timer,
-		Menu,
 		Palette,
 		Ban
 	} from 'lucide-svelte';
@@ -22,7 +21,6 @@
 	import { _ } from 'svelte-i18n';
 	import { LEVEL_NUMBER_TO_STRING } from '$lib/state/condition';
 	import { getAllConditions, getConditionById } from '$lib/state/scene_data.conditions.svelte';
-	import { onMount } from 'svelte';
 	import { addToggleListener } from '$lib/utility/html_details_element_extension';
 
 	interface Props {
@@ -33,9 +31,13 @@
 		deleteCombatant: (combatantId: string) => void;
 	}
 
-	const colors: HEX[] = ['#08D9D6', '#252A34', '#FF2E63', '#EAEAEA'];
+	const colors: HEX[] = ['#40bb03', '#e7b500', '#d41c3e', '#940be6', '#3a75f1', '#070706', '#4a4a4a', '#ffffff'];
 	// svelte-ignore non_reactive_update
 	let colorDetails: HTMLDetailsElement;
+	// Used to position the dropdown top and bottom
+	let detailsButtonInLowerHalf = $state(false)
+	// Used to handle the z-indexing
+	let colorDetailsOpen = $state(false)
 	let { combatant, appMode, combatantClicked, conditionClicked, deleteCombatant }: Props = $props();
 	let nextActingCombatant: Combatant | null = $derived(determineNextActingCombatant());
 
@@ -76,18 +78,42 @@
 		colorDetails.open = false;
 	}
 
-	onMount(() => {
-		addToggleListener(colorDetails);
+	$effect(() => {
+		// Since appMode is 'RUNNING' initially, the editing section would not be rendered and thus addToggleListener
+		// cannot be executed using the onMount function. This is why the handler is added on switching to edit mode.
+		if (appMode === 'EDITING') {
+			// register listener for details toggle behavior
+			addToggleListener(colorDetails);
+
+			// register listener for additional behavior
+			colorDetails.addEventListener('toggle', () => {
+				if (colorDetails.open) {
+					colorDetailsOpen = true
+
+					// open dropdown top- or bottom-aligned depending on where
+					// the triggering button is, more on the upper or more on
+					// the lower half of the screen
+					const rect: DOMRect = colorDetails.getBoundingClientRect();
+					const isInLowerHalf = rect.top > window.innerHeight * 0.7;
+					detailsButtonInLowerHalf = isInLowerHalf
+				} else {
+					colorDetailsOpen = false
+				}
+			});
+		}
 	});
 </script>
 
 {#if appMode === 'RUNNING'}
 	<div class="flex">
 		<div style:background-color={combatant.color} class="min-w-2">&nbsp;</div>
-		<div class="p-3 md:p-6 w-full">
+		<div class="w-full p-3 md:p-6">
 			<div class="flex w-full items-center justify-between">
 				<div class="relative">
-					<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-left text-2xl md:text-3xl">
+					<p
+						aria-label={$_('combatant_name')}
+						class="my-auto w-full ps-4 text-left text-2xl md:text-3xl"
+					>
 						{combatant.name}
 					</p>
 					{#if combatant === nextActingCombatant}
@@ -182,8 +208,8 @@
 		<div style:background-color={combatant.color} class="min-w-2">&nbsp;</div>
 		<div class="flex w-full p-3 md:p-6">
 			<div class="flex w-full items-center">
-				<div class="grow relative">
-					<div class="flex flex-col mr-1">
+				<div class="relative grow">
+					<div class="mr-1 flex flex-col">
 						<input
 							type="text"
 							aria-label={$_('combatant_name')}
@@ -194,13 +220,13 @@
 				</div>
 				<details
 					id="color-dropdown-{combatant.id}"
-					class="dropdown dropdown-end z-20 drop-shadow-xl mr-1"
+					class="dropdown dropdown-end {detailsButtonInLowerHalf ? 'dropdown-top' : 'dropdown-bottom'} mr-1 drop-shadow-xl { colorDetailsOpen ? 'z-[1]' : ''}"
 					bind:this={colorDetails}
 				>
 					<summary
 						style:background-color={combatant.color}
 						class:btn-outline={combatant.color === null}
-						class="btn btn-square btn-ghost input-bordered"
+						class="btn btn-square btn-ghost input-bordered z-auto"
 						aria-label={$_('open_menu')}
 					>
 						{#if combatant.color === null}
@@ -209,27 +235,28 @@
 							&nbsp;
 						{/if}
 					</summary>
-					<ul
-						class="color-detail-dropdown-content menu dropdown-content z-30 rounded-box bg-neutral text-xl text-neutral-content"
+					<div
+						tabindex="-1"
+						class="dropdown-content grid grid-cols-[1fr_1fr_1fr] rounded-md bg-primary p-1 text-primary-content shadow"
 					>
-						<li>
+						<button
+							class="btn btn-square btn-neutral size-16"
+							onclick={() => selectColor(null)}
+							aria-label="__SELECT_COLOR_NONE_"
+							role="menuitem"
+							tabindex="0"><Ban aria-hidden /></button
+						>
+						{#each colors as color, index}
 							<button
-								class="btn btn-neutral size-16"
-								onclick={() => selectColor(null)}
-								aria-label="__SELECT_COLOR_NONE_"><Ban aria-hidden /></button
+								style:background-color={color}
+								class="btn btn-square size-16"
+								onclick={() => selectColor(color)}
+								aria-label="__SELECT_COLOR_{index}__"
+								role="menuitem"
+								tabindex="0">&nbsp;</button
 							>
-						</li>
-						{#each colors as color}
-							<li>
-								<button
-									style:background-color={color}
-									class="btn size-16"
-									onclick={() => selectColor(color)}
-									aria-label="__SELECT_COLOR_{color}__">&nbsp;</button
-								>
-							</li>
 						{/each}
-					</ul>
+					</div>
 				</details>
 				<div class="mr-1">
 					<input
