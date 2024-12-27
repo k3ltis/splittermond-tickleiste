@@ -84,10 +84,10 @@
 {#if appMode === 'RUNNING'}
 	<div class="flex">
 		<div style:background-color={combatant.color} class="min-w-2">&nbsp;</div>
-		<div class="p-3 md:p-6">
+		<div class="p-3 md:p-6 w-full">
 			<div class="flex w-full items-center justify-between">
 				<div class="relative">
-					<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-2xl md:text-3xl">
+					<p aria-label={$_('combatant_name')} class="my-auto w-full ps-4 text-left text-2xl md:text-3xl">
 						{combatant.name}
 					</p>
 					{#if combatant === nextActingCombatant}
@@ -152,9 +152,6 @@
 							>
 						</button>
 					{/if}
-				</div>
-				<div class="w-16 text-center">
-					<div class="min-w-12"></div>
 				</div>
 			</div>
 			<div
