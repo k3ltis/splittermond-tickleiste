@@ -306,9 +306,4 @@
 		-moz-appearance: textfield; /* Firefox */
 		appearance: textfield;
 	}
-
-	ul.color-detail-dropdown-content {
-		flex-direction: row;
-		flex-wrap: nowrap;
-	}
 </style>
