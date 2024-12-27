@@ -78,22 +78,24 @@
 	}
 </script>
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-2 gap-2 md:gap-4">
 	{#each getSortedConditions(getAllConditions({ onlyActive: true })) as condition}
 		<button
 			class:btn-outline={!isActiveOnActiveCombatant(condition.id)}
 			class:btn-error={isActiveOnActiveCombatant(condition.id)}
-			class="btn md:text-xl"
+			class="btn px-2 text-lg font-normal md:text-xl"
 			onclick={() => select(condition.id)}
 		>
-			<span class="text-nowrap">
+			<span class="leading-none">
 				{$_(condition.i18n)}{resolveCurrentLevel(condition.id)}
 				{#if isActiveOnActiveCombatant(condition.id)}
-					(<Timer
-						class="mb-1 inline-block align-middle"
-						size={16}
-						strokeWidth={2}
-					/>&nbsp;{calculateConditionDuration(condition.id)})
+					<span class="text-nowrap">
+						(<Timer
+							class="mb-1 inline-block align-middle"
+							size={16}
+							strokeWidth={2}
+						/>&nbsp;{calculateConditionDuration(condition.id)})
+					</span>
 				{:else}
 					<span class="text-sm"
 						>{resolveLevelRange(condition.id, getSortedConditions(getAllConditions()))}</span

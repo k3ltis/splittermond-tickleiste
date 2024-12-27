@@ -114,7 +114,7 @@
 		</button>
 	{/each}
 </div>
-<div class="mt-1 grid grid-cols-4 gap-1 md:grid-cols-5">
+<div class="mt-2 grid grid-cols-4 gap-1 md:grid-cols-5">
 	<div>
 		{#if sessionData.activeCombatant === null || sessionData.activeCombatant?.combatState === 'Active'}
 			<div

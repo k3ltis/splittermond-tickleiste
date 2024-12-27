@@ -72,11 +72,11 @@
 				bind:value={customConditionName}
 				name="custom_condition_name"
 				placeholder="{$_('settings.custom_condition_placeholder')} "
-				class="input input-bordered mr-4 w-full text-xl md:text-2xl"
+				class="input input-bordered mr-2 w-full text-xl md:mr-4 md:text-2xl"
 				aria-label={$_('settings.new_condition_name')}
 			/>
 			<select
-				class="select select-bordered mr-4 text-center text-xl md:text-2xl"
+				class="select select-bordered mr-2 text-center text-xl md:mr-4 md:text-2xl"
 				name="custom_condition_max_level"
 				bind:value={customConditionMaxLevel}
 				aria-label={$_('settings.new_condition_level')}
